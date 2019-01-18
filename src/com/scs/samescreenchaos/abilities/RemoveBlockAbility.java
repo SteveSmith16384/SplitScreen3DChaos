@@ -9,7 +9,7 @@ import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
-import com.scs.multiplayervoxelworld.entities.PlayersAvatar;
+import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
 import com.scs.multiplayervoxelworld.modules.GameModule;
 import com.scs.samescreenchaos.blocks.StoneBlock;
@@ -22,7 +22,7 @@ public class RemoveBlockAbility extends AbstractAbility {
 
 	private static final float MAX_RANGE = 4;
 
-	public RemoveBlockAbility(MultiplayerVoxelWorldMain _game, GameModule module, PlayersAvatar p) {
+	public RemoveBlockAbility(MultiplayerVoxelWorldMain _game, GameModule module, AbstractPlayersAvatar p) {
 		super(_game, module, p);
 	}
 

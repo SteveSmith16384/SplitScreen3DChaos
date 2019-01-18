@@ -6,6 +6,7 @@ import com.jme3.system.AppSettings;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldProperties;
 import com.scs.multiplayervoxelworld.Settings;
+import com.scs.multiplayervoxelworld.modules.GameModule;
 
 public class ChaosMain extends MultiplayerVoxelWorldMain {
 
@@ -51,6 +52,13 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 
 
 	public ChaosMain() {
+	}
+
+
+	@Override
+	public GameModule getGameModule() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

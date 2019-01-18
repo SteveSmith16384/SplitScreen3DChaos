@@ -9,7 +9,7 @@ import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
-import com.scs.multiplayervoxelworld.entities.PlayersAvatar;
+import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
 import com.scs.multiplayervoxelworld.modules.GameModule;
 import com.scs.samescreenchaos.blocks.StoneBlock;
@@ -19,7 +19,7 @@ import mygame.util.Vector3Int;
 
 public class AddBlockAbility extends AbstractAbility {
 
-	public AddBlockAbility(MultiplayerVoxelWorldMain _game, GameModule module, PlayersAvatar p) {
+	public AddBlockAbility(MultiplayerVoxelWorldMain _game, GameModule module, AbstractPlayersAvatar p) {
 		super(_game, module, p);
 	}
 

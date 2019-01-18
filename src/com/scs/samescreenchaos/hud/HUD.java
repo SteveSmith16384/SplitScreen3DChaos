@@ -23,7 +23,7 @@ import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.components.IEntity;
 import com.scs.multiplayervoxelworld.components.IProcessable;
 import com.scs.multiplayervoxelworld.components.IShowOnHUD;
-import com.scs.multiplayervoxelworld.entities.PlayersAvatar;
+import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.modules.GameModule;
 
 import ssmith.util.RealtimeInterval;
@@ -38,7 +38,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 
 	private MultiplayerVoxelWorldMain game;
 	private GameModule module;
-	private PlayersAvatar player; 
+	private AbstractPlayersAvatar player; 
 
 	private RealtimeInterval updateInt = new RealtimeInterval(500);
 	
@@ -49,7 +49,7 @@ public class HUD extends Node implements IEntity, IProcessable {
 	private List<Picture> targetting_reticules = new ArrayList<>();
 	private TrueTypeContainer textArea; // For showing all other stats 
 
-	public HUD(MultiplayerVoxelWorldMain _game, GameModule _module, PlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
+	public HUD(MultiplayerVoxelWorldMain _game, GameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		super("HUD");
 
 		game = _game;

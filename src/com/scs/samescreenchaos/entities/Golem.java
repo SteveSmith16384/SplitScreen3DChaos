@@ -8,7 +8,6 @@ import com.scs.multiplayervoxelworld.components.IDamagable;
 import com.scs.multiplayervoxelworld.components.INotifiedOfCollision;
 import com.scs.multiplayervoxelworld.components.IProcessable;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
-import com.scs.multiplayervoxelworld.entities.Crystal;
 import com.scs.multiplayervoxelworld.jme.JMEAngleFunctions;
 import com.scs.multiplayervoxelworld.modules.GameModule;
 import com.scs.samescreenchaos.models.GolemModel;
@@ -155,10 +154,6 @@ public class Golem extends AbstractPhysicalEntity implements IProcessable, IDama
 
 	@Override
 	public void notifiedOfCollision(AbstractPhysicalEntity other) {
-		if (other instanceof Crystal) {
-			Settings.p(this + " collided with " + other);
-			module.gameOver();
-		}
 
 	}
 

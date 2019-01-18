@@ -3,10 +3,10 @@ package com.scs.samescreenchaos.abilities;
 import com.jme3.math.Vector3f;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
-import com.scs.multiplayervoxelworld.entities.PlayersAvatar;
+import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.modules.GameModule;
 
-public class JetPac extends AbstractAbility {
+public class MagicWings extends AbstractAbility {
 
 	//private static final Vector3f FORCE = new Vector3f(0, .25f, 0);
 	private static final float POWER = .7f;//.3f;
@@ -15,7 +15,7 @@ public class JetPac extends AbstractAbility {
 	private float fuel = 100;
 	private final Vector3f camUp = new Vector3f();
 
-	public JetPac(MultiplayerVoxelWorldMain _game, GameModule module, PlayersAvatar _player) {
+	public MagicWings(MultiplayerVoxelWorldMain _game, GameModule module, AbstractPlayersAvatar _player) {
 		super(_game, module, _player);
 	}
 

@@ -6,9 +6,8 @@ import java.util.List;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
-import com.scs.multiplayervoxelworld.entities.PlayersAvatar;
+import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.modules.GameModule;
-import com.scs.samescreenchaos.abilities.chaos.AbstractSpell;
 
 public class Spellbook extends AbstractAbility {
 
@@ -18,7 +17,7 @@ public class Spellbook extends AbstractAbility {
 	private AbstractSpell currentSpell;
 	private List<AbstractSpell> spells = new ArrayList<>();
 	
-	public Spellbook(MultiplayerVoxelWorldMain _game, GameModule module, PlayersAvatar _player) {
+	public Spellbook(MultiplayerVoxelWorldMain _game, GameModule module, AbstractPlayersAvatar _player) {
 		super(_game, module, _player);
 		
 		//currentSpell = new WallSpell(module, _player);

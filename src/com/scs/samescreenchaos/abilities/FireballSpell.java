@@ -1,4 +1,4 @@
-package com.scs.samescreenchaos.abilities.chaos;
+package com.scs.samescreenchaos.abilities;
 
 public class FireballSpell {
 

@@ -3,7 +3,7 @@ package com.scs.samescreenchaos.abilities;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
-import com.scs.multiplayervoxelworld.entities.PlayersAvatar;
+import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.modules.GameModule;
 
 public class RunFast extends AbstractAbility {
@@ -13,7 +13,7 @@ public class RunFast extends AbstractAbility {
 	private float power;
 	private boolean isRunningFast;
 	
-	public RunFast(MultiplayerVoxelWorldMain _game, GameModule module, PlayersAvatar _player) {
+	public RunFast(MultiplayerVoxelWorldMain _game, GameModule module, AbstractPlayersAvatar _player) {
 		super(_game, module, _player);
 	}
 
