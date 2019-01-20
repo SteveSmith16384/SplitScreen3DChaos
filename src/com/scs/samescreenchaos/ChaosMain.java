@@ -6,7 +6,7 @@ import com.jme3.system.AppSettings;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldProperties;
 import com.scs.multiplayervoxelworld.Settings;
-import com.scs.multiplayervoxelworld.modules.GameModule;
+import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 
 public class ChaosMain extends MultiplayerVoxelWorldMain {
 
@@ -30,7 +30,7 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 			}
 
 			MAX_TURN_SPEED = MultiplayerVoxelWorldMain.properties.GetMaxTurnSpeed();
-			BASE_SCORE_INC = MultiplayerVoxelWorldMain.properties.GetBaseScoreInc();
+			//BASE_SCORE_INC = MultiplayerVoxelWorldMain.properties.GetBaseScoreInc();
 			
 			ChaosMain app = new ChaosMain();
 			app.setSettings(settings);
@@ -56,7 +56,7 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 
 
 	@Override
-	public GameModule getGameModule() {
+	public AbstractGameModule getGameModule() {
 		// TODO Auto-generated method stub
 		return null;
 	}

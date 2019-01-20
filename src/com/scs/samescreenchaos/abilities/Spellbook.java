@@ -7,7 +7,7 @@ import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
-import com.scs.multiplayervoxelworld.modules.GameModule;
+import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 
 public class Spellbook extends AbstractAbility {
 
@@ -17,7 +17,7 @@ public class Spellbook extends AbstractAbility {
 	private AbstractSpell currentSpell;
 	private List<AbstractSpell> spells = new ArrayList<>();
 	
-	public Spellbook(MultiplayerVoxelWorldMain _game, GameModule module, AbstractPlayersAvatar _player) {
+	public Spellbook(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar _player) {
 		super(_game, module, _player);
 		
 		//currentSpell = new WallSpell(module, _player);

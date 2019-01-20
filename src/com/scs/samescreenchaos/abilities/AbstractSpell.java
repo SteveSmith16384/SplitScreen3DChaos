@@ -2,15 +2,15 @@ package com.scs.samescreenchaos.abilities;
 
 import com.scs.multiplayervoxelworld.abilities.IAbility;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
-import com.scs.multiplayervoxelworld.modules.GameModule;
+import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 
 public abstract class AbstractSpell implements IAbility {
 
-	protected GameModule module;
+	protected AbstractGameModule module;
 	protected String name;
 	protected AbstractPlayersAvatar player;
 	
-	public AbstractSpell(GameModule _module, AbstractPlayersAvatar _player, String _name) {
+	public AbstractSpell(AbstractGameModule _module, AbstractPlayersAvatar _player, String _name) {
 		name = _name;
 		module = _module;
 		player = _player;

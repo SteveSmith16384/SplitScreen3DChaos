@@ -12,12 +12,13 @@ import com.scs.multiplayervoxelworld.blocks.WoodBlock;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
 import com.scs.multiplayervoxelworld.input.IInputDevice;
-import com.scs.multiplayervoxelworld.modules.GameModule;
+import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
+import com.scs.samescreenchaos.entities.WizardsPlayersAvatars;
 
 import mygame.util.Vector3Int;
 import ssmith.lang.NumberFunctions;
 
-public class ChaosGameModule extends GameModule {
+public class ChaosGameModule extends AbstractGameModule {
 
 	private static final int MAP_SIZE = 100;
 
@@ -87,9 +88,9 @@ public class ChaosGameModule extends GameModule {
 
 
 	@Override
-	protected AbstractPlayersAvatar getPlayersAvatar(MultiplayerVoxelWorldMain _game, GameModule _module, int _playerID,
+	protected AbstractPlayersAvatar getPlayersAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID,
 			Camera _cam, IInputDevice _input, int _side) {
-		return new WizardslayersAvatar(_game, this, _playerID, _cam, _input, _side);
+		return new WizardsPlayersAvatars(_game, this, _playerID, _cam, _input, _side);
 	}
 
 }
