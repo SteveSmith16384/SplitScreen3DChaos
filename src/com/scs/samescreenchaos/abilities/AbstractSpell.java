@@ -18,8 +18,8 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 	}
 
 
+	@Override
 	public boolean activate(float interpol) {
-		//return cast(interpol);
 		if (this.player.resources < cost) {
 			Settings.p("Not enough resources");
 			return false;
@@ -28,14 +28,23 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 	}
 	
 	
+	@Override
 	public boolean process(float interpol) {
 		return false;
 	}
 
 	
+	@Override
 	public String getHudText() {
 		return name;
 	}
+	
+	
+	@Override
+	public boolean onlyActivateOnClick() {
+		return true;
+	}
+
 
 	
 }

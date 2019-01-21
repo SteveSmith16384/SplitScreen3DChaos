@@ -7,41 +7,46 @@ import java.util.List;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
-import com.scs.multiplayervoxelworld.blocks.ChangingBlock;
-import com.scs.multiplayervoxelworld.blocks.LeavesBlock;
-import com.scs.multiplayervoxelworld.blocks.WoodBlock;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
+import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
 import com.scs.multiplayervoxelworld.input.IInputDevice;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
-import com.scs.samescreenchaos.blocks.LavaBlock;
+import com.scs.samescreenchaos.blocks.ChangingBlock;
+import com.scs.samescreenchaos.blocks.LeavesBlock;
+import com.scs.samescreenchaos.blocks.WoodBlock;
 import com.scs.samescreenchaos.entities.WizardAvatar;
 
 import mygame.util.Vector3Int;
 import ssmith.lang.NumberFunctions;
+import ssmith.util.RealtimeInterval;
 
 public class ChaosGameModule extends AbstractGameModule {
 
 	private static final float BLOCK_SIZE = .1f;
 	private static final int MAP_SIZE = 20;
 	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
-	
+
 	private List<ChangingBlock> changingBlocks;
 	private VoxelTerrainEntity vte;
-	
+	private RealtimeInterval addBlockInt = new RealtimeInterval(10);
+
 	public ChaosGameModule(MultiplayerVoxelWorldMain _game) {
 		super(_game);
-		
+
 		changingBlocks = new LinkedList<>();
 	}
 
-	
+
 	@Override
 	public void setupLevel() {
+		FloorOrCeiling floor = new FloorOrCeiling(game, this, 0, 0, 0, MAP_SIZE, 1f, MAP_SIZE, "Textures/blocks/lavarock.jpg");
+		this.addEntity(floor);
+		
 		vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
 		this.addEntity(vte);
 
-		vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(MAP_SIZE_BLOCKS, 1, MAP_SIZE_BLOCKS), LavaBlock.class);
+		//vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(MAP_SIZE_BLOCKS, 1, MAP_SIZE_BLOCKS), LavaBlock.class);
 		//vte.addRectRange_Blocks(BlockCodes.SAND, new Vector3Int(10, 1, 10), new Vector3Int(1, 1, 1));
 
 		for (int i=0 ; i<2 ; i++) {
@@ -51,16 +56,20 @@ public class ChaosGameModule extends AbstractGameModule {
 
 	}
 
-	
+
 	@Override
 	public void update(float tpfSecs) {
 		super.update(tpfSecs);
-		
+
 		if (!this.changingBlocks.isEmpty()) {
-			ChangingBlock block = this.changingBlocks.get(0);
-			vte.blocks.setBlock(block.pos, block.newClass);
+			if (addBlockInt.hitInterval()) {
+				ChangingBlock block = this.changingBlocks.remove(0);
+				vte.blocks.setBlock(block.pos, block.newClass);
+				//Settings.p("adding block");
+			}
 		}
 	}
+
 
 	@Override
 	public Vector3f getPlayerStartPos(int id) {
@@ -100,8 +109,8 @@ public class ChaosGameModule extends AbstractGameModule {
 			}
 		}
 	}
-	
-	
+
+
 	private void addChangingBlock(ChangingBlock block) {
 		vte.blocks.setBlock(block.pos, block.getClass());
 		this.changingBlocks.add(block);

@@ -9,7 +9,7 @@ import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 
-public class Spellbook extends AbstractAbility {
+public class Spellbook extends AbstractAbility { // todo - delete this
 
 	private static final float SPELL_INTERVAL = 5;
 	

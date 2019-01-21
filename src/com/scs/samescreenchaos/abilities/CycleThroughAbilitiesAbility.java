@@ -16,8 +16,9 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	public CycleThroughAbilitiesAbility(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar p) {
 		super(_game, module, p);
 		
-		abilities.add(new AddBlockAbility(game, module, p));
-		abilities.add(new RemoveBlockAbility(game, module, p));
+		abilities.add(new SummonGolemSpell(game, module, p));
+		abilities.add(new WallSpell(game, module, p));
+		abilities.add(new TeleportSpell(game, module, p));
 	}
 
 
