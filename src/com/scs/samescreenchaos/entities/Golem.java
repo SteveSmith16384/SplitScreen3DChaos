@@ -30,6 +30,8 @@ public class Golem extends AbstractPhysicalEntity implements IProcessable, IDama
 	private boolean dead = false;
 	private long removeAt;
 
+	private int side;
+	
 	// AI
 	private AIMode aiMode = AIMode.WalkToCrystal;
 	private Vector3f targetPos;
@@ -37,11 +39,12 @@ public class Golem extends AbstractPhysicalEntity implements IProcessable, IDama
 	private RealtimeInterval checkPosInterval = new RealtimeInterval(2000);
 	private Vector3f prevPos = new Vector3f();
 
-	public Golem(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, Vector3f _targetPos) {
+	public Golem(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, int _side) {
 		super(_game, _module, "Golem");
 
-		targetPos = _targetPos;
-
+		//todo targetPos = _targetPos;
+		side = _side;
+		
 		model = new GolemModel(game.getAssetManager());
 		this.getMainNode().attachChild(model.getModel());
 		this.getMainNode().setLocalTranslation(startPos);

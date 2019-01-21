@@ -7,15 +7,17 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
+import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
+import com.scs.samescreenchaos.entities.Golem;
 
-public class TeleportSpell extends AbstractSpell {
+public class SummonGolemSpell extends AbstractAbility {
 
-	public TeleportSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar p) {
-		super(_game, module, p, "Teleport", 1);
+	public SummonGolemSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar p) {
+		super(_game, module, p);
 	}
 
 
@@ -44,8 +46,12 @@ public class TeleportSpell extends AbstractSpell {
 				if (ape instanceof VoxelTerrainEntity) {
 					VoxelTerrainEntity vte = (VoxelTerrainEntity)ape;
 					Vector3f position = result.getContactPoint();
-					player.playerControl.warp(position);
-					return true;
+					//if (position.y == 1f) { // Must be on floor
+						//Vector3Int blockPosition = blocks.getPointedBlockLocation(position, true);
+						Golem turret = new Golem(game, module, position, this.player.getSide());
+						//player.resources -= Settings.TURRET_COST;
+						return true;
+					//}
 				} else {
 					Settings.p(ape + " selected");
 				}
@@ -60,5 +66,10 @@ public class TeleportSpell extends AbstractSpell {
 		return true;
 	}
 
+
+	@Override
+	public String getHudText() {
+		return "[SummonGolemSpell]";
+	}
 
 }

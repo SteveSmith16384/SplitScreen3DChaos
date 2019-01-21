@@ -1,96 +1,117 @@
 package com.scs.samescreenchaos;
 
 import java.awt.Point;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
-import com.scs.multiplayervoxelworld.blocks.GrassBlock;
+import com.scs.multiplayervoxelworld.blocks.ChangingBlock;
 import com.scs.multiplayervoxelworld.blocks.LeavesBlock;
-import com.scs.multiplayervoxelworld.blocks.StoneBlock;
 import com.scs.multiplayervoxelworld.blocks.WoodBlock;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
 import com.scs.multiplayervoxelworld.input.IInputDevice;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
-import com.scs.samescreenchaos.entities.WizardsPlayersAvatars;
+import com.scs.samescreenchaos.blocks.LavaBlock;
+import com.scs.samescreenchaos.entities.WizardAvatar;
 
 import mygame.util.Vector3Int;
 import ssmith.lang.NumberFunctions;
 
 public class ChaosGameModule extends AbstractGameModule {
 
-	private static final int MAP_SIZE = 100;
-
-	private enum Phase {Waiting, Attack};
-
-	private Vector3f CRYSTAL_POS = new Vector3f(MAP_SIZE/2, 2, MAP_SIZE/2);
-
-	private long nextPhaseInterval;
+	private static final float BLOCK_SIZE = .1f;
+	private static final int MAP_SIZE = 20;
+	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
+	
+	private List<ChangingBlock> changingBlocks;
+	private VoxelTerrainEntity vte;
 	
 	public ChaosGameModule(MultiplayerVoxelWorldMain _game) {
 		super(_game);
+		
+		changingBlocks = new LinkedList<>();
 	}
 
 	
 	@Override
 	public void setupLevel() {
-		VoxelTerrainEntity vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(200, 20, 200), 16, 1, 1);
+		vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
 		this.addEntity(vte);
 
-		vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(100, 1, 100), GrassBlock.class);
+		vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(MAP_SIZE_BLOCKS, 1, MAP_SIZE_BLOCKS), LavaBlock.class);
 		//vte.addRectRange_Blocks(BlockCodes.SAND, new Vector3Int(10, 1, 10), new Vector3Int(1, 1, 1));
-		for (int i=0 ; i<20 ; i++) {
-			Point p = this.getRandomBlockPos();
-			vte.addRectRange_Blocks(new Vector3Int(p.x, 1, p.y), new Vector3Int(2, 1, 2), StoneBlock.class);
-		}
-		for (int i=0 ; i<10 ; i++) {
+
+		for (int i=0 ; i<2 ; i++) {
 			Point p = this.getRandomBlockPos();
 			this.createTree(vte, new Vector3f(p.x, 1, p.y));
 		}
 
 	}
 
+	
+	@Override
+	public void update(float tpfSecs) {
+		super.update(tpfSecs);
+		
+		if (!this.changingBlocks.isEmpty()) {
+			ChangingBlock block = this.changingBlocks.get(0);
+			vte.blocks.setBlock(block.pos, block.newClass);
+		}
+	}
 
 	@Override
 	public Vector3f getPlayerStartPos(int id) {
-		return new Vector3f(MAP_SIZE/2-3, 2, MAP_SIZE/2-3);
+		return new Vector3f(MAP_SIZE/2-3, 2, MAP_SIZE/2-3); // todo
 	}
 
 
 	private Point getRandomBlockPos() {
-		int x = NumberFunctions.rnd(1, MAP_SIZE-2);
-		int z = NumberFunctions.rnd(1, MAP_SIZE-2);
+		int x = NumberFunctions.rnd(1, MAP_SIZE_BLOCKS-2);
+		int z = NumberFunctions.rnd(1, MAP_SIZE_BLOCKS-2);
 		return new Point(x, z) ;
 	}
 
 
-	private void createTree(VoxelTerrainEntity vte, Vector3f pos) {
-		int height = NumberFunctions.rnd(4,  7);
-		int leavesStartHeight = NumberFunctions.rnd(3,  height);
-		int maxRad = NumberFunctions.rnd(1,  4);
+	private void createTree(VoxelTerrainEntity vte, Vector3f treePos) {
+		int height = NumberFunctions.rnd(10,  20);
+		int leavesStartHeight = NumberFunctions.rnd(5,  height-2);
+		int maxRad = NumberFunctions.rnd(1,  8);
 
 		// Trunk
 		for (int y=0 ; y<height ; y++) {
-			vte.blocks.setBlock(new Vector3Int(pos.x, pos.y+y, pos.z), WoodBlock.class);
+			Vector3Int pos = new Vector3Int(treePos.x, treePos.y+y, treePos.z);
+			ChangingBlock block = new ChangingBlock(WoodBlock.class, pos);
+			addChangingBlock(block);
 		}
 
 		for (int y=leavesStartHeight ; y<height ; y++) {
-			for (int x=(int)pos.x-maxRad ; x<=pos.x+maxRad ; x++) {
-				for (int z=(int)pos.z-maxRad ; z<=pos.z+maxRad ; z++) {
+			for (int x=(int)treePos.x-maxRad ; x<=treePos.x+maxRad ; x++) {
+				for (int z=(int)treePos.z-maxRad ; z<=treePos.z+maxRad ; z++) {
 					if (NumberFunctions.rnd(1, 3) == 1) {
-						vte.blocks.setBlock(new Vector3Int(x, pos.y+y,z), LeavesBlock.class);
+						Vector3Int pos = new Vector3Int(x, treePos.y+y,z);
+						ChangingBlock block = new ChangingBlock(LeavesBlock.class, pos);
+						addChangingBlock(block);
+						//vte.blocks.setBlock(new Vector3Int(x, treePos.y+y,z), LeavesBlock.class);
 					}
 				}
 			}
 		}
+	}
+	
+	
+	private void addChangingBlock(ChangingBlock block) {
+		vte.blocks.setBlock(block.pos, block.getClass());
+		this.changingBlocks.add(block);
 	}
 
 
 	@Override
 	protected AbstractPlayersAvatar getPlayersAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID,
 			Camera _cam, IInputDevice _input, int _side) {
-		return new WizardsPlayersAvatars(_game, this, _playerID, _cam, _input, _side);
+		return new WizardAvatar(_game, this, _playerID, _cam, _input, _side);
 	}
 
 }

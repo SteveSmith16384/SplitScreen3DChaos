@@ -57,8 +57,7 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 
 	@Override
 	public AbstractGameModule getGameModule() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ChaosGameModule(this);
 	}
 
 }
