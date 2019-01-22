@@ -9,7 +9,7 @@ import com.scs.multiplayervoxelworld.abilities.AbstractAbility;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 
-public class Spellbook extends AbstractAbility { // todo - delete this
+public class Spellbook extends AbstractAbility { // todo - use this?
 
 	private static final float SPELL_INTERVAL = 5;
 	
@@ -25,20 +25,17 @@ public class Spellbook extends AbstractAbility { // todo - delete this
 
 	
 	@Override
-	public boolean process(float interpol) {
-		if (interpol > 1) {
-			Settings.p("interpol= " + interpol);			
-		}
-		timeSinceLastCast += interpol;
-		Settings.p("Too soon: " + timeSinceLastCast);
+	public boolean process(float tpfSecs) {
+		timeSinceLastCast += tpfSecs;
+		//Settings.p("Too soon: " + timeSinceLastCast);
 		return false;
 	}
 
 	
 	@Override
-	public boolean activate(float interpol) {
+	public boolean activate(float tpfSecs) {
 		if (timeSinceLastCast > SPELL_INTERVAL) {
-			if (currentSpell.activate(interpol)) {
+			if (currentSpell.activate(tpfSecs)) {
 				timeSinceLastCast = 0;
 				return true;
 			}

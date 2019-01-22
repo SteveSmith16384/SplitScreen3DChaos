@@ -7,13 +7,13 @@ import com.jme3.scene.Geometry;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
-import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
+import com.scs.samescreenchaos.entities.WizardAvatar;
 import com.scs.samescreenchaos.entities.creatures.AbstractCreature;
 
 public class SubversionSpell extends AbstractSpell {
 
-	public SubversionSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar p) {
+	public SubversionSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "Subversion", 1);
 	}
 

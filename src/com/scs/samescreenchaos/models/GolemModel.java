@@ -10,16 +10,13 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.jme.JMEModelFunctions;
+import com.scs.samescreenchaos.entities.creatures.AbstractCreature;
 
 /**
  * Anims are idle, smash, walk
  *
  */
-public class GolemModel {
-
-	public static final int ANIM_IDLE = 0;
-	public static final int ANIM_WALK = 1;
-	public static final int ANIM_ATTACK = 2;
+public class GolemModel implements ICreatureModel {
 
 	public static final float MODEL_WIDTH = 0.4f;
 	public static final float MODEL_HEIGHT = 0.7f;
@@ -29,7 +26,7 @@ public class GolemModel {
 
 	// Anim
 	private AnimChannel channel;
-	private int currAnimCode = -1;
+	private AbstractCreature.Anim currAnimCode = AbstractCreature.Anim.None;
 
 	public GolemModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
@@ -54,23 +51,23 @@ public class GolemModel {
 
 
 
-	public void setAnim(int animCode) {
+	public void setAnim(AbstractCreature.Anim animCode) {
 		if (currAnimCode == animCode) {
 			return;			
 		}
 
 		switch (animCode) {
-		case ANIM_IDLE:
+		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("idle");
 			break;
 
-		case ANIM_WALK:
+		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("walk");
 			break;
 
-		case ANIM_ATTACK:
+		case Attack:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("smash");
 			break;

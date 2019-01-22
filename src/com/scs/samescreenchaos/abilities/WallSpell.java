@@ -8,10 +8,11 @@ import com.jme3.scene.Geometry;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
-import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
-import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
+import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
+import com.scs.samescreenchaos.ChaosGameModule;
 import com.scs.samescreenchaos.blocks.StoneBlock;
+import com.scs.samescreenchaos.entities.WizardAvatar;
 
 import mygame.util.Vector3Int;
 
@@ -19,14 +20,8 @@ public class WallSpell extends AbstractSpell {
 	
 	private static final int SIZE = 1;
 
-	public WallSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar p) {
+	public WallSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "WallSpell", 1);
-	}
-
-
-	@Override
-	public boolean process(float interpol) {
-		return false;
 	}
 
 
@@ -42,10 +37,10 @@ public class WallSpell extends AbstractSpell {
 			if (result.getDistance() > 1f) { // So we don't build a block on top of ourselves
 				Geometry g = result.getGeometry();
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-				if (ape instanceof VoxelTerrainEntity) {
-					VoxelTerrainEntity vte = (VoxelTerrainEntity)ape;
+				if (ape instanceof FloorOrCeiling) {
 					Vector3f position = result.getContactPoint();
-					vte.addRectRange_Actual(new Vector3Int(position), new Vector3Int(SIZE, SIZE, SIZE), StoneBlock.class);
+					ChaosGameModule m = (ChaosGameModule)module;
+					m.vte.addRectRange_Actual(new Vector3Int(position), new Vector3Int(SIZE, SIZE, SIZE), StoneBlock.class);
 					return true;
 				} else {
 					Settings.p(ape + " selected");
@@ -55,16 +50,5 @@ public class WallSpell extends AbstractSpell {
 		return false;
 	}
 
-
-	@Override
-	public boolean onlyActivateOnClick() {
-		return true;
-	}
-
-
-	@Override
-	public String getHudText() {
-		return "[SummonGolemSpell]";
-	}
 
 }

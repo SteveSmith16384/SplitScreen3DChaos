@@ -11,12 +11,12 @@ import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 import com.scs.samescreenchaos.entities.WizardAvatar;
-import com.scs.samescreenchaos.entities.creatures.Golem2;
+import com.scs.samescreenchaos.entities.creatures.AbstractCreature;
 
-public class SummonGolemSpell extends AbstractSpell {
+public class CommandCreatureSpell extends AbstractSpell {
 
-	public SummonGolemSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "SummonGolemSpell", 1);
+	public CommandCreatureSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+		super(_game, module, p, "CommandCreatureSpell", 0);
 	}
 
 
@@ -32,14 +32,28 @@ public class SummonGolemSpell extends AbstractSpell {
 			if (result.getDistance() > 1f) { // So we don't build a block on top of ourselves
 				Geometry g = result.getGeometry();
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-				if (ape instanceof FloorOrCeiling) {
+				if (ape instanceof AbstractCreature) {
+					WizardAvatar w = (WizardAvatar)this.player;
+					AbstractCreature c = (AbstractCreature)ape;
+					if (c.side == w.getSide()) {
+						w.selectedEntity = ape;
+						Settings.p(ape + " selected");
+					} else {
+						if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
+							AbstractCreature owned = (AbstractCreature)w.selectedEntity;
+							owned.setTarget(ape);
+						}
+					}
+				} else if (ape instanceof FloorOrCeiling) {
 					Vector3f position = result.getContactPoint();
-					Golem2 golem = new Golem2(game, module, position, this.player.getSide());
-					module.addEntity(golem);
-					//player.resources -= Settings.TURRET_COST;
+					WizardAvatar w = (WizardAvatar)this.player;
+					if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
+						AbstractCreature c = (AbstractCreature)w.selectedEntity;
+						c.setTarget(position);
+					}
 					return true;
 				} else {
-					Settings.p(ape + " selected");
+					//Settings.p(ape + " selected");
 				}
 			}
 		}

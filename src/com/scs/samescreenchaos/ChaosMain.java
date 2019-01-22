@@ -21,7 +21,7 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 			} catch (BackingStoreException e) {
 				e.printStackTrace();
 			}
-			settings.setUseJoysticks(true);
+			//settings.setUseJoysticks(true);
 			settings.setTitle(Settings.NAME + " (v" + Settings.VERSION + ")");
 			if (Settings.RELEASE_MODE) {
 				//todo settings.setSettingsDialogImage("Textures/text/multiplayerarena.png");
@@ -52,6 +52,7 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 
 
 	public ChaosMain() {
+		super();
 	}
 
 
@@ -59,5 +60,6 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 	public AbstractGameModule getGameModule() {
 		return new ChaosGameModule(this);
 	}
+
 
 }

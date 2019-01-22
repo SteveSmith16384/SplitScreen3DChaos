@@ -28,7 +28,7 @@ public class ChaosGameModule extends AbstractGameModule {
 	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
 
 	private List<ChangingBlock> changingBlocks;
-	private VoxelTerrainEntity vte;
+	public VoxelTerrainEntity vte;
 	private RealtimeInterval addBlockInt = new RealtimeInterval(10);
 
 	public ChaosGameModule(MultiplayerVoxelWorldMain _game) {
@@ -122,5 +122,7 @@ public class ChaosGameModule extends AbstractGameModule {
 			Camera _cam, IInputDevice _input, int _side) {
 		return new WizardAvatar(_game, this, _playerID, _cam, _input, _side);
 	}
+
+
 
 }

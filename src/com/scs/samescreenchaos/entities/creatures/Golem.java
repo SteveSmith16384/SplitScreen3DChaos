@@ -9,11 +9,12 @@ import com.scs.multiplayervoxelworld.components.IProcessable;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.jme.JMEAngleFunctions;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
+import com.scs.samescreenchaos.entities.creatures.AbstractCreature.Anim;
 import com.scs.samescreenchaos.models.GolemModel;
 
 import ssmith.util.RealtimeInterval;
 
-public class Golem extends AbstractPhysicalEntity implements IProcessable, IDamagable {
+public class Golem extends AbstractPhysicalEntity implements IProcessable, IDamagable { // todo - delete
 
 	private static final float TURN_SPEED = 1f;
 
@@ -66,12 +67,12 @@ public class Golem extends AbstractPhysicalEntity implements IProcessable, IDama
 		if (!dead) {
 			switch (aiMode) {
 			case AwaitingCommand:
-				model.setAnim(GolemModel.ANIM_IDLE);
+				model.setAnim(Anim.Idle);
 				break;
 
 			case WalkToPoint:
 			case AttackCreature:
-				model.setAnim(GolemModel.ANIM_WALK);
+				model.setAnim(Anim.Walk);
 				if (aiMode == AIMode.AttackCreature) {
 					this.targetPos = this.target.getLocation();
 				}
@@ -167,7 +168,7 @@ public class Golem extends AbstractPhysicalEntity implements IProcessable, IDama
 		if (this.health <= 0) {
 			Settings.p(this + " killed");
 			dead = true;
-			model.setAnim(GolemModel.ANIM_IDLE);
+			model.setAnim(Anim.Died);
 			removeAt = System.currentTimeMillis() + 2000;
 		}
 
