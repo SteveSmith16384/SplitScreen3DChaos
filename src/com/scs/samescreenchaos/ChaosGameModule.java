@@ -10,12 +10,14 @@ import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
+import com.scs.multiplayervoxelworld.hud.IHud;
 import com.scs.multiplayervoxelworld.input.IInputDevice;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 import com.scs.samescreenchaos.blocks.ChangingBlock;
 import com.scs.samescreenchaos.blocks.LeavesBlock;
 import com.scs.samescreenchaos.blocks.WoodBlock;
 import com.scs.samescreenchaos.entities.WizardAvatar;
+import com.scs.samescreenchaos.hud.ChaosHUD;
 
 import mygame.util.Vector3Int;
 import ssmith.lang.NumberFunctions;
@@ -121,6 +123,12 @@ public class ChaosGameModule extends AbstractGameModule {
 	protected AbstractPlayersAvatar getPlayersAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID,
 			Camera _cam, IInputDevice _input, int _side) {
 		return new WizardAvatar(_game, this, _playerID, _cam, _input, _side);
+	}
+
+
+	@Override
+	protected IHud generateHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
+		return new ChaosHUD(_game, _module, _player, xBL, yBL, w, h, _cam);
 	}
 
 

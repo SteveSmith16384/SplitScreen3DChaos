@@ -16,6 +16,7 @@ import com.scs.samescreenchaos.models.WizardModel;
 public class WizardAvatar extends AbstractPlayersAvatar {
 	
 	public AbstractPhysicalEntity selectedEntity; //e.g. selected creature
+	public float mana;
 	
 	public WizardAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
 		super(_game, _module, _playerID, _cam, _input, _side);

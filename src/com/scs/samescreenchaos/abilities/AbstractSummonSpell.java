@@ -9,14 +9,14 @@ import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
-import com.scs.multiplayervoxelworld.entities.VoxelTerrainEntity;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 import com.scs.samescreenchaos.entities.WizardAvatar;
+import com.scs.samescreenchaos.entities.creatures.AbstractCreature;
 
-public class TeleportSpell extends AbstractSpell {
+public abstract class AbstractSummonSpell extends AbstractSpell {
 
-	public TeleportSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Teleport", 1);
+	public AbstractSummonSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p, String name) {
+		super(_game, module, p, name, 1);
 	}
 
 
@@ -34,7 +34,10 @@ public class TeleportSpell extends AbstractSpell {
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 				if (ape instanceof FloorOrCeiling) {
 					Vector3f position = result.getContactPoint();
-					player.playerControl.warp(position);
+					position.y = 20f; // Drop from sky
+					AbstractCreature c = this.createCreature(position);
+					module.addEntity(c);
+					//player.resources -= Settings.TURRET_COST;
 					return true;
 				} else {
 					Settings.p(ape + " selected");
@@ -45,5 +48,5 @@ public class TeleportSpell extends AbstractSpell {
 	}
 
 
-
+	protected abstract AbstractCreature createCreature(Vector3f pos);
 }

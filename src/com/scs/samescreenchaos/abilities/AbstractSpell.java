@@ -22,11 +22,16 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 
 	@Override
 	public boolean activate(float interpol) {
-		if (this.player.resources < cost) {
-			Settings.p("Not enough resources");
+		if (this.getWizard().mana < cost) {
+			Settings.p("Not enough mana");
 			return false;
 		}
 		return true;
+	}
+	
+	
+	protected WizardAvatar getWizard() {
+		return (WizardAvatar)this.player;
 	}
 	
 	
