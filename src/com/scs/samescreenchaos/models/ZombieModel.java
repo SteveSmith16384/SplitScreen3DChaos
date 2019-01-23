@@ -70,7 +70,7 @@ public class ZombieModel implements ICreatureModel {
 			break;
 
 		case Died:
-			channel.setLoopMode(LoopMode.Loop);
+			channel.setLoopMode(LoopMode.DontLoop);
 			channel.setAnim("dead1");
 			break;
 

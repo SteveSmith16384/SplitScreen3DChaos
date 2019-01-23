@@ -15,7 +15,7 @@ public class SummonGiantSpiderSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		GiantSpider golem = new GiantSpider(game, module, pos, this.player.getSide());
+		GiantSpider golem = new GiantSpider(game, module, pos, (WizardAvatar)this.player);
 		return golem;
 	}
 

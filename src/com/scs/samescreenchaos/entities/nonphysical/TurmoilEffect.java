@@ -22,6 +22,8 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 
 	public TurmoilEffect(MultiplayerVoxelWorldMain _game, AbstractGameModule _module) {
 		super(_game, _module, "Turmoil");
+		
+		this.module.addEntity(this);
 	}
 
 

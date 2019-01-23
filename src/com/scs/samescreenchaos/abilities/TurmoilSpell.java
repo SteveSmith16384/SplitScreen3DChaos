@@ -12,7 +12,7 @@ public class TurmoilSpell extends AbstractSpell {
 	}
 
 	public boolean cast() {
-		TurmoilEffect te = new TurmoilEffect(game, module);
+		new TurmoilEffect(game, module);
 		return true;
 	}
 }

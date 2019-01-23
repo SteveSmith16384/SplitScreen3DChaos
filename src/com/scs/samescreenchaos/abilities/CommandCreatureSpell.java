@@ -7,10 +7,10 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
-import com.scs.multiplayervoxelworld.components.ITargetByAI;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
+import com.scs.samescreenchaos.components.ITargetByAI;
 import com.scs.samescreenchaos.entities.WizardAvatar;
 import com.scs.samescreenchaos.entities.creatures.AbstractCreature;
 
@@ -36,7 +36,7 @@ public class CommandCreatureSpell extends AbstractSpell {
 				if (ape instanceof ITargetByAI) {
 					WizardAvatar w = (WizardAvatar)this.player;
 					AbstractCreature c = (AbstractCreature)ape;
-					if (c.side == w.getSide()) {
+					if (c.getOwner() == player) {
 						w.selectedEntity = ape;
 						Settings.p(ape + " selected");
 					} else {

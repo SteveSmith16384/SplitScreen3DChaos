@@ -34,7 +34,7 @@ public class SummonGolemSpell extends AbstractSpell { // todo - extends Abstract
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 				if (ape instanceof FloorOrCeiling) {
 					Vector3f position = result.getContactPoint();
-					Golem2 golem = new Golem2(game, module, position, this.player.getSide());
+					Golem2 golem = new Golem2(game, module, position, (WizardAvatar)this.player);
 					module.addEntity(golem);
 					return true;
 				} else {

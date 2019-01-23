@@ -74,7 +74,7 @@ public class GolemModel implements ICreatureModel {
 
 		case Died:
 			// No die anim
-			//channel.setLoopMode(LoopMode.Loop);
+			//channel.setLoopMode(LoopMode.DontLoop);
 			//channel.setAnim("smash");#
 			
 			break;

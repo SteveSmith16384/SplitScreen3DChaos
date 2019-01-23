@@ -15,7 +15,7 @@ public class SummonZombieSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		Zombie golem = new Zombie(game, module, pos, this.player.getSide());
+		Zombie golem = new Zombie(game, module, pos, (WizardAvatar)this.player);
 		return golem;
 	}
 

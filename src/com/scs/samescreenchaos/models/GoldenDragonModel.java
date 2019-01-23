@@ -70,7 +70,7 @@ public class GoldenDragonModel implements ICreatureModel {
 			break;
 
 		case Died:
-			channel.setLoopMode(LoopMode.Loop);
+			channel.setLoopMode(LoopMode.DontLoop);
 			channel.setAnim("die");
 			break;
 

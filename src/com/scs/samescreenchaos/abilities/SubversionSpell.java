@@ -31,8 +31,8 @@ public class SubversionSpell extends AbstractSpell {
 			AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 			if (ape instanceof AbstractCreature) {
 				AbstractCreature creature = (AbstractCreature)ape;
-				if (creature.side != player.getSide()) {
-					creature.side = player.getSide();
+				if (creature.getOwner() != player) {
+					creature.setOwner((WizardAvatar)player);
 					return true;
 				}
 			} else {

@@ -1,0 +1,4 @@
+COMBAT
+
+When creatures collide, they will set each other as targets.  Every interval, they will cause damage to each other.
+

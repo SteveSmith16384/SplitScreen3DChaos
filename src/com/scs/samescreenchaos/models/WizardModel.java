@@ -79,7 +79,7 @@ public class WizardModel {
 			break;
 
 		case ANIM_DIED:
-			channel.setLoopMode(LoopMode.Loop);
+			channel.setLoopMode(LoopMode.DontLoop);
 			channel.setAnim("Die");
 			break;
 
