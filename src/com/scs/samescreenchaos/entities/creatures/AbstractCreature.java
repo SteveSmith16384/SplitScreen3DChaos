@@ -7,15 +7,15 @@ import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.components.IDamagable;
 import com.scs.multiplayervoxelworld.components.INotifiedOfCollision;
 import com.scs.multiplayervoxelworld.components.IProcessable;
+import com.scs.multiplayervoxelworld.components.ITargetByAI;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.jme.JMEAngleFunctions;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
-import com.scs.samescreenchaos.models.GolemModel;
 import com.scs.samescreenchaos.models.ICreatureModel;
 
 import ssmith.util.RealtimeInterval;
 
-public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision {
+public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, ITargetByAI {
 
 	private static final float TURN_SPEED = 1f;
 
@@ -23,7 +23,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private static final float WEIGHT = 1f;
 
 	public enum Anim {None, Idle, Walk, Attack, Died}; // AvoidBlockage 
-	private enum AIMode {AwaitingCommand, WalkToPoint, AttackCreature}; // AvoidBlockage 
+	private enum AIMode {AwaitingCommand, WalkToPoint, WalkToCreature, Attacking}; // AvoidBlockage 
 
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
@@ -38,7 +38,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	// AI
 	private AIMode aiMode = AIMode.AwaitingCommand;
 	private Vector3f targetPos;
-	private AbstractPhysicalEntity physicalTarget;
+	private ITargetByAI physicalTarget;
 	private float avoidUntil = 0;
 	private RealtimeInterval checkPosInterval = new RealtimeInterval(2000);
 	private Vector3f prevPos = new Vector3f();
@@ -49,7 +49,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		side = _side;
 		speed = _speed;
 
-		model = getCreatureModel(); new GolemModel(game.getAssetManager());
+		model = getCreatureModel(); //new GolemModel(game.getAssetManager());
 		this.getMainNode().attachChild(model.getModel());
 		this.getMainNode().setLocalTranslation(startPos);
 
@@ -58,12 +58,12 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		this.getMainNode().addControl(playerControl);
 
 		playerControl.getPhysicsRigidBody().setUserObject(this);
-		
+
 		model.setAnim(Anim.Idle);
 
 	}
-	
-	
+
+
 	protected abstract ICreatureModel getCreatureModel();
 
 
@@ -72,6 +72,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		if (module.isGameOver()) {
 			return;
 		}
+		
 		if (!dead) {
 			switch (aiMode) {
 			case AwaitingCommand:
@@ -79,10 +80,15 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				break;
 
 			case WalkToPoint:
-			case AttackCreature:
+			case WalkToCreature:
 				model.setAnim(Anim.Walk);
-				if (aiMode == AIMode.AttackCreature) {
-					this.targetPos = this.physicalTarget.getLocation();
+				if (aiMode == AIMode.WalkToCreature) {
+					if (physicalTarget != null) {
+						this.targetPos = this.physicalTarget.getLocation();
+						if (!physicalTarget.isAlive()) {
+							physicalTarget = null;
+						}
+					}
 				}
 
 				if (checkPosInterval.hitInterval()) {
@@ -104,9 +110,12 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				}
 				this.moveFwds();
 				break;
+
+			case Attacking:
+				model.setAnim(Anim.Attack);
 				
-				default:
-					throw new RuntimeException("todo");
+			default:
+				throw new RuntimeException("todo");
 			}
 		} else {
 			if (this.removeAt < System.currentTimeMillis()) {
@@ -181,9 +190,9 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		}
 
 	}
-	
-	
-	public void setTarget(AbstractPhysicalEntity t) {
+
+
+	public void setTarget(ITargetByAI t) {
 		this.physicalTarget = t;
 	}
 
@@ -195,13 +204,24 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 
 	@Override
+	public void setLocation(Vector3f pos) {
+		this.playerControl.warp(pos);
+	}
+
+
+	@Override
 	public void notifiedOfCollision(AbstractPhysicalEntity other) {
-		if (other instanceof AbstractCreature) {
-			AbstractCreature co = (AbstractCreature)other;
-			if (this.side != co.side) {
-				this.setTarget(other);
+		if (other instanceof ITargetByAI) {
+			ITargetByAI co = (ITargetByAI)other;
+			if (this.side != co.getSide()) {
+				this.setTarget(co);
+				this.aiMode = AIMode.Attacking;
 			}
 		}
 	}
 
+	
+	public boolean isAlive() {
+		return !dead;
+	}
 }

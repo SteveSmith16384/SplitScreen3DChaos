@@ -19,7 +19,7 @@ public class SubversionSpell extends AbstractSpell {
 
 
 	@Override
-	public boolean activate(float interpol) {
+	public boolean cast() {
 		Ray ray = new Ray(this.player.getCamera().getLocation(), this.player.getCamera().getDirection());
 
 		CollisionResults results = new CollisionResults();

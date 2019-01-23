@@ -72,6 +72,13 @@ public class GolemModel implements ICreatureModel {
 			channel.setAnim("smash");
 			break;
 
+		case Died:
+			// No die anim
+			//channel.setLoopMode(LoopMode.Loop);
+			//channel.setAnim("smash");#
+			
+			break;
+
 		default:
 			Settings.pe(this.getClass().getSimpleName() + ": Unable to show anim " + animCode);
 		}

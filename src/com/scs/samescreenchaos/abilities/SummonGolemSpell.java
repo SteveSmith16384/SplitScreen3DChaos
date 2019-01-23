@@ -13,7 +13,7 @@ import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 import com.scs.samescreenchaos.entities.WizardAvatar;
 import com.scs.samescreenchaos.entities.creatures.Golem2;
 
-public class SummonGolemSpell extends AbstractSpell {
+public class SummonGolemSpell extends AbstractSpell { // todo - extends AbstractSummon
 
 	public SummonGolemSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "SummonGolemSpell", 1);
@@ -21,7 +21,7 @@ public class SummonGolemSpell extends AbstractSpell {
 
 
 	@Override
-	public boolean activate(float interpol) {
+	public boolean cast() {
 		Ray ray = new Ray(this.player.getCamera().getLocation(), this.player.getCamera().getDirection());
 
 		CollisionResults results = new CollisionResults();
@@ -36,7 +36,6 @@ public class SummonGolemSpell extends AbstractSpell {
 					Vector3f position = result.getContactPoint();
 					Golem2 golem = new Golem2(game, module, position, this.player.getSide());
 					module.addEntity(golem);
-					//player.resources -= Settings.TURRET_COST;
 					return true;
 				} else {
 					Settings.p(ape + " selected");

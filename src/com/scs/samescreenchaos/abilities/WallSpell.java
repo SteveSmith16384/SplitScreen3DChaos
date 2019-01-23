@@ -26,7 +26,7 @@ public class WallSpell extends AbstractSpell {
 
 
 	@Override
-	public boolean activate(float interpol) {
+	public boolean cast() {
 		Ray ray = new Ray(this.player.getCamera().getLocation(), this.player.getCamera().getDirection());
 
 		CollisionResults results = new CollisionResults();
@@ -34,7 +34,7 @@ public class WallSpell extends AbstractSpell {
 
 		CollisionResult result = results.getClosestCollision();
 		if (result != null) {
-			if (result.getDistance() > 1f) { // So we don't build a block on top of ourselves
+			if (result.getDistance() > SIZE) { // So we don't build a block on top of ourselves
 				Geometry g = result.getGeometry();
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 				if (ape instanceof FloorOrCeiling) {

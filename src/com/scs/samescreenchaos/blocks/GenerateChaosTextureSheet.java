@@ -22,7 +22,7 @@ public class GenerateChaosTextureSheet {
 
 	public GenerateChaosTextureSheet() throws IOException {
 		String[][] tiles = {
-				{"grass.jpg", "lavarock.jpg", "stone.png", "scarybark.jpg", "leaves.jpg"}, 
+				{"grass.jpg", "lavarock.jpg", "stone.png", "scarybark.jpg"}, 
 				{"road2.png", "sand.jpg"}
 		}; // Keep these in the same order!
 

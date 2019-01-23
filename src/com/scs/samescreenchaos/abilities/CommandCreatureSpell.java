@@ -7,6 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
+import com.scs.multiplayervoxelworld.components.ITargetByAI;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
@@ -21,7 +22,7 @@ public class CommandCreatureSpell extends AbstractSpell {
 
 
 	@Override
-	public boolean activate(float interpol) {
+	public boolean cast() {
 		Ray ray = new Ray(this.player.getCamera().getLocation(), this.player.getCamera().getDirection());
 
 		CollisionResults results = new CollisionResults();
@@ -32,7 +33,7 @@ public class CommandCreatureSpell extends AbstractSpell {
 			if (result.getDistance() > 1f) { // So we don't build a block on top of ourselves
 				Geometry g = result.getGeometry();
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-				if (ape instanceof AbstractCreature) {
+				if (ape instanceof ITargetByAI) {
 					WizardAvatar w = (WizardAvatar)this.player;
 					AbstractCreature c = (AbstractCreature)ape;
 					if (c.side == w.getSide()) {
@@ -41,7 +42,7 @@ public class CommandCreatureSpell extends AbstractSpell {
 					} else {
 						if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
 							AbstractCreature owned = (AbstractCreature)w.selectedEntity;
-							owned.setTarget(ape);
+							owned.setTarget((ITargetByAI)ape);
 						}
 					}
 				} else if (ape instanceof FloorOrCeiling) {

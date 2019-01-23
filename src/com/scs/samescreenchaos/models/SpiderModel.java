@@ -28,9 +28,9 @@ public class SpiderModel implements ICreatureModel {
 	public SpiderModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		Spatial model = assetManager.loadModel("Models/spider/Spider.blend");
+		model = assetManager.loadModel("Models/spider/Spider.blend");
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/spider/Spider.png");
-		model.setShadowMode(ShadowMode.CastAndReceive);
+		model.setShadowMode(ShadowMode.Cast);
 		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
 		JMEModelFunctions.scaleModelToWidth(model, MODEL_WIDTH);
 		JMEModelFunctions.moveYOriginTo(model, 0f);

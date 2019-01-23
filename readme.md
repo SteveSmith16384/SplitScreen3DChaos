@@ -1,4 +1,4 @@
-#Same Screen Chaos
+# Same Screen Chaos
 
 By Steve Smith - https://twitter.com/stephencsmith
 
@@ -6,7 +6,7 @@ By Steve Smith - https://twitter.com/stephencsmith
 Very early in development.  You can walk around a cast some spells.
 
 
-##CREDITS
+## Credits
 Design and programming by Steve Smith - https://twitter.com/stephencsmith/ 
 
 Source code licensed under MIT Licence.

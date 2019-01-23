@@ -13,6 +13,8 @@ import com.scs.multiplayervoxelworld.jme.JMEAngleFunctions;
 import com.scs.multiplayervoxelworld.jme.JMEModelFunctions;
 import com.scs.samescreenchaos.entities.creatures.AbstractCreature;
 
+// Animations: [hurt_l, attack1_l, idle, enter_side, hurt_head, run, hurt_b, attack1_r, walk2, attack2, attack3, hurt_r, dead1, dead2, hurt, walk, dead3]
+
 public class ZombieModel implements ICreatureModel {
 
 	public static final float MODEL_HEIGHT = 1.f;
@@ -27,9 +29,9 @@ public class ZombieModel implements ICreatureModel {
 	public ZombieModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		Spatial model = assetManager.loadModel("Models/new_thin_zombie/new_thin_zombie.blend");
+		model = assetManager.loadModel("Models/new_thin_zombie/new_thin_zombie.blend");
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/new_thin_zombie/new_thin_zombie.png");
-		model.setShadowMode(ShadowMode.CastAndReceive);
+		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
@@ -54,17 +56,22 @@ public class ZombieModel implements ICreatureModel {
 		switch (animCode) {
 		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("SpiderStand");
+			channel.setAnim("idle");
 			break;
 
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("SpiderWalk");
+			channel.setAnim("walk2");
 			break;
 
 		case Attack:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("SpiderWalk"); // No attack anim
+			channel.setAnim("attack1_r");
+			break;
+
+		case Died:
+			channel.setLoopMode(LoopMode.Loop);
+			channel.setAnim("dead1");
 			break;
 
 		default:

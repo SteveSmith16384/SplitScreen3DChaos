@@ -3,12 +3,8 @@ package com.scs.samescreenchaos.hud;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.atr.jme.font.TrueTypeFont;
-import com.atr.jme.font.TrueTypeMesh;
-import com.atr.jme.font.asset.TrueTypeKeyMesh;
-import com.atr.jme.font.shape.TrueTypeContainer;
-import com.atr.jme.font.util.StringContainer;
-import com.atr.jme.font.util.Style;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
@@ -25,6 +21,7 @@ import com.scs.multiplayervoxelworld.components.IEntity;
 import com.scs.multiplayervoxelworld.components.IProcessable;
 import com.scs.multiplayervoxelworld.components.IShowOnHUD;
 import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
+import com.scs.multiplayervoxelworld.gui.TextArea;
 import com.scs.multiplayervoxelworld.hud.IHud;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 
@@ -34,7 +31,7 @@ import ssmith.util.RealtimeInterval;
  * Positioning text = the co-ords of BitmapText are for the top-left of the first line of text, and they go down from there.
  * 
  */
-public class ChaosHUD extends Node implements IHud, IEntity, IProcessable { // todo - rename
+public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 	public float hud_width, hud_height;
 
@@ -49,8 +46,10 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable { // t
 	private ColorRGBA dam_box_col = new ColorRGBA(1, 0, 0, 0.0f);
 	private boolean process_damage_box;
 	private List<Picture> targetting_reticules = new ArrayList<>();
-	private TrueTypeContainer textArea; // For showing all other stats 
-
+	//private TrueTypeContainer textArea; // For showing all other stats 
+	private TextArea log_ta;
+	private BitmapText stats;
+	
 	public ChaosHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		super("HUD");
 
@@ -61,45 +60,27 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable { // t
 		hud_height = h;
 		cam = _cam;
 
+		BitmapFont guiFont_small = game.getAssetManager().loadFont("Interface/Fonts/Console.fnt");
+
 		super.setLocalTranslation(xBL, yBL, 0);
 
-		/*health = new BitmapText(font_small, false);
-		health.setLocalTranslation(10, hud_height-20, 0);
-		this.attachChild(health);
-		this.setHealth(100);*/
+		log_ta = new TextArea("log", guiFont_small, 6, "TEXT TEST_");
+		log_ta.setLocalTranslation(0, hud_height/2, 0);
+		this.attachChild(log_ta);
+
+		stats = new BitmapText(guiFont_small, false);
+		stats.setLocalTranslation(10, hud_height-20, 0);
+		this.attachChild(stats);
 		
-		TrueTypeKeyMesh ttkSmall = new TrueTypeKeyMesh("Fonts/ERASBD.TTF", Style.Bold, (int)30);
+		/*
+		TrueTypeKeyMesh ttkSmall = new TrueTypeKeyMesh("Fonts/ERASBD.TTF", Style.Bold, (int)10);
 		TrueTypeFont ttfSmall = (TrueTypeMesh)_game.getAssetManager().loadAsset(ttkSmall);
 		textArea = ttfSmall.getFormattedText(new StringContainer(ttfSmall, "KILL THE N00BS!"), ColorRGBA.Yellow);
 		textArea.setLocalTranslation(10, (int)(cam.getHeight()*1), 0);
 		this.attachChild(textArea);
+		*/
 
-/*
-		score = new BitmapText(font_small, false);
-		score.setLocalTranslation(10, hud_height-15, 0);
-		this.attachChild(score);
-		this.setScore(0);
 
-		abilityGun = new BitmapText(font_small, false);
-		abilityGun.setColor(ColorRGBA.Green);
-		abilityGun.setLocalTranslation(10, hud_height-30, 0);
-		this.attachChild(abilityGun);
-
-		abilityOther = new BitmapText(font_small, false);
-		abilityOther.setColor(ColorRGBA.Green);
-		abilityOther.setLocalTranslation(10, hud_height-45, 0);
-		this.attachChild(abilityOther);
-
-		accuracy = new BitmapText(font_small, false);
-		accuracy.setLocalTranslation(10, hud_height-75, 0);
-		this.attachChild(accuracy);
-
-		helpText = new BitmapText(font_small, false);
-		abilityOther.setColor(ColorRGBA.Red);
-		helpText.setText(GameModule.HELP_TEXT);
-		helpText.setLocalTranslation(10, hud_height-75, 0);
-		this.attachChild(helpText);
-*/
 		// Damage box
 		{
 			Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
@@ -202,39 +183,15 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable { // t
 		str.append(player.ability[0].getHudText() + "\n");
 		str.append(player.ability[1].getHudText() + "\n");
 		//todo str.append("Mana: " + player.resources + "\n");
-		this.textArea.setText(str.toString());
-		this.textArea.updateGeometry();
+		this.stats.setText(str.toString());
+		//this.textArea.updateGeometry();
 	}
 
 
 	public void log(String s) {
-		//this.log_ta.addLine(s);
+		this.log_ta.addLine(s);
 	}
 
-/*
-	public void setScore(float s) {
-		//this.score.setText("SCORE: " + (int)s);
-	}
-*/
-
-	/*public void setHealth(float h) {
-		if (!Settings.DEBUG_HUD) {
-			this.health.setText("HEALTH: " + (int)h);
-		} else {
-			this.health.setText("THIS IS PLAYER " + playerId);
-		}
-	}*/
-
-/*
-	public void setAbilityGunText(String s) {
-		this.abilityGun.setText(s);
-	}
-
-
-	public void setAbilityOtherText(String s) {
-		this.abilityOther.setText(s);
-	}
-*/
 
 	public void showDamageBox() {
 		process_damage_box = true;
@@ -273,13 +230,13 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable { // t
 		
 	}
 
-
+/*
 	@Override
 	public void markForRemoval() {
 		// TODO Auto-generated method stub
 		
 	}
-
+*/
 
 	@Override
 	public void actuallyRemove() {

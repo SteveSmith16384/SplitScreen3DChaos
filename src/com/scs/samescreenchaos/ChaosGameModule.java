@@ -14,7 +14,7 @@ import com.scs.multiplayervoxelworld.hud.IHud;
 import com.scs.multiplayervoxelworld.input.IInputDevice;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 import com.scs.samescreenchaos.blocks.ChangingBlock;
-import com.scs.samescreenchaos.blocks.LeavesBlock;
+import com.scs.samescreenchaos.blocks.GrassBlock;
 import com.scs.samescreenchaos.blocks.WoodBlock;
 import com.scs.samescreenchaos.entities.WizardAvatar;
 import com.scs.samescreenchaos.hud.ChaosHUD;
@@ -26,7 +26,7 @@ import ssmith.util.RealtimeInterval;
 public class ChaosGameModule extends AbstractGameModule {
 
 	private static final float BLOCK_SIZE = .1f;
-	private static final int MAP_SIZE = 20;
+	public static final int MAP_SIZE = 20;
 	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
 
 	private List<ChangingBlock> changingBlocks;
@@ -103,9 +103,8 @@ public class ChaosGameModule extends AbstractGameModule {
 				for (int z=(int)treePos.z-maxRad ; z<=treePos.z+maxRad ; z++) {
 					if (NumberFunctions.rnd(1, 3) == 1) {
 						Vector3Int pos = new Vector3Int(x, treePos.y+y,z);
-						ChangingBlock block = new ChangingBlock(LeavesBlock.class, pos);
+						ChangingBlock block = new ChangingBlock(GrassBlock.class, pos);
 						addChangingBlock(block);
-						//vte.blocks.setBlock(new Vector3Int(x, treePos.y+y,z), LeavesBlock.class);
 					}
 				}
 			}
