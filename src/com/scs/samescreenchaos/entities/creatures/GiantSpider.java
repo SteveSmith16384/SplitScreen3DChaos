@@ -10,12 +10,12 @@ import com.scs.samescreenchaos.models.SpiderModel;
 public class GiantSpider extends AbstractCreature {
 
 	public GiantSpider(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar owner) {
-		super(_game, _module, "GiantSpider", startPos, owner, 0.3f, 1, 1);
+		super(_game, _module, "GiantSpider", startPos, owner, 1f, 1, 1);
 	}
 
 	
 	@Override
-	protected ICreatureModel getCreatureModel() {
+	public ICreatureModel getCreatureModel() {
 		return new SpiderModel(game.getAssetManager());
 	}
 

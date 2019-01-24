@@ -20,13 +20,17 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 		abilities.add(new SummonGiantSpiderSpell(game, module, p));
 		abilities.add(new SummonZombieSpell(game, module, p));
 		abilities.add(new SummonGoldenDragonSpell(game, module, p));
+		abilities.add(new SummonGreenDragonSpell(game, module, p));
+		abilities.add(new SummonRedDragonSpell(game, module, p));
 		
 		abilities.add(new FireballSpell(game, module, p));
 		abilities.add(new WallSpell(game, module, p));
+		abilities.add(new WindSpell(game, module, p));
 		abilities.add(new TeleportSpell(game, module, p));
 		abilities.add(new CommandCreatureSpell(game, module, p));
 		abilities.add(new SubversionSpell(game, module, p));
 		abilities.add(new TurmoilSpell(game, module, p));
+		abilities.add(new ResurrectSpell(game, module, p));
 	}
 
 

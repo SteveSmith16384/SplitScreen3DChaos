@@ -5,24 +5,24 @@ import java.util.List;
 
 import com.jme3.math.Vector3f;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
+import com.scs.multiplayervoxelworld.components.IAffectedByPhysics;
 import com.scs.multiplayervoxelworld.components.IEntity;
 import com.scs.multiplayervoxelworld.components.IProcessable;
 import com.scs.multiplayervoxelworld.entities.AbstractEntity;
-import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
-import com.scs.samescreenchaos.ChaosGameModule;
 
-import ssmith.lang.NumberFunctions;
 import ssmith.util.RealtimeInterval;
 
-public class TurmoilEffect extends AbstractEntity implements IProcessable {
+public class WindEffect extends AbstractEntity implements IProcessable {
 
 	private List<IEntity> entities = new ArrayList<IEntity>();
 	private RealtimeInterval interval = new RealtimeInterval(2000);
+	private Vector3f dir;
 
-	public TurmoilEffect(MultiplayerVoxelWorldMain _game, AbstractGameModule _module) {
-		super(_game, _module, "TurmoilEffect");
-		
+	public WindEffect(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f _dir) {
+		super(_game, _module, "WindEffect");
+
+		dir = _dir;
 		this.module.addEntity(this);
 	}
 
@@ -36,19 +36,12 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 	@Override
 	public void process(float tpfSecs) {
 		if (interval.hitInterval()) {
-			AbstractPhysicalEntity ape = null;
-			while (ape == null && !this.entities.isEmpty()) {
-				IEntity e = this.entities.remove(0);
-				if (e instanceof AbstractPhysicalEntity) {
-					ape = (AbstractPhysicalEntity)e;
-					break;
+			for (IEntity e : this.entities) {
+				// todo - only blow enemies
+				if (e instanceof IAffectedByPhysics) {
+					IAffectedByPhysics abp = (IAffectedByPhysics)e;
+					abp.applyForce(dir);
 				}
-			}
-			if (ape != null) {
-				float x = NumberFunctions.rndFloat(0,  ChaosGameModule.MAP_SIZE);
-				float z = NumberFunctions.rndFloat(0,  ChaosGameModule.MAP_SIZE);
-				Vector3f pos = new Vector3f(x, 0f, z);
-				ape.setLocation(pos);
 			}
 		}
 

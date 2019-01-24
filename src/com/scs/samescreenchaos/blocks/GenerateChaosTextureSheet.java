@@ -23,7 +23,7 @@ public class GenerateChaosTextureSheet {
 	public GenerateChaosTextureSheet() throws IOException {
 		String[][] tiles = {
 				{"grass.jpg", "lavarock.jpg", "stone.png", "scarybark.jpg"}, 
-				{"road2.png", "sand.jpg"}
+				{"road2.png", "sand.jpg", "", "floor006.png"} // Note the blank filename for invisible
 		}; // Keep these in the same order!
 
 		TextureSheetGenerator gen = new TextureSheetGenerator();

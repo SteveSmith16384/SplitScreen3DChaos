@@ -24,6 +24,7 @@ import com.scs.multiplayervoxelworld.entities.AbstractPlayersAvatar;
 import com.scs.multiplayervoxelworld.gui.TextArea;
 import com.scs.multiplayervoxelworld.hud.IHud;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
+import com.scs.samescreenchaos.entities.WizardAvatar;
 
 import ssmith.util.RealtimeInterval;
 
@@ -37,7 +38,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 	private MultiplayerVoxelWorldMain game;
 	private AbstractGameModule module;
-	private AbstractPlayersAvatar player; 
+	private WizardAvatar player; 
 
 	private RealtimeInterval updateInt = new RealtimeInterval(500);
 	
@@ -50,7 +51,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 	private TextArea log_ta;
 	private BitmapText stats;
 	
-	public ChaosHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
+	public ChaosHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, WizardAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		super("HUD");
 
 		game = _game;
@@ -182,7 +183,10 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 		StringBuilder str = new StringBuilder();
 		str.append(player.ability[0].getHudText() + "\n");
 		str.append(player.ability[1].getHudText() + "\n");
-		//todo str.append("Mana: " + player.resources + "\n");
+		str.append("Mana: " + player.mana + "\n");
+		if (player.selectedEntity != null) {
+			str.append(player.selectedEntity.name + "Selected\n");
+		}
 		this.stats.setText(str.toString());
 		//this.textArea.updateGeometry();
 	}
@@ -230,13 +234,6 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 		
 	}
 
-/*
-	@Override
-	public void markForRemoval() {
-		// TODO Auto-generated method stub
-		
-	}
-*/
 
 	@Override
 	public void actuallyRemove() {
@@ -248,5 +245,11 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 	@Override
 	public Spatial getSpatial() {
 		return this;
+	}
+
+
+	@Override
+	public void refresh() {
+		updateTextArea();		
 	}
 }

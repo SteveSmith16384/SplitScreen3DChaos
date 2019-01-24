@@ -24,5 +24,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/Blocky"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MultiplayerVoxelWorld"/>
 	<classpathentry kind="lib" path="/MultiplayerVoxelWorld/libs/Jamepad.jar"/>
+	<classpathentry kind="lib" path="E:/mycode/jME3.2-stable/sources/jme3-testdata-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

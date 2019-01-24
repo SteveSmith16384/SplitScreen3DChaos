@@ -15,7 +15,7 @@ public class Golem2 extends AbstractCreature {
 
 	
 	@Override
-	protected ICreatureModel getCreatureModel() {
+	public ICreatureModel getCreatureModel() {
 		return new GolemModel(game.getAssetManager());
 	}
 

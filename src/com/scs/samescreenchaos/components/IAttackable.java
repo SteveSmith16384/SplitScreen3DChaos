@@ -1,8 +1,9 @@
 package com.scs.samescreenchaos.components;
 
 import com.jme3.math.Vector3f;
+import com.scs.multiplayervoxelworld.components.IDamagable;
 
-public interface ITargetByAI { // todo - rename
+public interface IAttackable extends IDamagable { // todo - rename
 
 	int getSide();
 	
@@ -12,6 +13,4 @@ public interface ITargetByAI { // todo - rename
 	
 	float getDef();
 	
-	//void attackedBy(ITargetByAI other);
-
 }

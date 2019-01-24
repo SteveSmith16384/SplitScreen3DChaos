@@ -14,7 +14,7 @@ public class ChangingBlock extends AbstractBlock {
 	
 	
 	public ChangingBlock(Class<? extends AbstractBlock> _newClass, Vector3Int _pos) {
-		super(1, 0); // todo
+		super(2, 1);
 		
 		newClass = _newClass;
 		pos = _pos;

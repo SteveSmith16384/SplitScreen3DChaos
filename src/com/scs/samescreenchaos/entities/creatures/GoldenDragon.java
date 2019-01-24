@@ -15,7 +15,7 @@ public class GoldenDragon extends AbstractCreature {
 
 	
 	@Override
-	protected ICreatureModel getCreatureModel() {
+	public ICreatureModel getCreatureModel() {
 		return new GoldenDragonModel(game.getAssetManager());
 	}
 

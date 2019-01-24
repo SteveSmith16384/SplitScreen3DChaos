@@ -10,7 +10,7 @@ import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
-import com.scs.samescreenchaos.components.ITargetByAI;
+import com.scs.samescreenchaos.components.IAttackable;
 import com.scs.samescreenchaos.entities.WizardAvatar;
 import com.scs.samescreenchaos.entities.creatures.AbstractCreature;
 
@@ -33,16 +33,19 @@ public class CommandCreatureSpell extends AbstractSpell {
 			if (result.getDistance() > 1f) { // So we don't build a block on top of ourselves
 				Geometry g = result.getGeometry();
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-				if (ape instanceof ITargetByAI) {
+				if (ape instanceof IAttackable) {
 					WizardAvatar w = (WizardAvatar)this.player;
 					AbstractCreature c = (AbstractCreature)ape;
 					if (c.getOwner() == player) {
 						w.selectedEntity = ape;
 						Settings.p(ape + " selected");
+						return true;
 					} else {
 						if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
 							AbstractCreature owned = (AbstractCreature)w.selectedEntity;
-							owned.setTarget((ITargetByAI)ape);
+							owned.setTarget((IAttackable)ape);
+							Settings.p("Target selected");
+							return true;
 						}
 					}
 				} else if (ape instanceof FloorOrCeiling) {
@@ -51,6 +54,7 @@ public class CommandCreatureSpell extends AbstractSpell {
 					if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
 						AbstractCreature c = (AbstractCreature)w.selectedEntity;
 						c.setTarget(position);
+						Settings.p("Destination " + position + " selected");
 					}
 					return true;
 				} else {

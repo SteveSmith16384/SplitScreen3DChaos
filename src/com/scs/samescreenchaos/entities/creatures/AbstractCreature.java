@@ -10,14 +10,16 @@ import com.scs.multiplayervoxelworld.components.IProcessable;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
 import com.scs.multiplayervoxelworld.jme.JMEAngleFunctions;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
-import com.scs.samescreenchaos.components.ITargetByAI;
+import com.scs.samescreenchaos.GameMechanics;
+import com.scs.samescreenchaos.components.IAttackable;
+import com.scs.samescreenchaos.entities.AbstractCorpse;
 import com.scs.samescreenchaos.entities.WizardAvatar;
 import com.scs.samescreenchaos.models.ICreatureModel;
 
 import ssmith.lang.NumberFunctions;
 import ssmith.util.RealtimeInterval;
 
-public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, ITargetByAI {
+public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable {
 
 	private static final float TURN_SPEED = 1f;
 
@@ -39,7 +41,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	// AI
 	private AIMode aiMode = AIMode.AwaitingCommand;
 	private Vector3f targetPos;
-	private ITargetByAI physicalTarget;
+	private IAttackable physicalTarget;
 	private float avoidUntil = 0;
 	private RealtimeInterval checkPosInterval = new RealtimeInterval(2000);
 	private Vector3f prevPos = new Vector3f();
@@ -68,7 +70,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	}
 
 
-	protected abstract ICreatureModel getCreatureModel();
+	public abstract ICreatureModel getCreatureModel();
 
 
 	@Override
@@ -114,13 +116,16 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 				if (this.aiMode == AIMode.WalkToPoint) {
 					this.turnTowardsDestination();
-				} else {
+					if (this.distance(this.targetPos) < .5f) {
+						this.aiMode = AIMode.AwaitingCommand;
+					}
+				}/* else if (this.aiMode == AIMode.AvoidBlockage) {
 					turnAwayFromDestination();
 					this.avoidUntil -= tpfSecs;
 					if (avoidUntil < 0) {
 						aiMode = AIMode.WalkToPoint;
 					}
-				}
+				}*/
 				this.moveFwds();
 				break;
 
@@ -198,27 +203,34 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		}
 		this.health -= amt;
 		if (this.health <= 0) {
-			killed(reason);
+			killed(reason, false);
 		}
 	}
-	
-	
-	public void killed(String reason) {
+
+
+	public void killed(String reason, boolean permanent) {
 		Settings.p(this + " killed by " + reason);
 		dead = true;
 		model.setAnim(Anim.Died);
 		removeAt = System.currentTimeMillis() + 2000;
+
+		if (!permanent) {
+			AbstractCorpse corpse = new AbstractCorpse(game, module, this);
+			module.addEntity(corpse);
+		}
 	}
 
 
-	public void setTarget(ITargetByAI t) {
+	public void setTarget(IAttackable t) {
 		this.physicalTarget = t;
+		aiMode = AIMode.WalkToCreature;
 	}
 
 
 	public void setTarget(Vector3f pos) {
 		this.physicalTarget = null;
 		this.targetPos = pos.clone();
+		aiMode = AIMode.WalkToPoint;
 	}
 
 
@@ -230,21 +242,21 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	@Override
 	public void notifiedOfCollision(AbstractPhysicalEntity other) {
-		if (other instanceof ITargetByAI) {
-			ITargetByAI co = (ITargetByAI)other;
+		if (other instanceof IAttackable) {
+			IAttackable co = (IAttackable)other;
 			if (this.getSide() != co.getSide()) {
 				this.setTarget(co);
-				//co.attackedBy(this);
 				this.aiMode = AIMode.Attacking;
-				if (other instanceof IDamagable) {
-					IDamagable id = (IDamagable)other;
-					if (checkAttackInterval.hitInterval()) {
-						float tot = this.att - co.getDef() + NumberFunctions.rndFloat(-3,  3);
-						if (tot > 0) {
-							id.damaged(tot, "combat with " + this.name);
-						}
+				//if (other instanceof IDamagable) {
+				//IDamagable id = (IDamagable)other;
+				if (checkAttackInterval.hitInterval()) {
+					//float tot = this.att - co.getDef() + NumberFunctions.rndFloat(-3,  3);
+					float tot = GameMechanics.combat(att, co.getDef());
+					if (tot > 0) {
+						co.damaged(tot, "combat with " + this.name);
 					}
 				}
+				//}
 
 			}
 		}
@@ -266,18 +278,22 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	}
 
 
-	/*
-	@Override
-	public void attackedBy(ITargetByAI other) {
-		this.setTarget(other);
-
-	}
-	 */
-
 	@Override
 	public float getDef() {
 		return def;
 	}
 
-
+/*
+	public void setAnim(Anim anim) {
+		this.model.setAnim(anim);
+	}
+	*/
+	
+	/**
+	 * For when resurrected.
+	 */
+	public void setAIToAwaitingCommand() {
+		this.aiMode = AIMode.AwaitingCommand;
+	}
+	
 }

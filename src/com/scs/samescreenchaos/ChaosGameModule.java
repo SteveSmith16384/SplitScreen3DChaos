@@ -44,18 +44,22 @@ public class ChaosGameModule extends AbstractGameModule {
 	public void setupLevel() {
 		FloorOrCeiling floor = new FloorOrCeiling(game, this, 0, 0, 0, MAP_SIZE, 1f, MAP_SIZE, "Textures/blocks/lavarock.jpg");
 		this.addEntity(floor);
-		
+
 		vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
 		this.addEntity(vte);
 
 		//vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(MAP_SIZE_BLOCKS, 1, MAP_SIZE_BLOCKS), LavaBlock.class);
 		//vte.addRectRange_Blocks(BlockCodes.SAND, new Vector3Int(10, 1, 10), new Vector3Int(1, 1, 1));
 
-		for (int i=0 ; i<2 ; i++) {
+		for (int i=0 ; i<5 ; i++) {
 			Point p = this.getRandomBlockPos();
 			this.createTree(vte, new Vector3f(p.x, 1, p.y));
 		}
-
+/*
+		for (int i=0 ; i<5 ; i++) {
+			Point p = this.getRandomBlockPos();
+			this.createWall(vte, new Vector3f(p.x, 1, p.y));
+		}*/
 	}
 
 
@@ -67,7 +71,6 @@ public class ChaosGameModule extends AbstractGameModule {
 			if (addBlockInt.hitInterval()) {
 				ChangingBlock block = this.changingBlocks.remove(0);
 				vte.blocks.setBlock(block.pos, block.newClass);
-				//Settings.p("adding block");
 			}
 		}
 	}
@@ -101,7 +104,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		for (int y=leavesStartHeight ; y<height ; y++) {
 			for (int x=(int)treePos.x-maxRad ; x<=treePos.x+maxRad ; x++) {
 				for (int z=(int)treePos.z-maxRad ; z<=treePos.z+maxRad ; z++) {
-					if (NumberFunctions.rnd(1, 3) == 1) {
+					if (NumberFunctions.rnd(1, 4) == 1) {
 						Vector3Int pos = new Vector3Int(x, treePos.y+y,z);
 						ChangingBlock block = new ChangingBlock(GrassBlock.class, pos);
 						addChangingBlock(block);
@@ -127,7 +130,7 @@ public class ChaosGameModule extends AbstractGameModule {
 
 	@Override
 	protected IHud generateHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
-		return new ChaosHUD(_game, _module, _player, xBL, yBL, w, h, _cam);
+		return new ChaosHUD(_game, _module, (WizardAvatar)_player, xBL, yBL, w, h, _cam);
 	}
 
 

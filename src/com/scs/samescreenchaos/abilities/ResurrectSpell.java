@@ -8,18 +8,16 @@ import com.jme3.scene.Geometry;
 import com.scs.multiplayervoxelworld.MultiplayerVoxelWorldMain;
 import com.scs.multiplayervoxelworld.Settings;
 import com.scs.multiplayervoxelworld.entities.AbstractPhysicalEntity;
-import com.scs.multiplayervoxelworld.entities.FloorOrCeiling;
 import com.scs.multiplayervoxelworld.modules.AbstractGameModule;
 import com.scs.samescreenchaos.ChaosGameModule;
 import com.scs.samescreenchaos.blocks.WallBlock;
+import com.scs.samescreenchaos.entities.AbstractCorpse;
 import com.scs.samescreenchaos.entities.WizardAvatar;
 
-public class WallSpell extends AbstractSpell {
-	
-	private static final int SIZE = 1;
+public class ResurrectSpell extends AbstractSpell {
 
-	public WallSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Wall", 1);
+	public ResurrectSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+		super(_game, module, p, "Resurrect", 1);
 	}
 
 
@@ -32,17 +30,17 @@ public class WallSpell extends AbstractSpell {
 
 		CollisionResult result = results.getClosestCollision();
 		if (result != null) {
-			if (result.getDistance() > SIZE) { // So we don't build a block on top of ourselves
-				Geometry g = result.getGeometry();
-				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-				if (ape instanceof FloorOrCeiling) {
-					Vector3f position = result.getContactPoint();
-					ChaosGameModule m = (ChaosGameModule)module;
-					m.vte.addRectRange_Actual(position, new Vector3f(SIZE, SIZE, SIZE), WallBlock.class);
-					return true;
-				} else {
-					Settings.p(ape + " selected");
-				}
+			Geometry g = result.getGeometry();
+			AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
+			if (ape instanceof AbstractCorpse) {
+				//Vector3f position = result.getContactPoint();
+				//ChaosGameModule m = (ChaosGameModule)module;
+				//m.vte.addRectRange_Actual(position, new Vector3f(SIZE, SIZE, SIZE), WallBlock.class);
+				AbstractCorpse corpse = (AbstractCorpse)ape;
+				corpse.resurrect((WizardAvatar)player);
+				return true;
+			} else {
+				Settings.p(ape + " selected");
 			}
 		}
 		return false;
