@@ -10,7 +10,6 @@ import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
-import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class TeleportSpell extends AbstractSpell {

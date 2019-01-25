@@ -41,8 +41,8 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		this.ability[0] = new FireballSpell(game, _module, this);
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
 
-		floorSelector = new FloorSelector(game, this);
-		game.getRootNode().attachChild(floorSelector);
+		floorSelector = new FloorSelector(game, module, this);
+		//game.getRootNode().attachChild(floorSelector);
 
 	}
 
@@ -50,9 +50,9 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	@Override
 	protected Spatial getPlayersModel(MultiplayerVoxelWorldMain game, int pid) {
 		WizardModel wiz = new WizardModel(game.getAssetManager());
-		if (ChaosSettings.HIDE_AVATARS) {
+		/*if (ChaosSettings.HIDE_AVATARS) {
 			wiz.getModel().setCullHint(CullHint.Always);
-		}
+		}*/
 		return wiz.getModel();
 	}
 
@@ -63,10 +63,19 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 			return;
 		}
 
+		if (this.input.isCycleAbilityPressed(true)) {
+			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
+			c.selectNext();
+		} else if (this.input.isCycleAbilityPressed(false)) {
+			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
+			c.selectPrev();
+
+		}
+
 		this.mana += tpfSecs;
 		super.process(tpfSecs);
 
-		this.floorSelector.process(tpfSecs);
+		//this.floorSelector.process(tpfSecs);
 
 		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -10f) {
 			killed("Too low");

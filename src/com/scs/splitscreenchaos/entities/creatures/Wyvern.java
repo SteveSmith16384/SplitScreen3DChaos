@@ -1,9 +1,23 @@
 package com.scs.splitscreenchaos.entities.creatures;
 
-public class Wyvern {
+import com.jme3.math.Vector3f;
+import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenchaos.models.ICreatureModel;
+import com.scs.splitscreenchaos.models.WyvernModel;
+import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-	public Wyvern() {
-		// TODO Auto-generated constructor stub
+public class Wyvern extends AbstractCreature {
+
+	public Wyvern(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar owner) {
+		super(_game, _module, "Wyvern", startPos, owner, 1f, 1, 1, 3);
 	}
+
+	
+	@Override
+	public ICreatureModel getCreatureModel() {
+		return new WyvernModel(game.getAssetManager());
+	}
+
 
 }

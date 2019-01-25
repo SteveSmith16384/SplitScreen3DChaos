@@ -38,7 +38,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
 
-	private float health = 100f;
+	private float health;
 	protected float speed, att, def;
 	private boolean dead = false;
 	private long removeAt;
@@ -53,15 +53,16 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private Vector3f prevPos = new Vector3f();
 	private RealtimeInterval checkAttackInterval = new RealtimeInterval(2000);
 
-	public AbstractCreature(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def) {
+	public AbstractCreature(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health) {
 		super(_game, _module, name);
 
 		owner = _owner;
-		speed = _speed/5; // todo - check
+		speed = _speed/2;
 		att = _att;
 		def = _def;
-
-		model = getCreatureModel(); //new GolemModel(game.getAssetManager());
+		health = _health;
+		
+		model = getCreatureModel();
 		this.getMainNode().attachChild(model.getModel());
 		this.getMainNode().setLocalTranslation(startPos);
 
@@ -72,9 +73,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
 		// Add sphere above to show side
-		Mesh sphere = new Sphere(8, 8, .2f, true, false);
+		Mesh sphere = new Sphere(8, 8, .5f, true, false);
 		Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
-		//ball_geo.setShadowMode(ShadowMode.Cast);
 		TextureKey key = new TextureKey( "Textures/greensun.jpg"); // todo - diff colours depending on wizard
 		Texture tex = game.getAssetManager().loadTexture(key);
 		Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
@@ -325,10 +325,12 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		for (IEntity e : module.entities) {
 			if (e instanceof IAttackable) {
 				IAttackable golem = (IAttackable)e;
-				float dist = this.distance(golem.getLocation());
-				if (dist <= closestDist) {
-					closestDist = dist;
-					closest = golem;
+				if (golem.getSide() != this.getSide()) {
+					float dist = this.distance(golem.getLocation());
+					if (dist <= closestDist) {
+						closestDist = dist;
+						closest = golem;
+					}
 				}
 			}
 		}

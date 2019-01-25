@@ -32,7 +32,7 @@ public abstract class AbstractDragonModel implements ICreatureModel {
 		model = assetManager.loadModel("Models/dragon/dragon.blend");
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, tex);//"Models/dragon/dragon_yellow.png");
 		model.setShadowMode(ShadowMode.Cast);
-		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
+		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
 		JMEModelFunctions.scaleModelToWidth(model, MODEL_WIDTH);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
 

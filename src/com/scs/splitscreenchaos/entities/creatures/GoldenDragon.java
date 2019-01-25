@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class GoldenDragon extends AbstractCreature {
 
 	public GoldenDragon(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar _owner) {
-		super(_game, _module, "Golden Dragon", startPos, _owner, 3, 9, 9);
+		super(_game, _module, "Golden Dragon", startPos, _owner, 3, 9, 9, 9);
 	}
 
 	

@@ -1,18 +1,26 @@
 package com.scs.splitscreenchaos;
 
 import java.awt.Point;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.jme3.collision.CollisionResult;
+import com.jme3.collision.CollisionResults;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial.CullHint;
 import com.scs.splitscreenchaos.blocks.ChangingBlock;
 import com.scs.splitscreenchaos.blocks.GrassBlock;
+import com.scs.splitscreenchaos.blocks.StoneBlock;
 import com.scs.splitscreenchaos.blocks.WoodBlock;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
@@ -59,8 +67,15 @@ public class ChaosGameModule extends AbstractGameModule {
 		//vte.addRectRange_Blocks(BlockCodes.SAND, new Vector3Int(10, 1, 10), new Vector3Int(1, 1, 1));
 
 		for (int i=0 ; i<5 ; i++) {
-			Point p = this.getRandomBlockPos();
+			Point p = this.getRandomBlockPos(1);
 			this.createTree(vte, new Vector3f(p.x, 1, p.y));
+		}
+
+		for (int i=0 ; i<5 ; i++) {
+			Point p = this.getRandomBlockPos(20);
+			this.createWall_Horiz(vte, new Vector3f(p.x, 1, p.y));
+			p = this.getRandomBlockPos(20);
+			this.createWall_Vert(vte, new Vector3f(p.x, 1, p.y));
 		}
 
 		// Create AI Wiz
@@ -68,10 +83,9 @@ public class ChaosGameModule extends AbstractGameModule {
 			// todo
 		}
 
-	
 		// Create AI Monsters
-		//GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(1, 2, 1), null);
-		//this.addEntity(gd);
+		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(1, 2, 1), null);
+		this.addEntity(gd);
 	}
 
 
@@ -123,9 +137,9 @@ public class ChaosGameModule extends AbstractGameModule {
 	}
 
 
-	private Point getRandomBlockPos() {
-		int x = NumberFunctions.rnd(1, MAP_SIZE_BLOCKS-2);
-		int z = NumberFunctions.rnd(1, MAP_SIZE_BLOCKS-2);
+	private Point getRandomBlockPos(int inset) {
+		int x = NumberFunctions.rnd(inset, MAP_SIZE_BLOCKS-inset-1);
+		int z = NumberFunctions.rnd(inset, MAP_SIZE_BLOCKS-inset-1);
 		return new Point(x, z) ;
 	}
 
@@ -156,6 +170,34 @@ public class ChaosGameModule extends AbstractGameModule {
 	}
 
 
+	private void createWall_Horiz(VoxelTerrainEntity vte, Vector3f startPos) {
+		int height = 4;
+		for (int x=0 ; x<20 ; x++) {
+			Vector3Int pos = new Vector3Int(startPos.x+x, startPos.y+height, startPos.z);
+			ChangingBlock block = new ChangingBlock(StoneBlock.class, pos);
+			addChangingBlock(block);
+			height += NumberFunctions.rnd(-1,  1);
+			if (height < 0) {
+				height = 0;
+			}
+		}
+	}
+
+
+	private void createWall_Vert(VoxelTerrainEntity vte, Vector3f startPos) {
+		int height = 4;
+		for (int z=0 ; z<20 ; z++) {
+			Vector3Int pos = new Vector3Int(startPos.x, startPos.y+height, startPos.z+z);
+			ChangingBlock block = new ChangingBlock(StoneBlock.class, pos);
+			addChangingBlock(block);
+			height += NumberFunctions.rnd(-1,  1);
+			if (height < 0) {
+				height = 0;
+			}
+		}
+	}
+
+
 	private void addChangingBlock(ChangingBlock block) {
 		vte.blocks.setBlock(block.pos, block.getClass());
 		this.changingBlocks.add(block);
@@ -173,7 +215,6 @@ public class ChaosGameModule extends AbstractGameModule {
 	protected IHud generateHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		return new ChaosHUD(_game, _module, (WizardAvatar)_player, xBL, yBL, w, h, _cam);
 	}
-
 
 
 }

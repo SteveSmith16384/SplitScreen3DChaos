@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
-import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;

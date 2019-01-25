@@ -68,6 +68,11 @@ public class SpiderModel implements ICreatureModel {
 			channel.setAnim("SpiderWalk"); // No attack anim
 			break;
 
+		case Died:
+			channel.setLoopMode(LoopMode.Loop);
+			channel.setAnim("SpiderStand"); // No died anim
+			break;
+
 		default:
 			Settings.pe(this.getClass().getSimpleName() + ": Unable to show anim " + animCode);
 		}

@@ -8,7 +8,6 @@ import com.jme3.font.BitmapText;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -17,11 +16,8 @@ import com.jme3.scene.shape.Quad;
 import com.jme3.ui.Picture;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
-import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.IProcessable;
-import com.scs.splitscreenfpsengine.components.IShowOnHUD;
-import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.gui.TextArea;
 import com.scs.splitscreenfpsengine.hud.IHud;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -219,6 +215,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 		targetting_reticule.setWidth(crosshairs_w);
 		float crosshairs_h = cam.getHeight()/10;
 		targetting_reticule.setHeight(crosshairs_h);
+		targetting_reticule.setLocalTranslation(cam.getWidth()/2-(crosshairs_w/2), cam.getHeight()/2-(crosshairs_h/2), 0);
 		this.attachChild(targetting_reticule);
 
 		this.targetting_reticules.add(targetting_reticule);

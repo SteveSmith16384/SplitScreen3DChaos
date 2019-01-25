@@ -9,7 +9,6 @@ import com.scs.splitscreenchaos.ChaosSettings;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
-import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -31,7 +30,7 @@ public abstract class AbstractSummonSpell extends AbstractSpell {
 		CollisionResult result = results.getClosestCollision();
 		if (result != null) {
 			if (result.getDistance() > 1f) { // So we don't build a block on top of ourselves
-				if (result.getDistance() < 5f) { // So we don't build a block on top of ourselves
+				if (result.getDistance() < 8f) {
 					Geometry g = result.getGeometry();
 					AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 					if (ape instanceof FloorOrCeiling) {
@@ -43,7 +42,7 @@ public abstract class AbstractSummonSpell extends AbstractSpell {
 						module.addEntity(c);
 						return true;
 					} else {
-						Settings.p(ape + " selected");
+						player.hud.appendToLog(ape + " selected");
 					}
 				} else {
 					player.hud.appendToLog("Too far away");

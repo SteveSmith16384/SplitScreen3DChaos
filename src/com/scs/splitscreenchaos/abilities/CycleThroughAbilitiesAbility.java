@@ -22,6 +22,7 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 		abilities.add(new SummonGoldenDragonSpell(game, module, p));
 		abilities.add(new SummonGreenDragonSpell(game, module, p));
 		abilities.add(new SummonRedDragonSpell(game, module, p));
+		abilities.add(new SummonWyvernSpell(game, module, p));
 		
 		abilities.add(new FireballSpell(game, module, p));
 		abilities.add(new WallSpell(game, module, p));
@@ -40,6 +41,20 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	}
 
 
+	public void selectNext() {
+		this.activate(0);
+	}
+	
+	
+	public void selectPrev() {
+		index--;
+		if (index < 0) {
+			index = this.abilities.size() - 1;
+		}
+		this.player.ability[0] = this.abilities.get(index);
+	}
+	
+	
 	@Override
 	public boolean activate(float interpol) {
 		index++;
