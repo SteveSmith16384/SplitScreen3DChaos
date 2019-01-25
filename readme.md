@@ -1,4 +1,4 @@
-# Same Screen Chaos
+# Split-Screen 3D Chaos
 
 By Steve Smith - https://twitter.com/stephencsmith
 
