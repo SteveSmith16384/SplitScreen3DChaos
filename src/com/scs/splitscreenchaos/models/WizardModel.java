@@ -9,6 +9,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.scs.splitscreenchaos.entities.creatures.AbstractCreature.Anim;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
@@ -18,7 +19,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
  * 
  * Anims: [Walk, Die, Hit, Idle, Attack]
  */
-public class WizardModel {
+public class WizardModel implements ICreatureModel {
 
 	public static final int ANIM_IDLE = 0;
 	public static final int ANIM_WALKING = 1;
@@ -34,7 +35,7 @@ public class WizardModel {
 
 	// Anim
 	private AnimChannel channel;
-	private int currAnimCode = -1;
+	private Anim currAnimCode = Anim.None;
 
 	public WizardModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
@@ -48,7 +49,7 @@ public class WizardModel {
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
 		channel = control.createChannel();
-		setAnim(ANIM_IDLE); // Default
+		setAnim(Anim.Idle); // Default
 	}
 
 
@@ -57,28 +58,29 @@ public class WizardModel {
 	}
 
 
-	public void setAnim(int animCode) {
+	@Override
+	public void setAnim(Anim animCode) {
 		if (currAnimCode == animCode) {
 			return;			
 		}
 
 		switch (animCode) {
-		case ANIM_IDLE:
+		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("Idle");
 			break;
 
-		case ANIM_WALKING:
+		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("Walk");
 			break;
 
-		case ANIM_ATTACK:
+		case Attack:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("Attack");
 			break;
 
-		case ANIM_DIED:
+		case Died:
 			channel.setLoopMode(LoopMode.DontLoop);
 			channel.setAnim("Die");
 			break;
@@ -91,5 +93,6 @@ public class WizardModel {
 
 
 	}
+
 
 }

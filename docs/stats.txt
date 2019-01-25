@@ -3,7 +3,7 @@ combat, range, defence, movement allowance, magical resistance,
 manoeuvre, ???, law/chaos rating, overall strength (?).
 
 0  Nothing
-1  Nothing
+1  Nothing         A R R D M
 2  King Cobra      4 0 0 1 1 6 1 8  1 30
 3  Dire Wolf       3 0 0 2 3 7 2 8 -1 12
 4  Goblin          2 0 0 4 1 4 4 8 -1 12

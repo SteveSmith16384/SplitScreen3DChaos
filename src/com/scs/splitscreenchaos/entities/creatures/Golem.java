@@ -1,5 +1,5 @@
 package com.scs.splitscreenchaos.entities.creatures;
-
+/*
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature.Anim;
 import com.scs.splitscreenchaos.models.GolemModel;
@@ -175,3 +175,4 @@ public class Golem extends AbstractPhysicalEntity implements IProcessable, IDama
 	}
 
 }
+*/

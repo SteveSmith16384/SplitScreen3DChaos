@@ -20,8 +20,8 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Node model = (Node)assetManager.loadModel("Models/Goblin/Goblin.blend");
-		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/tree-creature/Tree-Creature_Diffuse_Map.png");
+		Spatial model = assetManager.loadModel("Models/destroyedwalls_by_lfa/destroyedWalls3.fbx");
+		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/destroyedwalls_by_lfa/wall.bmp");
 
 		//JMEModelFunctions.scaleModelToHeight(model, 2f);
 		
@@ -30,12 +30,12 @@ public class ModelViewer_Chaos extends ModelViewer {
 	
 	
 	public String getAnimNode() {
-		return "Goblin (Node)";
+		return "Slime-sculpt (Node)";
 	}
 	
 
 	public String getAnimToShow() {
-		return "Attack-two handedAction";
+		return "Idle";
 	}
 	
 

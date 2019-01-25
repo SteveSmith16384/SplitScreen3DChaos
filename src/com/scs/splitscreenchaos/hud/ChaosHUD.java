@@ -65,7 +65,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 		super.setLocalTranslation(xBL, yBL, 0);
 
-		log_ta = new TextArea("log", guiFont_small, 6, "TEXT TEST_");
+		log_ta = new TextArea("log", guiFont_small, 6, "Welcome to the Plane of Limbo");
 		log_ta.setLocalTranslation(0, hud_height/2, 0);
 		this.attachChild(log_ta);
 
@@ -126,11 +126,8 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 			this.attachChild(pic);
 		}*/
 
-/*
-		this.updateGeometricState();
-		this.setModelBound(new BoundingBox());
-		this.updateModelBound();
-*/
+		this.addTargetter();
+
 		module.addEntity(this);
 
 	}
@@ -143,7 +140,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 		}
 		
 		// Test reticle
-		if (Settings.DEBUG_TARGETTER) {
+		/*if (Settings.DEBUG_TARGETTER) {
 			int id = 0;
 			for (IEntity entity : module.entities) {
 				if (entity instanceof IShowOnHUD) {
@@ -167,7 +164,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 			}
 
-		}
+		}*/
 
 		if (process_damage_box) {
 			this.dam_box_col.a -= (tpf/2);
@@ -217,7 +214,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 	private void addTargetter() {
 		Picture targetting_reticule = new Picture("HUD Picture");
-		targetting_reticule.setImage(game.getAssetManager(), "Textures/circular_recticle.png", true);
+		targetting_reticule.setImage(game.getAssetManager(), "Textures/triangle_recticle.png", true);
 		float crosshairs_w = cam.getWidth()/10;
 		targetting_reticule.setWidth(crosshairs_w);
 		float crosshairs_h = cam.getHeight()/10;
@@ -251,5 +248,11 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 	@Override
 	public void refresh() {
 		updateTextArea();		
+	}
+
+
+	@Override
+	public void appendToLog(String s) {
+		log_ta.addLine(s);
 	}
 }

@@ -1,6 +1,12 @@
 package com.scs.splitscreenchaos.entities.creatures;
 
+import com.jme3.asset.TextureKey;
+import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Mesh;
+import com.jme3.scene.shape.Sphere;
+import com.jme3.texture.Texture;
 import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.entities.AbstractCorpse;
@@ -10,13 +16,13 @@ import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
 import com.scs.splitscreenfpsengine.MyBetterCharacterControl;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.components.IDamagable;
+import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-import ssmith.lang.NumberFunctions;
 import ssmith.util.RealtimeInterval;
 
 public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable {
@@ -51,7 +57,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		super(_game, _module, name);
 
 		owner = _owner;
-		speed = _speed;
+		speed = _speed/5; // todo - check
 		att = _att;
 		def = _def;
 
@@ -64,6 +70,18 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		this.getMainNode().addControl(playerControl);
 
 		playerControl.getPhysicsRigidBody().setUserObject(this);
+
+		// Add sphere above to show side
+		Mesh sphere = new Sphere(8, 8, .2f, true, false);
+		Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
+		//ball_geo.setShadowMode(ShadowMode.Cast);
+		TextureKey key = new TextureKey( "Textures/greensun.jpg"); // todo - diff colours depending on wizard
+		Texture tex = game.getAssetManager().loadTexture(key);
+		Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
+		mat.setTexture("DiffuseMap", tex);
+		ball_geo.setMaterial(mat);
+		ball_geo.setLocalTranslation(0,  3,  0);
+		this.getMainNode().attachChild(ball_geo);
 
 		model.setAnim(Anim.Idle);
 
@@ -95,6 +113,12 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			switch (aiMode) {
 			case AwaitingCommand:
 				model.setAnim(Anim.Idle);
+				physicalTarget = this.findClosestTarget();
+				if (physicalTarget != null) {
+					aiMode = AIMode.WalkToCreature;
+					Settings.p(this + " is now walking towards " + physicalTarget);
+
+				}
 				break;
 
 			case WalkToPoint:
@@ -192,7 +216,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	@Override
 	public int getSide() {
-		return owner.getSide();
+		if (owner != null) {
+			return owner.getSide();
+		}
+		return -1;
 	}
 
 
@@ -283,17 +310,30 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		return def;
 	}
 
-/*
-	public void setAnim(Anim anim) {
-		this.model.setAnim(anim);
-	}
-	*/
-	
+
 	/**
 	 * For when resurrected.
 	 */
 	public void setAIToAwaitingCommand() {
 		this.aiMode = AIMode.AwaitingCommand;
 	}
-	
+
+
+	private IAttackable findClosestTarget() {
+		IAttackable closest = null;
+		float closestDist = 9999;
+		for (IEntity e : module.entities) {
+			if (e instanceof IAttackable) {
+				IAttackable golem = (IAttackable)e;
+				float dist = this.distance(golem.getLocation());
+				if (dist <= closestDist) {
+					closestDist = dist;
+					closest = golem;
+				}
+			}
+		}
+		return closest;
+	}
+
+
 }

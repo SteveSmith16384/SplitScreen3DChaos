@@ -31,18 +31,25 @@ public abstract class AbstractSummonSpell extends AbstractSpell {
 		CollisionResult result = results.getClosestCollision();
 		if (result != null) {
 			if (result.getDistance() > 1f) { // So we don't build a block on top of ourselves
-				Geometry g = result.getGeometry();
-				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-				if (ape instanceof FloorOrCeiling) {
-					Vector3f position = result.getContactPoint();
-					position.y = ChaosSettings.SUMMON_Y_POS; // Drop from sky
-					AbstractCreature c = this.createCreature(position);
-					module.addEntity(c);
-					//player.resources -= Settings.TURRET_COST;
-					return true;
+				if (result.getDistance() < 5f) { // So we don't build a block on top of ourselves
+					Geometry g = result.getGeometry();
+					AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
+					if (ape instanceof FloorOrCeiling) {
+						player.hud.appendToLog("Summoning " + name);
+						Vector3f position = result.getContactPoint();
+						position.y = ChaosSettings.SUMMON_Y_POS; // Drop from sky
+						AbstractCreature c = this.createCreature(position);
+						c.getMainNode().lookAt(player.getLocation(), Vector3f.UNIT_Y); // Look at wizard
+						module.addEntity(c);
+						return true;
+					} else {
+						Settings.p(ape + " selected");
+					}
 				} else {
-					Settings.p(ape + " selected");
+					player.hud.appendToLog("Too far away");
 				}
+			} else {
+				player.hud.appendToLog("Too close");
 			}
 		}
 		return false;

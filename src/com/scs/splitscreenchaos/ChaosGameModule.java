@@ -10,6 +10,7 @@ import com.scs.splitscreenchaos.blocks.ChangingBlock;
 import com.scs.splitscreenchaos.blocks.GrassBlock;
 import com.scs.splitscreenchaos.blocks.WoodBlock;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
@@ -26,15 +27,21 @@ import ssmith.util.RealtimeInterval;
 public class ChaosGameModule extends AbstractGameModule {
 
 	private static final float BLOCK_SIZE = .1f;
-	public static final int MAP_SIZE = 20;
+	public static final int MAP_SIZE = 30;
 	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
 
 	private List<ChangingBlock> changingBlocks;
 	public VoxelTerrainEntity vte;
 	private RealtimeInterval addBlockInt = new RealtimeInterval(10);
 
-	public ChaosGameModule(MultiplayerVoxelWorldMain _game) {
+	public int totalWizards, totalHumans, totalAI;
+
+	public ChaosGameModule(MultiplayerVoxelWorldMain _game, int _numHumans, int _numAI) {
 		super(_game);
+
+		totalHumans = _numHumans;
+		totalAI = _numAI;
+		totalWizards = totalHumans + totalAI;
 
 		changingBlocks = new LinkedList<>();
 	}
@@ -55,11 +62,16 @@ public class ChaosGameModule extends AbstractGameModule {
 			Point p = this.getRandomBlockPos();
 			this.createTree(vte, new Vector3f(p.x, 1, p.y));
 		}
-/*
-		for (int i=0 ; i<5 ; i++) {
-			Point p = this.getRandomBlockPos();
-			this.createWall(vte, new Vector3f(p.x, 1, p.y));
-		}*/
+
+		// Create AI Wiz
+		for (int i=0 ; i<totalAI ; i++) {
+			// todo
+		}
+
+	
+		// Create AI Monsters
+		//GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(1, 2, 1), null);
+		//this.addEntity(gd);
 	}
 
 
@@ -78,7 +90,36 @@ public class ChaosGameModule extends AbstractGameModule {
 
 	@Override
 	public Vector3f getPlayerStartPos(int id) {
-		return new Vector3f(MAP_SIZE/2-3, 2, MAP_SIZE/2-3); // todo
+		switch (this.totalWizards) {
+		case 1:
+			return new Vector3f(MAP_SIZE/2, 2, MAP_SIZE/2);
+		case 2:
+			switch (id) {
+			case 0:
+				return new Vector3f(1, 2, 1);
+			case 1:
+				return new Vector3f(MAP_SIZE-2, 2, MAP_SIZE-2);
+			default:
+				throw new RuntimeException("No start value for player " + id + " in a " + totalWizards + " player game");
+			}
+		case 3:
+		case 4:
+			switch (id) {
+			case 0:
+				return new Vector3f(1, 2, 1);
+			case 1:
+				return new Vector3f(MAP_SIZE-2, 2, MAP_SIZE-2);
+			case 2:
+				return new Vector3f(MAP_SIZE-2, 2, 1);
+			case 3:
+				return new Vector3f(1, 2, MAP_SIZE-2);
+			default:
+				throw new RuntimeException("No start value for player " + id + " in a " + totalWizards + " player game");
+			}
+		default:
+			throw new RuntimeException("No start value for player " + id + " in a " + totalWizards + " player game");
+
+		}
 	}
 
 

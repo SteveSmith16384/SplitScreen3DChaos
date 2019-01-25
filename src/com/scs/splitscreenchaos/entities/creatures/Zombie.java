@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class Zombie extends AbstractCreature {
 
 	public Zombie(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar _side) {
-		super(_game, _module, "Zombie", startPos, _side, 0.3f, 1, 1);
+		super(_game, _module, "Zombie", startPos, _side, 1, 1, 1);
 	}
 
 	

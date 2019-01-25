@@ -8,6 +8,7 @@ import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.abilities.CycleThroughAbilitiesAbility;
 import com.scs.splitscreenchaos.abilities.FireballSpell;
 import com.scs.splitscreenchaos.components.IAttackable;
+import com.scs.splitscreenchaos.effects.FloorSelector;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.models.WizardModel;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
@@ -20,7 +21,7 @@ import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.input.IInputDevice;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class WizardAvatar extends AbstractPlayersAvatar implements IAttackable, IDamagable, INotifiedOfCollision {
+public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAttackable, IDamagable, INotifiedOfCollision {
 
 	private static final float ATT = 1;
 	private static final float DEF = 1;
@@ -29,6 +30,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IAttackable, 
 	public float mana;
 	protected float health;
 	public boolean killed = false;
+	private FloorSelector floorSelector;
 
 	public WizardAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
 		super(_game, _module, _playerID, _cam, _input, _side);
@@ -39,7 +41,11 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IAttackable, 
 		this.ability[0] = new FireballSpell(game, _module, this);
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
 
+		floorSelector = new FloorSelector(game, this);
+		game.getRootNode().attachChild(floorSelector);
+
 	}
+
 
 	@Override
 	protected Spatial getPlayersModel(MultiplayerVoxelWorldMain game, int pid) {
@@ -52,13 +58,17 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IAttackable, 
 
 
 	@Override
-	public void process(float tpf) {
-		if (!killed) {
-			this.mana += tpf;
-			super.process(tpf);
+	public void process(float tpfSecs) {
+		if (killed) {
+			return;
 		}
 
-		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -1f) { // scs catching here after died!
+		this.mana += tpfSecs;
+		super.process(tpfSecs);
+
+		this.floorSelector.process(tpfSecs);
+
+		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -10f) {
 			killed("Too low");
 			return;
 		}

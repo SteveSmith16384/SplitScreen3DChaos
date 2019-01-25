@@ -11,6 +11,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class ChaosMain extends MultiplayerVoxelWorldMain {
 
 	private static final String PROPS_FILE = "chaos_settings.txt";
+	private static final int NUM_AI = 0;//1;
 	
 	public static void main(String[] args) {
 		try {
@@ -58,7 +59,7 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 
 	@Override
 	public AbstractGameModule getGameModule() {
-		return new ChaosGameModule(this);
+		return new ChaosGameModule(this, super.getNumPlayers(), NUM_AI);
 	}
 
 

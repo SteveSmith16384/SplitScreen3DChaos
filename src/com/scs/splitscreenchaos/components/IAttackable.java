@@ -3,7 +3,7 @@ package com.scs.splitscreenchaos.components;
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 
-public interface IAttackable extends IDamagable { // todo - rename
+public interface IAttackable extends IDamagable {
 
 	int getSide();
 	
