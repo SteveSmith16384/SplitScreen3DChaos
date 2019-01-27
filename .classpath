@@ -13,6 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -22,7 +23,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Blocky"/>
-	<classpathentry kind="lib" path="E:/mycode/jME3.2-stable/sources/jme3-testdata-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SplitScreenFPSEngine"/>
 	<classpathentry kind="lib" path="/SplitScreenFPSEngine/libs/Jamepad.jar"/>
 	<classpathentry kind="output" path="target/classes"/>

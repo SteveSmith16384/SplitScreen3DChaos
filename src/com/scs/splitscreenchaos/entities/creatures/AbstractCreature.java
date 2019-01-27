@@ -157,9 +157,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				model.setAnim(Anim.Attack);
 				this.turnTowardsDestination();
 				this.moveFwds();
+				break;
 
 			default:
-				throw new RuntimeException("todo");
+				throw new RuntimeException("Unknown ai state: " + aiMode);
 			}
 		} else {
 			if (this.removeAt < System.currentTimeMillis()) {
