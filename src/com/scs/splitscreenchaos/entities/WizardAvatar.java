@@ -44,7 +44,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 	@Override
 	protected Spatial getPlayersModel(MultiplayerVoxelWorldMain game, int pid) {
-		WizardModel wiz = new WizardModel(game.getAssetManager());
+		WizardModel wiz = new WizardModel(game.getAssetManager(), pid);
 		/*if (ChaosSettings.HIDE_AVATARS) {
 			wiz.getModel().setCullHint(CullHint.Always);
 		}*/
@@ -138,6 +138,12 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 			}
 		}
 
+	}
+
+
+	@Override
+	public float getCameraHeight() {
+		return 1f; // todo - check
 	}
 
 

@@ -12,6 +12,9 @@ public class RunFastEffect extends AbstractTimedEffect {
 		super(_game, _module, "RunFastEffect", 10);
 		
 		wiz = _wiz;
+		
+		this.wiz.moveSpeed = this.wiz.moveSpeed * 2;
+
 	}
 
 	

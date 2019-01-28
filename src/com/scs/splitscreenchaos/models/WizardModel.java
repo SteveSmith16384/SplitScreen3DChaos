@@ -37,19 +37,36 @@ public class WizardModel implements ICreatureModel {
 	private AnimChannel channel;
 	private Anim currAnimCode = Anim.None;
 
-	public WizardModel(AssetManager _assetManager) {
+	public WizardModel(AssetManager _assetManager, int playerid) {
 		assetManager = _assetManager;
 
 		model = assetManager.loadModel("Models/mage/mage.blend");
-		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/mage/mage.png");
+		JMEModelFunctions.setTextureOnSpatial(assetManager, model, getTex(playerid));//"Models/mage/mage.png");
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
-		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 1)); // Point model fwds
+		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 1)); // Point model fwds
+		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
 		channel = control.createChannel();
 		setAnim(Anim.Idle); // Default
+	}
+
+
+	private String getTex(int pid) {
+		switch (pid) {
+		case 0:
+			return "Models/mage/mage_yellow.png";
+		case 1:
+			return "Models/mage/mage_red.png";
+		case 2:
+			return "Models/mage/mage_cyan.png";
+		case 3:
+			return "Models/mage/mage_magenta.png";
+		default: 
+			throw new RuntimeException("Todo");
+		}
 	}
 
 

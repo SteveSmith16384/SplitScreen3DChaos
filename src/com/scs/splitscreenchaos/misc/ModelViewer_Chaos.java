@@ -1,6 +1,7 @@
 package com.scs.splitscreenchaos.misc;
 
 import com.jme3.scene.Spatial;
+import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.misc.ModelViewer;
 
 
@@ -18,8 +19,8 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Spatial model = assetManager.loadModel("Models/ruins entrance.blend");
-		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/destroyedwalls_by_lfa/wall.bmp");
+		Spatial model = assetManager.loadModel("Models/lipsofsuna_tree/tree2.blend");
+		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/lipsofsuna_tree/tree4.png");
 
 		//JMEModelFunctions.scaleModelToHeight(model, 2f);
 		
@@ -28,12 +29,12 @@ public class ModelViewer_Chaos extends ModelViewer {
 	
 	
 	public String getAnimNode() {
-		return "Slime-sculpt (Node)";
+		return "Skeli (Node)";
 	}
 	
 
 	public String getAnimToShow() {
-		return "Idle";
+		return "idle";
 	}
 	
 

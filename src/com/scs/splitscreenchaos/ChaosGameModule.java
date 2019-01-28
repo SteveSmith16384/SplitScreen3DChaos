@@ -180,12 +180,14 @@ public class ChaosGameModule extends AbstractGameModule {
 	private void createWall_Vert(VoxelTerrainEntity vte, Vector3f startPos) {
 		int height = 4;
 		for (int z=0 ; z<20 ; z++) {
-			Vector3Int pos = new Vector3Int(startPos.x, startPos.y+height, startPos.z+z);
-			ChangingBlock block = new ChangingBlock(StoneBlock.class, pos);
-			addChangingBlock(block);
 			height += NumberFunctions.rnd(-1,  1);
 			if (height < 0) {
 				height = 0;
+			}
+			for (int y=0 ; y<height; y++) {
+				Vector3Int pos = new Vector3Int(startPos.x, startPos.y+y, startPos.z+z);
+				ChangingBlock block = new ChangingBlock(StoneBlock.class, pos);
+				addChangingBlock(block);
 			}
 		}
 	}

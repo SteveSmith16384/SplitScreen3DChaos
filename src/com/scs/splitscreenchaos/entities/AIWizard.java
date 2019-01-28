@@ -11,13 +11,17 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class AIWizard extends AbstractCreature implements IWizard, IAttackable, IDamagable {
 
-	public AIWizard(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos) {
+	private int wizid;
+	
+	public AIWizard(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, int _wizid) {
 		super(_game, _module, "Wizard", startPos, null, 1, 1, 1, 1);
+		
+		wizid = _wizid;
 	}
 
 	@Override
 	public ICreatureModel getCreatureModel() {
-		return new WizardModel(game.getAssetManager());
+		return new WizardModel(game.getAssetManager(), wizid);
 	}
 
 	@Override
