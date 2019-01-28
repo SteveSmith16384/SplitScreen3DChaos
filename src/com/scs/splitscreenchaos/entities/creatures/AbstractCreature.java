@@ -38,6 +38,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
 
+	private boolean undead;
 	private float health, maxHealth;
 	protected float speed, att, def;
 	private boolean dead = false;
@@ -53,7 +54,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private Vector3f prevPos = new Vector3f();
 	private RealtimeInterval checkAttackInterval = new RealtimeInterval(2000);
 
-	public AbstractCreature(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health) {
+	public AbstractCreature(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health, boolean _undead) {
 		super(_game, _module, name);
 
 		owner = _owner;
@@ -62,6 +63,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		def = _def;
 		health = _health;
 		maxHealth = _health;
+		undead = _undead;
 		
 		model = getCreatureModel();
 		this.getMainNode().attachChild(model.getModel());
@@ -74,14 +76,14 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
 		// Add sphere above to show side
-		Mesh sphere = new Sphere(8, 8, .5f, true, false);
+		Mesh sphere = new Sphere(8, 8, .2f, true, false);
 		Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
 		TextureKey key = new TextureKey( "Textures/greensun.jpg"); // todo - diff colours depending on wizard
 		Texture tex = game.getAssetManager().loadTexture(key);
 		Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
 		mat.setTexture("DiffuseMap", tex);
 		ball_geo.setMaterial(mat);
-		ball_geo.setLocalTranslation(0,  3,  0);
+		ball_geo.setLocalTranslation(0, 2, 0); // todo - set pos from model size
 		this.getMainNode().attachChild(ball_geo);
 
 		model.setAnim(Anim.Idle);
@@ -125,11 +127,11 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			case WalkToPoint:
 			case WalkToCreature:
 				model.setAnim(Anim.Walk);
-				if (aiMode == AIMode.WalkToCreature) {
+				/*if (aiMode == AIMode.WalkToCreature) {
 					if (physicalTarget != null) {
 						this.targetPos = this.physicalTarget.getLocation();
 					}
-				}
+				}*/
 
 				if (checkPosInterval.hitInterval()) {
 					if (this.mainNode.getWorldTranslation().distance(this.prevPos) < .5f) {
@@ -139,7 +141,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 					prevPos.set(this.mainNode.getWorldTranslation());
 				}
 
-				if (this.aiMode == AIMode.WalkToPoint) {
+				if (this.aiMode == AIMode.WalkToPoint || this.aiMode == AIMode.WalkToCreature) {
 					this.turnTowardsDestination();
 					if (this.distance(this.targetPos) < .5f) {
 						this.aiMode = AIMode.AwaitingCommand;
@@ -352,5 +354,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		return closest;
 	}
 
+
+	@Override
+	public boolean isUndead() {
+		return undead;
+	}
 
 }

@@ -14,7 +14,7 @@ public class AIWizard extends AbstractCreature implements IWizard, IAttackable, 
 	private int wizid;
 	
 	public AIWizard(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, int _wizid) {
-		super(_game, _module, "Wizard", startPos, null, 1, 1, 1, 1);
+		super(_game, _module, "Wizard", startPos, null, 1, 1, 1, 1, false);
 		
 		wizid = _wizid;
 	}

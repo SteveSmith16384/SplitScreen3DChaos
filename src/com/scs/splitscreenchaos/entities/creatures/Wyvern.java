@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class Wyvern extends AbstractCreature {
 
 	public Wyvern(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar owner) {
-		super(_game, _module, "Wyvern", startPos, owner, 1f, 1, 1, 3);
+		super(_game, _module, "Wyvern", startPos, owner, 1f, 1, 1, 3, false);
 	}
 
 	

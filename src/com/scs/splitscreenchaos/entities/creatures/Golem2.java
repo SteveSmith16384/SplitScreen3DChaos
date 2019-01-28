@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class Golem2 extends AbstractCreature {
 
 	public Golem2(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar _side) {
-		super(_game, _module, "Golem", startPos, _side, 0.3f, 1, 1, 8);
+		super(_game, _module, "Golem", startPos, _side, 0.3f, 1, 1, 8, false);
 	}
 
 	

@@ -13,4 +13,6 @@ public interface IAttackable extends IDamagable {
 	
 	float getDef();
 	
+	boolean isUndead();
+	
 }

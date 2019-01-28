@@ -147,4 +147,10 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	}
 
 
+	@Override
+	public boolean isUndead() {
+		return false;
+	}
+
+
 }

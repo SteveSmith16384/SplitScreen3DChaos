@@ -16,7 +16,6 @@ import ssmith.util.RealtimeInterval;
 
 public class FloorSelector extends AbstractPhysicalEntity implements IProcessable {
 
-	//private MultiplayerVoxelWorldMain game;
 	private WizardAvatar wiz;
 	private RealtimeInterval updateInt = new RealtimeInterval(300);
 

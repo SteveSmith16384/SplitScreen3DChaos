@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class RedDragon extends AbstractCreature {
 
 	public RedDragon(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar _side) {
-		super(_game, _module, "Red Dragon", startPos, _side, 3, 7, 9, 8);
+		super(_game, _module, "Red Dragon", startPos, _side, 3, 7, 9, 8, false);
 	}
 
 	
