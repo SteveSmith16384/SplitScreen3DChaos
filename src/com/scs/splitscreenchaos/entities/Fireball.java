@@ -15,7 +15,6 @@ import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.components.ICanShoot;
 import com.scs.splitscreenfpsengine.entities.AbstractBullet;
-import com.scs.splitscreenfpsengine.entities.DebuggingSphere;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class Fireball extends AbstractBullet {

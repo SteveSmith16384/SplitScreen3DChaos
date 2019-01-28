@@ -1,17 +1,11 @@
 package com.scs.splitscreenchaos;
 
 import java.awt.Point;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.jme3.collision.CollisionResult;
-import com.jme3.collision.CollisionResults;
-import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Spatial.CullHint;
 import com.scs.splitscreenchaos.blocks.ChangingBlock;
 import com.scs.splitscreenchaos.blocks.GrassBlock;
 import com.scs.splitscreenchaos.blocks.StoneBlock;
@@ -20,7 +14,6 @@ import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
-import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;

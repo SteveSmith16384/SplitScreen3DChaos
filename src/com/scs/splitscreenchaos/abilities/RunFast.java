@@ -1,43 +1,27 @@
 package com.scs.splitscreenchaos.abilities;
 
+import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenchaos.entities.nonphysical.RunFastEffect;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
-import com.scs.splitscreenfpsengine.Settings;
-import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
-import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class RunFast extends AbstractAbility {
+public class RunFast extends AbstractSpell {
 
 	private static final float MAX_POWER = 10;
 	
 	private float power;
 	private boolean isRunningFast;
 	
-	public RunFast(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar _player) {
-		super(_game, module, _player);
+	public RunFast(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar _player) {
+		super(_game, module, _player, "RunFast", 1);
 	}
 
 	
 	@Override
-	public boolean process(float interpol) {
-		isRunningFast = false;
-		power += interpol;
-		power = Math.min(power, MAX_POWER);
-		this.player.moveSpeed = Settings.PLAYER_MOVE_SPEED;
-		return true;
-	}
-
-	
-	@Override
-	public boolean activate(float interpol) {
-		power -= interpol;
-		power = Math.max(power, 0);
-		if (power > 0) {
-			this.player.moveSpeed = Settings.PLAYER_MOVE_SPEED * 1.5f;
-			isRunningFast = true;
-			return true;
-		}
-		return false;
+	public boolean cast() {
+		this.player.moveSpeed = this.player.moveSpeed * 2;
+		RunFastEffect rfe = new RunFastEffect(game, module, player);
+		return  true;
 	}
 
 	

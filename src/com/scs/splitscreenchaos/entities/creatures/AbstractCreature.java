@@ -38,7 +38,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
 
-	private float health;
+	private float health, maxHealth;
 	protected float speed, att, def;
 	private boolean dead = false;
 	private long removeAt;
@@ -61,6 +61,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		att = _att;
 		def = _def;
 		health = _health;
+		maxHealth = _health;
 		
 		model = getCreatureModel();
 		this.getMainNode().attachChild(model.getModel());
@@ -236,6 +237,19 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	}
 
 
+	public void restoreHealth() {
+		this.health = this.maxHealth;
+	}
+	
+	
+	public void heal(float amt) {
+		this.health += amt;
+		if (this.health > maxHealth) {
+			health = maxHealth;
+		}
+	}
+	
+	
 	public void killed(String reason, boolean permanent) {
 		Settings.p(this + " killed by " + reason);
 		dead = true;

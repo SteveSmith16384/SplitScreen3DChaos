@@ -33,6 +33,7 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 
 	}
 
+	
 	@Override
 	public void process(float tpfSecs) {
 		if (interval.hitInterval()) {

@@ -1,12 +1,11 @@
 package com.scs.splitscreenchaos.abilities;
 
 import com.jme3.math.Vector3f;
+import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
-import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
-import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class MagicWings extends AbstractAbility {
+public class MagicWings {/*extends AbstractSpell {
 
 	//private static final Vector3f FORCE = new Vector3f(0, .25f, 0);
 	private static final float POWER = .7f;//.3f;
@@ -15,8 +14,8 @@ public class MagicWings extends AbstractAbility {
 	private float fuel = 100;
 	private final Vector3f camUp = new Vector3f();
 
-	public MagicWings(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar _player) {
-		super(_game, module, _player);
+	public MagicWings(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar _player) {
+		super(_game, module, _player, "MagicWings", 1);
 	}
 
 
@@ -29,7 +28,7 @@ public class MagicWings extends AbstractAbility {
 
 
 	@Override
-	public boolean activate(float interpol) {
+	public boolean cast() {
 		fuel -= (interpol*20);
 		fuel = Math.max(fuel, 0);
 		if (fuel > 0) {
@@ -47,5 +46,5 @@ public class MagicWings extends AbstractAbility {
 	public String getHudText() {
 		return "JetPac Fuel:" + ((int)(fuel*10));
 	}
-
+*/
 }

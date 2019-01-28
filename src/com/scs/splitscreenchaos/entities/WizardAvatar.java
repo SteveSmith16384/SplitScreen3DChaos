@@ -2,8 +2,6 @@ package com.scs.splitscreenchaos.entities;
 
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.Spatial.CullHint;
-import com.scs.splitscreenchaos.ChaosSettings;
 import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.abilities.CycleThroughAbilitiesAbility;
 import com.scs.splitscreenchaos.abilities.FireballSpell;
@@ -30,7 +28,6 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	public float mana;
 	protected float health;
 	public boolean killed = false;
-	private FloorSelector floorSelector;
 
 	public WizardAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
 		super(_game, _module, _playerID, _cam, _input, _side);
@@ -41,9 +38,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		this.ability[0] = new FireballSpell(game, _module, this);
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
 
-		floorSelector = new FloorSelector(game, module, this);
-		//game.getRootNode().attachChild(floorSelector);
-
+		new FloorSelector(game, module, this);
 	}
 
 
