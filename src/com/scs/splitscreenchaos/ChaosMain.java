@@ -3,13 +3,13 @@ package com.scs.splitscreenchaos;
 import java.util.prefs.BackingStoreException;
 
 import com.jme3.system.AppSettings;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldProperties;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 import com.scs.splitscreenfpsengine.modules.AbstractStartModule;
 
-public class ChaosMain extends MultiplayerVoxelWorldMain {
+public class ChaosMain extends SplitScreenFpsEngine {
 
 	private static final String PROPS_FILE = "chaos_settings.txt";
 	private static final int NUM_AI = 0;//1;
@@ -31,7 +31,7 @@ public class ChaosMain extends MultiplayerVoxelWorldMain {
 				settings.setSettingsDialogImage(null);
 			}
 
-			MAX_TURN_SPEED = MultiplayerVoxelWorldMain.properties.GetMaxTurnSpeed();
+			MAX_TURN_SPEED = SplitScreenFpsEngine.properties.GetMaxTurnSpeed();
 			//BASE_SCORE_INC = MultiplayerVoxelWorldMain.properties.GetBaseScoreInc();
 			
 			ChaosMain app = new ChaosMain();

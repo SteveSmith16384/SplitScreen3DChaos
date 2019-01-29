@@ -1,6 +1,6 @@
 package com.scs.splitscreenchaos.entities.nonphysical;
 
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractEntity;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
@@ -15,7 +15,7 @@ public class ChangeBlocksInSweep extends AbstractEntity implements IProcessable 
 	private int maxZ;
 	private VoxelTerrainEntity vte;
 
-	public ChangeBlocksInSweep(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _maxZ) {
+	public ChangeBlocksInSweep(SplitScreenFpsEngine _game, AbstractGameModule _module, int _maxZ) {
 		super(_game, _module, "ChangeBlocksInSweep");
 
 		vte = module.getVoxelTerrainEntity();

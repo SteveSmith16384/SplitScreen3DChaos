@@ -15,7 +15,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Quad;
 import com.jme3.ui.Picture;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.gui.TextArea;
@@ -32,7 +32,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 	public float hud_width, hud_height;
 
-	private MultiplayerVoxelWorldMain game;
+	private SplitScreenFpsEngine game;
 	private AbstractGameModule module;
 	private WizardAvatar player; 
 
@@ -47,7 +47,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 	private TextArea log_ta;
 	private BitmapText stats;
 	
-	public ChaosHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, WizardAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
+	public ChaosHUD(SplitScreenFpsEngine _game, AbstractGameModule _module, WizardAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		super("HUD");
 
 		game = _game;
@@ -122,7 +122,8 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 			this.attachChild(pic);
 		}*/
 
-		this.addTargetter();
+		this.addTargetter((w/2), (h/2));
+		//this.addTargetter(50, 50);
 
 		module.addEntity(this);
 
@@ -208,14 +209,15 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 	}
 
 
-	private void addTargetter() {
+	private void addTargetter(float x, float y) {
 		Picture targetting_reticule = new Picture("HUD Picture");
 		targetting_reticule.setImage(game.getAssetManager(), "Textures/triangle_recticle.png", true);
 		float crosshairs_w = cam.getWidth()/10;
 		targetting_reticule.setWidth(crosshairs_w);
 		float crosshairs_h = cam.getHeight()/10;
 		targetting_reticule.setHeight(crosshairs_h);
-		targetting_reticule.setLocalTranslation(cam.getWidth()/2-(crosshairs_w/2), cam.getHeight()/2-(crosshairs_h/2), 0);
+		//targetting_reticule.setLocalTranslation(cam.getWidth()/2-(crosshairs_w/2), cam.getHeight()/2-(crosshairs_h/2), 0);
+		targetting_reticule.setLocalTranslation(x-(crosshairs_w/2), y-(crosshairs_h/2), 0);
 		this.attachChild(targetting_reticule);
 
 		this.targetting_reticules.add(targetting_reticule);

@@ -4,12 +4,12 @@ import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.entities.creatures.RedDragon;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class SummonRedDragonSpell extends AbstractSummonSpell {
 
-	public SummonRedDragonSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+	public SummonRedDragonSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "Red Dragon");
 	}
 

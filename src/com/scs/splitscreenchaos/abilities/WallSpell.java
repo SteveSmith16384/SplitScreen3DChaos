@@ -8,7 +8,7 @@ import com.jme3.scene.Geometry;
 import com.scs.splitscreenchaos.ChaosGameModule;
 import com.scs.splitscreenchaos.blocks.WallBlock;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
@@ -18,7 +18,7 @@ public class WallSpell extends AbstractSpell {
 	
 	private static final int SIZE = 1;
 
-	public WallSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+	public WallSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "Wall", 1);
 	}
 

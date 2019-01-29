@@ -4,7 +4,7 @@ import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
@@ -14,7 +14,7 @@ public class AbstractCorpse extends AbstractPhysicalEntity {
 
 	private AbstractCreature creature;
 
-	public AbstractCorpse(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractCreature _creature) {
+	public AbstractCorpse(SplitScreenFpsEngine _game, AbstractGameModule _module, AbstractCreature _creature) {
 		super(_game, _module, _creature.name + " (corpse)");
 
 		creature = _creature;

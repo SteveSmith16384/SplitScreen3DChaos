@@ -1,6 +1,6 @@
 package com.scs.splitscreenchaos.entities.nonphysical;
 
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractEntity;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -9,7 +9,7 @@ public abstract class AbstractTimedEffect extends AbstractEntity implements IPro
 
 	private float timeLeftSecs;
 	
-	public AbstractTimedEffect(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, String name, float _durationSecs) {
+	public AbstractTimedEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, String name, float _durationSecs) {
 		super(_game, _module, name);
 		
 		this.timeLeftSecs = _durationSecs;

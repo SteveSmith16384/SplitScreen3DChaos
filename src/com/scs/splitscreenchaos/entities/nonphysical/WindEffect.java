@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jme3.math.Vector3f;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IAffectedByPhysics;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.IProcessable;
@@ -19,7 +19,7 @@ public class WindEffect extends AbstractEntity implements IProcessable {
 	private RealtimeInterval interval = new RealtimeInterval(2000);
 	private Vector3f dir;
 
-	public WindEffect(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f _dir) {
+	public WindEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, Vector3f _dir) {
 		super(_game, _module, "WindEffect");
 
 		dir = _dir;

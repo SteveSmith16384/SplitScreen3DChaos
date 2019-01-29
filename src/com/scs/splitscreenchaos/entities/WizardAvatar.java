@@ -9,7 +9,7 @@ import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.effects.FloorSelector;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.models.WizardModel;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.components.IEntity;
@@ -29,7 +29,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	protected float health;
 	public boolean killed = false;
 
-	public WizardAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
+	public WizardAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
 		super(_game, _module, _playerID, _cam, _input, _side);
 
 		mana = 100;
@@ -43,7 +43,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 
 	@Override
-	protected Spatial getPlayersModel(MultiplayerVoxelWorldMain game, int pid) {
+	protected Spatial getPlayersModel(SplitScreenFpsEngine game, int pid) {
 		WizardModel wiz = new WizardModel(game.getAssetManager(), pid);
 		/*if (ChaosSettings.HIDE_AVATARS) {
 			wiz.getModel().setCullHint(CullHint.Always);

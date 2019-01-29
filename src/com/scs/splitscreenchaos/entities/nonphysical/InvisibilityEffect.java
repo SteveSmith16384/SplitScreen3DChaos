@@ -1,7 +1,7 @@
 package com.scs.splitscreenchaos.entities.nonphysical;
 
 import com.jme3.scene.Spatial.CullHint;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
@@ -9,7 +9,7 @@ public class InvisibilityEffect extends AbstractTimedEffect {
 
 	private AbstractPlayersAvatar wiz;
 	
-	public InvisibilityEffect(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractPlayersAvatar _wiz) {
+	public InvisibilityEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, AbstractPlayersAvatar _wiz) {
 		super(_game, _module, "InvisibilityEffect", 10);
 		
 		wiz = _wiz;

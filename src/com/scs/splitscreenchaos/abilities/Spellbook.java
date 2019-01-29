@@ -3,7 +3,7 @@ package com.scs.splitscreenchaos.abilities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -16,7 +16,7 @@ public class Spellbook extends AbstractAbility { // todo - use this?
 	private AbstractSpell currentSpell;
 	private List<AbstractSpell> spells = new ArrayList<>();
 	
-	public Spellbook(MultiplayerVoxelWorldMain _game, AbstractGameModule module, AbstractPlayersAvatar _player) {
+	public Spellbook(SplitScreenFpsEngine _game, AbstractGameModule module, AbstractPlayersAvatar _player) {
 		super(_game, module, _player);
 		
 		//currentSpell = new WallSpell(module, _player);

@@ -6,7 +6,7 @@ import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
@@ -14,7 +14,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class TeleportSpell extends AbstractSpell {
 
-	public TeleportSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+	public TeleportSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "Teleport", 1);
 	}
 

@@ -8,14 +8,14 @@ import com.jme3.scene.Geometry;
 import com.scs.splitscreenchaos.ChaosSettings;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public abstract class AbstractSummonSpell extends AbstractSpell {
 
-	public AbstractSummonSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p, String name) {
+	public AbstractSummonSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p, String name) {
 		super(_game, module, p, name, 1);
 	}
 

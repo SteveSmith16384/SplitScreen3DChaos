@@ -5,7 +5,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Box;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
@@ -19,7 +19,7 @@ public class FloorSelector extends AbstractPhysicalEntity implements IProcessabl
 	private WizardAvatar wiz;
 	private RealtimeInterval updateInt = new RealtimeInterval(300);
 
-	public FloorSelector(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar _wiz) {
+	public FloorSelector(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _wiz) {
 		super(_game, module, "FloorSelector");
 
 		game =_game;

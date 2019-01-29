@@ -3,7 +3,7 @@ package com.scs.splitscreenchaos.abilities;
 import java.util.ArrayList;
 
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.abilities.IAbility;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -13,7 +13,7 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	private ArrayList<IAbility> abilities = new ArrayList<>();
 	private int index;
 
-	public CycleThroughAbilitiesAbility(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+	public CycleThroughAbilitiesAbility(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p);
 		
 		abilities.add(new SummonGolemSpell(game, module, p));

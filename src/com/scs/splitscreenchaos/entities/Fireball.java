@@ -11,7 +11,7 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.components.ICanShoot;
 import com.scs.splitscreenfpsengine.entities.AbstractBullet;
@@ -21,7 +21,7 @@ public class Fireball extends AbstractBullet {
 
 	private ParticleEmitter fire;
 
-	public Fireball(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, ICanShoot _shooter) {
+	public Fireball(SplitScreenFpsEngine _game, AbstractGameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "Fireball", _shooter);
 
 	}

@@ -2,12 +2,12 @@ package com.scs.splitscreenchaos.abilities;
 
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class HealSpell extends AbstractSpell {
 
-	public HealSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+	public HealSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "HealSpell", 1);
 	}
 

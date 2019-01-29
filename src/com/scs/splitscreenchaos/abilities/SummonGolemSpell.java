@@ -7,7 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.Golem2;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
@@ -15,7 +15,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class SummonGolemSpell extends AbstractSpell { // todo - extends AbstractSummon
 
-	public SummonGolemSpell(MultiplayerVoxelWorldMain _game, AbstractGameModule module, WizardAvatar p) {
+	public SummonGolemSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "SummonGolemSpell", 1);
 	}
 

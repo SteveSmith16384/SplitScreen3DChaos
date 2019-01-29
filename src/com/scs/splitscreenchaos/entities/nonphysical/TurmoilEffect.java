@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.ChaosGameModule;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractEntity;
@@ -20,7 +20,7 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 	private List<IEntity> entities = new ArrayList<IEntity>();
 	private RealtimeInterval interval = new RealtimeInterval(2000);
 
-	public TurmoilEffect(MultiplayerVoxelWorldMain _game, AbstractGameModule _module) {
+	public TurmoilEffect(SplitScreenFpsEngine _game, AbstractGameModule _module) {
 		super(_game, _module, "TurmoilEffect");
 		
 		this.module.addEntity(this);

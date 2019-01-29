@@ -12,7 +12,7 @@ import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.entities.AbstractCorpse;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.models.ICreatureModel;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.MyBetterCharacterControl;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.components.IDamagable;
@@ -54,7 +54,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private Vector3f prevPos = new Vector3f();
 	private RealtimeInterval checkAttackInterval = new RealtimeInterval(2000);
 
-	public AbstractCreature(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health, boolean _undead) {
+	public AbstractCreature(SplitScreenFpsEngine _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health, boolean _undead) {
 		super(_game, _module, name);
 
 		owner = _owner;

@@ -13,7 +13,7 @@ import com.scs.splitscreenchaos.blocks.WoodBlock;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
@@ -37,7 +37,7 @@ public class ChaosGameModule extends AbstractGameModule {
 
 	public int totalWizards, totalHumans, totalAI;
 
-	public ChaosGameModule(MultiplayerVoxelWorldMain _game, int _numHumans, int _numAI) {
+	public ChaosGameModule(SplitScreenFpsEngine _game, int _numHumans, int _numAI) {
 		super(_game);
 
 		totalHumans = _numHumans;
@@ -200,14 +200,14 @@ public class ChaosGameModule extends AbstractGameModule {
 
 
 	@Override
-	protected AbstractPlayersAvatar getPlayersAvatar(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, int _playerID,
+	protected AbstractPlayersAvatar getPlayersAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID,
 			Camera _cam, IInputDevice _input, int _side) {
 		return new WizardAvatar(_game, this, _playerID, _cam, _input, _side);
 	}
 
 
 	@Override
-	protected IHud generateHUD(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
+	protected IHud generateHUD(SplitScreenFpsEngine _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		return new ChaosHUD(_game, _module, (WizardAvatar)_player, xBL, yBL, w, h, _cam);
 	}
 

@@ -5,7 +5,7 @@ import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.models.ICreatureModel;
 import com.scs.splitscreenchaos.models.WizardModel;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
@@ -13,7 +13,7 @@ public class AIWizard extends AbstractCreature implements IWizard, IAttackable, 
 
 	private int wizid;
 	
-	public AIWizard(MultiplayerVoxelWorldMain _game, AbstractGameModule _module, Vector3f startPos, int _wizid) {
+	public AIWizard(SplitScreenFpsEngine _game, AbstractGameModule _module, Vector3f startPos, int _wizid) {
 		super(_game, _module, "Wizard", startPos, null, 1, 1, 1, 1, false);
 		
 		wizid = _wizid;

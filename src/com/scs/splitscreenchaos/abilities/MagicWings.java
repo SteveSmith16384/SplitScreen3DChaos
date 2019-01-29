@@ -2,7 +2,7 @@ package com.scs.splitscreenchaos.abilities;
 
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenfpsengine.MultiplayerVoxelWorldMain;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class MagicWings {/*extends AbstractSpell {
