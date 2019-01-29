@@ -2,7 +2,7 @@ package com.scs.splitscreenchaos.entities.creatures;
 
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenchaos.models.GoldenDragonModel;
+import com.scs.splitscreenchaos.models.GoldenDragonModel2;
 import com.scs.splitscreenchaos.models.ICreatureModel;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -16,7 +16,7 @@ public class GoldenDragon extends AbstractCreature {
 	
 	@Override
 	public ICreatureModel getCreatureModel() {
-		return new GoldenDragonModel(game.getAssetManager());
+		return new GoldenDragonModel2(game.getAssetManager());
 	}
 
 

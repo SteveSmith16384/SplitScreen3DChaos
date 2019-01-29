@@ -32,8 +32,9 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 		abilities.add(new CommandCreatureSpell(game, module, p));
 		abilities.add(new SubversionSpell(game, module, p));
 		abilities.add(new TurmoilSpell(game, module, p));
-		abilities.add(new ResurrectSpell(game, module, p));
+		abilities.add(new RaiseDeadSpell(game, module, p));
 		abilities.add(new RunFastSpell(game, module, p));
+		abilities.add(new SwapPositionsSpell(game, module, p));
 	}
 
 

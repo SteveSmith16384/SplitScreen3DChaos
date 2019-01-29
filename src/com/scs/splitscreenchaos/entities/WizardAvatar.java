@@ -1,7 +1,9 @@
 package com.scs.splitscreenchaos.entities;
 
+import com.jme3.bounding.BoundingBox;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.Spatial.CullHint;
 import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.abilities.CycleThroughAbilitiesAbility;
 import com.scs.splitscreenchaos.abilities.FireballSpell;
@@ -9,8 +11,8 @@ import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.effects.FloorSelector;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.models.WizardModel;
-import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
@@ -28,12 +30,12 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	public float mana;
 	protected float health;
 	public boolean killed = false;
-
+	
 	public WizardAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
 		super(_game, _module, _playerID, _cam, _input, _side);
 
 		mana = 100;
-		health = 100;//module.getPlayersHealth(playerID);
+		health = 100;
 
 		this.ability[0] = new FireballSpell(game, _module, this);
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
@@ -48,6 +50,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		/*if (ChaosSettings.HIDE_AVATARS) {
 			wiz.getModel().setCullHint(CullHint.Always);
 		}*/
+		BoundingBox bv = (BoundingBox)wiz.getModel().getWorldBound();
 		return wiz.getModel();
 	}
 
@@ -104,6 +107,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 
 	private void killed(String reason) {
+		hud.appendToLog("You have been killed by " + reason);
 		killed = true;
 		Settings.p("Player died: " + reason);
 		//todo - die anim - this.pl
@@ -111,10 +115,6 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		//this.restarting = true;
 		//this.restartTime = MultiplayerVoxelWorldMain.properties.GetRestartTimeSecs();
 		//invulnerableTime = RESTART_DUR*3;
-
-		// Move us below the map
-		//Vector3f pos = this.getMainNode().getWorldTranslation().clone();//.floor_phy.getPhysicsLocation().clone();
-		//playerControl.warp(pos);
 
 		// Remove all owned creatures
 		for (IEntity e : module.entities) {
@@ -142,14 +142,14 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 
 	@Override
-	public float getCameraHeight() {
-		return 1f; // todo - check
+	public boolean isUndead() {
+		return false;
 	}
 
 
 	@Override
-	public boolean isUndead() {
-		return false;
+	public boolean canBeSeen() {
+		return this.getMainNode().getCullHint() != CullHint.Always;
 	}
 
 

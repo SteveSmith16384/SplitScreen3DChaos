@@ -20,23 +20,11 @@ public class SubversionSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		Ray ray = new Ray(this.player.getCamera().getLocation(), this.player.getCamera().getDirection());
-
-		CollisionResults results = new CollisionResults();
-		module.getRootNode().collideWith(ray, results);
-
-		CollisionResult result = results.getClosestCollision();
-		if (result != null) {
-			Geometry g = result.getGeometry();
-			AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-			if (ape instanceof AbstractCreature) {
-				AbstractCreature creature = (AbstractCreature)ape;
-				if (creature.getOwner() != player) {
-					creature.setOwner((WizardAvatar)player);
-					return true;
-				}
-			} else {
-				Settings.p(ape + " selected");
+		AbstractCreature creature = (AbstractCreature)module.getWithRay(this.player, AbstractCreature.class, -1);
+		if (creature != null) {
+			if (creature.getOwner() != player) {
+				creature.setOwner((WizardAvatar)player);
+				return true;
 			}
 		}
 		return false;

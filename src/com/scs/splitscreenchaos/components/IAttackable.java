@@ -15,4 +15,6 @@ public interface IAttackable extends IDamagable {
 	
 	boolean isUndead();
 	
+	boolean canBeSeen(); // In case a wiz is invisible
+	
 }

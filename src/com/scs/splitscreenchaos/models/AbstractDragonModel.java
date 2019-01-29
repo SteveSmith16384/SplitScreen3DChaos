@@ -17,7 +17,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
 public abstract class AbstractDragonModel implements ICreatureModel {
 
-	public static final float MODEL_WIDTH = 0.9f;
+	//public static final float MODEL_WIDTH = 0.9f;
 
 	private AssetManager assetManager;
 	private Spatial model;
@@ -26,14 +26,14 @@ public abstract class AbstractDragonModel implements ICreatureModel {
 	private AnimChannel channel;
 	private AbstractCreature.Anim currAnimCode = AbstractCreature.Anim.None;
 
-	public AbstractDragonModel(AssetManager _assetManager, String tex) {
+	public AbstractDragonModel(AssetManager _assetManager, String tex, float height) {
 		assetManager = _assetManager;
 
 		model = assetManager.loadModel("Models/dragon/dragon.blend");
-		JMEModelFunctions.setTextureOnSpatial(assetManager, model, tex);//"Models/dragon/dragon_yellow.png");
+		JMEModelFunctions.setTextureOnSpatial(assetManager, model, tex);
 		model.setShadowMode(ShadowMode.Cast);
-		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
-		JMEModelFunctions.scaleModelToWidth(model, MODEL_WIDTH);
+		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
+		JMEModelFunctions.scaleModelToHeight(model, height);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);

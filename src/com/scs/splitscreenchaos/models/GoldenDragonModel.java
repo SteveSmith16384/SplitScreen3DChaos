@@ -15,7 +15,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
 // Anims on 'dragon (Node)': [sleep, die, wait, wait_03, wait_02, attack, wakeup, collide, neutral, attack_02, walk, fallasleep]
 
-public class GoldenDragonModel implements ICreatureModel { // todo - extends AbstractDragonModel
+public class GoldenDragonModel implements ICreatureModel { // todo - delete this
 
 	public static final float MODEL_WIDTH = 0.9f;
 
@@ -26,7 +26,7 @@ public class GoldenDragonModel implements ICreatureModel { // todo - extends Abs
 	private AnimChannel channel;
 	private AbstractCreature.Anim currAnimCode = AbstractCreature.Anim.None;
 
-	public GoldenDragonModel(AssetManager _assetManager) {
+	public GoldenDragonModel(AssetManager _assetManager, int delme) {
 		assetManager = _assetManager;
 
 		model = assetManager.loadModel("Models/dragon/dragon.blend");

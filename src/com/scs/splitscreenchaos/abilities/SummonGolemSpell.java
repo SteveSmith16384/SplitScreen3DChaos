@@ -6,7 +6,7 @@ import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenchaos.entities.creatures.Golem2;
+import com.scs.splitscreenchaos.entities.creatures.Golem;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
@@ -34,7 +34,7 @@ public class SummonGolemSpell extends AbstractSpell { // todo - extends Abstract
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 				if (ape instanceof FloorOrCeiling) {
 					Vector3f position = result.getContactPoint();
-					Golem2 golem = new Golem2(game, module, position, (WizardAvatar)this.player);
+					Golem golem = new Golem(game, module, position, (WizardAvatar)this.player);
 					module.addEntity(golem);
 					return true;
 				} else {

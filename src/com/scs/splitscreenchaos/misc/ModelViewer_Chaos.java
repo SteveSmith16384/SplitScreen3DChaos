@@ -1,6 +1,8 @@
 package com.scs.splitscreenchaos.misc;
 
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.misc.ModelViewer;
 
@@ -19,8 +21,9 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Spatial model = assetManager.loadModel("Models/lipsofsuna_tree/tree2.blend");
-		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/lipsofsuna_tree/tree4.png");
+		Spatial model = assetManager.loadModel("Models/boneman/boneman_running.blend");
+		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/lipsofsuna_tree/tree4.png");
+		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
 
 		//JMEModelFunctions.scaleModelToHeight(model, 2f);
 		

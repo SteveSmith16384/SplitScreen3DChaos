@@ -6,10 +6,11 @@ import java.util.List;
 
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.scs.splitscreenchaos.blocks.BrickBlock;
 import com.scs.splitscreenchaos.blocks.ChangingBlock;
 import com.scs.splitscreenchaos.blocks.GrassBlock;
-import com.scs.splitscreenchaos.blocks.StoneBlock;
 import com.scs.splitscreenchaos.blocks.WoodBlock;
+import com.scs.splitscreenchaos.entities.MageTower;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
@@ -59,18 +60,24 @@ public class ChaosGameModule extends AbstractGameModule {
 		//vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(MAP_SIZE_BLOCKS, 1, MAP_SIZE_BLOCKS), LavaBlock.class);
 		//vte.addRectRange_Blocks(BlockCodes.SAND, new Vector3Int(10, 1, 10), new Vector3Int(1, 1, 1));
 
+		new MageTower(game, this, new Vector3f(0, 0, 0));
+		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0));
+		new MageTower(game, this, new Vector3f(0, 0, MAP_SIZE-1));
+		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, MAP_SIZE-1));
+		
+		
 		for (int i=0 ; i<5 ; i++) {
 			Point p = this.getRandomBlockPos(1);
 			this.createTree(vte, new Vector3f(p.x, 1, p.y));
 		}
-
-		for (int i=0 ; i<5 ; i++) {
+/*
+		for (int i=0 ; i<10 ; i++) {
 			Point p = this.getRandomBlockPos(20);
 			this.createWall_Horiz(vte, new Vector3f(p.x, 1, p.y));
 			p = this.getRandomBlockPos(20);
 			this.createWall_Vert(vte, new Vector3f(p.x, 1, p.y));
 		}
-
+*/
 		// Create AI Wiz
 		for (int i=0 ; i<totalAI ; i++) {
 			// todo
@@ -164,29 +171,31 @@ public class ChaosGameModule extends AbstractGameModule {
 
 
 	private void createWall_Horiz(VoxelTerrainEntity vte, Vector3f startPos) {
-		int height = 4;
+		int height = 8;
 		for (int x=0 ; x<20 ; x++) {
-			Vector3Int pos = new Vector3Int(startPos.x+x, startPos.y+height, startPos.z);
-			ChangingBlock block = new ChangingBlock(StoneBlock.class, pos);
-			addChangingBlock(block);
 			height += NumberFunctions.rnd(-1,  1);
 			if (height < 0) {
-				height = 0;
+				height = 1;
+			}
+			for (int y=0 ; y<height; y++) {
+				Vector3Int pos = new Vector3Int(startPos.x+x, startPos.y+y, startPos.z);
+				ChangingBlock block = new ChangingBlock(BrickBlock.class, pos);
+				addChangingBlock(block);
 			}
 		}
 	}
 
 
 	private void createWall_Vert(VoxelTerrainEntity vte, Vector3f startPos) {
-		int height = 4;
+		int height = 8;
 		for (int z=0 ; z<20 ; z++) {
 			height += NumberFunctions.rnd(-1,  1);
 			if (height < 0) {
-				height = 0;
+				height = 1;
 			}
 			for (int y=0 ; y<height; y++) {
 				Vector3Int pos = new Vector3Int(startPos.x, startPos.y+y, startPos.z+z);
-				ChangingBlock block = new ChangingBlock(StoneBlock.class, pos);
+				ChangingBlock block = new ChangingBlock(BrickBlock.class, pos);
 				addChangingBlock(block);
 			}
 		}

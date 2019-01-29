@@ -5,7 +5,7 @@ import com.jme3.asset.AssetManager;
 public class GreenDragonModel extends AbstractDragonModel {
 
 	public GreenDragonModel(AssetManager _assetManager) {
-		super(_assetManager, "Models/dragon/dragon_green.png");
+		super(_assetManager, "Models/dragon/dragon_green.png", 2.5f);
 	}
 
 }

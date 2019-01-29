@@ -1,10 +1,12 @@
 package com.scs.splitscreenchaos.entities.creatures;
 
 import com.jme3.asset.TextureKey;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
+import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.scs.splitscreenchaos.GameMechanics;
@@ -12,9 +14,9 @@ import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.entities.AbstractCorpse;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.models.ICreatureModel;
-import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.MyBetterCharacterControl;
 import com.scs.splitscreenfpsengine.Settings;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
@@ -27,18 +29,19 @@ import ssmith.util.RealtimeInterval;
 
 public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable {
 
+	private static final float ATTACK_LEWAY = .4f;
 	private static final float TURN_SPEED = 1f;
 
-	private static final float PLAYER_HEIGHT = 3f;
+	//private static final float PLAYER_HEIGHT = 3f;
 	private static final float WEIGHT = 1f;
 
-	public enum Anim {None, Idle, Walk, Attack, Died}; // AvoidBlockage 
-	private enum AIMode {AwaitingCommand, WalkToPoint, WalkToCreature, Attacking}; // AvoidBlockage 
+	public enum Anim {None, Idle, Walk, Attack, Died}; 
+	private enum AIMode {AwaitingCommand, WalkToPoint, WalkToCreature, Attacking}; 
 
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
 
-	private boolean undead;
+	public boolean undead;
 	private float health, maxHealth;
 	protected float speed, att, def;
 	private boolean dead = false;
@@ -49,7 +52,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private AIMode aiMode = AIMode.AwaitingCommand;
 	private Vector3f targetPos;
 	private IAttackable physicalTarget;
-	private float avoidUntil = 0;
+	private float attackDist = -1; // How far away the target currrently is when attacking
+	//private float avoidUntil = 0;
 	private RealtimeInterval checkPosInterval = new RealtimeInterval(2000);
 	private Vector3f prevPos = new Vector3f();
 	private RealtimeInterval checkAttackInterval = new RealtimeInterval(2000);
@@ -64,30 +68,50 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		health = _health;
 		maxHealth = _health;
 		undead = _undead;
-		
+
 		model = getCreatureModel();
 		this.getMainNode().attachChild(model.getModel());
 		this.getMainNode().setLocalTranslation(startPos);
 
-		playerControl = new MyBetterCharacterControl(PLAYER_HEIGHT/3, PLAYER_HEIGHT, WEIGHT); // todo - calc from model size
+		BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
+		playerControl = new MyBetterCharacterControl(bv.getXExtent(), bv.getYExtent()*2, WEIGHT);
 		playerControl.setJumpForce(new Vector3f(0, Settings.JUMP_FORCE, 0)); 
 		this.getMainNode().addControl(playerControl);
 
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
 		// Add sphere above to show side
-		Mesh sphere = new Sphere(8, 8, .2f, true, false);
-		Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
-		TextureKey key = new TextureKey( "Textures/greensun.jpg"); // todo - diff colours depending on wizard
-		Texture tex = game.getAssetManager().loadTexture(key);
-		Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
-		mat.setTexture("DiffuseMap", tex);
-		ball_geo.setMaterial(mat);
-		ball_geo.setLocalTranslation(0, 2, 0); // todo - set pos from model size
-		this.getMainNode().attachChild(ball_geo);
+		if (this.owner != null) {
+			Sphere sphere = new Sphere(8, 8, .2f, true, false);
+			sphere.setTextureMode(Sphere.TextureMode.Projected);
+			Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
+			TextureKey key = new TextureKey(getOrbColour(owner.playerID));
+			Texture tex = game.getAssetManager().loadTexture(key);
+			Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
+			mat.setTexture("DiffuseMap", tex);
+			ball_geo.setMaterial(mat);
+			ball_geo.setLocalTranslation(0, bv.getYExtent()*2 + 0.2f, 0);
+			this.getMainNode().attachChild(ball_geo);
+		}
 
 		model.setAnim(Anim.Idle);
 
+	}
+
+
+	private static String getOrbColour(int id) {
+		switch (id) {
+		case 0:
+			return "Textures/orb_yellow";
+		case 1:
+			return "Textures/orb_red.png";
+		case 2:
+			return "Textures/orb_blue.png";
+		case 3:
+			return "Textures/orb_purple.png";
+		default:
+			throw new RuntimeException("Todo");
+		}
 	}
 
 
@@ -102,13 +126,13 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 		// Reset any vars
 		if (physicalTarget != null) {
-			if (!physicalTarget.isAlive()) {
+			if (physicalTarget.isAlive()) {
+				this.targetPos = this.physicalTarget.getLocation();
+			} else {
 				physicalTarget = null;
 				if (aiMode == AIMode.Attacking) {
 					aiMode = AIMode.AwaitingCommand;
 				}
-			} else {
-				this.targetPos = this.physicalTarget.getLocation();
 			}
 		}
 
@@ -143,7 +167,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 				if (this.aiMode == AIMode.WalkToPoint || this.aiMode == AIMode.WalkToCreature) {
 					this.turnTowardsDestination();
-					if (this.distance(this.targetPos) < .5f) {
+					if (this.distance(this.targetPos) < .1f) {
 						this.aiMode = AIMode.AwaitingCommand;
 					}
 				}/* else if (this.aiMode == AIMode.AvoidBlockage) {
@@ -157,9 +181,14 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				break;
 
 			case Attacking:
-				model.setAnim(Anim.Attack);
 				this.turnTowardsDestination();
-				this.moveFwds();
+				float dist = this.distance((AbstractPhysicalEntity)this.physicalTarget);
+				if (dist > this.attackDist) { // Stop us constantly pushing our attackee
+					model.setAnim(Anim.Walk);
+					this.moveFwds();
+				} else {
+					model.setAnim(Anim.Attack);
+				}
 				break;
 
 			default:
@@ -242,16 +271,16 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	public void restoreHealth() {
 		this.health = this.maxHealth;
 	}
-	
-	
+
+
 	public void heal(float amt) {
 		this.health += amt;
 		if (this.health > maxHealth) {
 			health = maxHealth;
 		}
 	}
-	
-	
+
+
 	public void killed(String reason, boolean permanent) {
 		Settings.p(this + " killed by " + reason);
 		dead = true;
@@ -288,20 +317,18 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	public void notifiedOfCollision(AbstractPhysicalEntity other) {
 		if (other instanceof IAttackable) {
 			IAttackable co = (IAttackable)other;
-			if (this.getSide() != co.getSide()) {
+			if (isValidTarget(co)) {
+				//if (this.getSide() != co.getSide()) {
 				this.setTarget(co);
+				this.attackDist = this.distance(other) + ATTACK_LEWAY;
 				this.aiMode = AIMode.Attacking;
-				//if (other instanceof IDamagable) {
-				//IDamagable id = (IDamagable)other;
 				if (checkAttackInterval.hitInterval()) {
-					//float tot = this.att - co.getDef() + NumberFunctions.rndFloat(-3,  3);
+					Settings.p("Combat between " + this + " and " + co);
 					float tot = GameMechanics.combat(att, co.getDef());
 					if (tot > 0) {
 						co.damaged(tot, "combat with " + this.name);
 					}
 				}
-				//}
-
 			}
 		}
 	}
@@ -342,7 +369,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		for (IEntity e : module.entities) {
 			if (e instanceof IAttackable) {
 				IAttackable golem = (IAttackable)e;
-				if (golem.getSide() != this.getSide()) {
+				/*if (golem.canBeSeen()) {
+					if (!golem.isUndead() || this.isUndead()) { // Don;t attack undead unless we're undead
+						if (golem.getSide() != this.getSide()) {*/
+				if (isValidTarget(golem)) {
 					float dist = this.distance(golem.getLocation());
 					if (dist <= closestDist) {
 						closestDist = dist;
@@ -355,9 +385,28 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	}
 
 
+	private boolean isValidTarget(IAttackable golem) {
+		if (golem.canBeSeen()) {
+			if (!golem.isUndead() || this.isUndead()) { // Don;t attack undead unless we're undead
+				if (golem.getSide() != this.getSide()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
 	@Override
 	public boolean isUndead() {
 		return undead;
 	}
+
+
+	@Override
+	public boolean canBeSeen() {
+		return this.getMainNode().getCullHint() != CullHint.Always;
+	}
+
 
 }

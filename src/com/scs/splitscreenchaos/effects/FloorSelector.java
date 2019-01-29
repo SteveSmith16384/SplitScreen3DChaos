@@ -4,6 +4,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Box;
+import com.scs.splitscreenchaos.abilities.AbstractSummonSpell;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IProcessable;
@@ -27,12 +28,9 @@ public class FloorSelector extends AbstractPhysicalEntity implements IProcessabl
 
 		Box box1 = new Box(.5f, .01f, .5f);
 		Geometry geometry = new Geometry("SquareIndicatorBox", box1);
-		//geometry.setShadowMode(ShadowMode.CastAndReceive);
 		JMEModelFunctions.setTextureOnSpatial(game.getAssetManager(), geometry, "Textures/yellowsun.jpg"); // todo - diff colours
-		geometry.setLocalTranslation(.5f, 0, .5f);
+		//geometry.setLocalTranslation(.5f, 0, .5f);
 		this.getMainNode().attachChild(geometry);
-		//this.mainNode.attachChild(geometry);
-		//mainNode.updateModelBound();
 
 		module.addEntity(this);
 
@@ -41,8 +39,13 @@ public class FloorSelector extends AbstractPhysicalEntity implements IProcessabl
 
 	@Override
 	public void process(float tpfSecs) {
+		if (wiz.ability[0] instanceof AbstractSummonSpell == false) {
+			this.getMainNode().setCullHint(CullHint.Always);
+			return;
+		}
+		
 		if (updateInt.hitInterval()) {
-			Vector3f ape = module.getPointWithRay(wiz, FloorOrCeiling.class);
+			Vector3f ape = module.getPointWithRay(wiz, FloorOrCeiling.class, -1);
 			if (ape != null) {
 				this.getMainNode().setCullHint(CullHint.Inherit);
 				this.getMainNode().setLocalTranslation(ape);
