@@ -1,4 +1,4 @@
-package com.scs.splitscreenchaos.models;
+package com.scs.splitscreenchaos.components;
 
 import com.jme3.scene.Spatial;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
@@ -7,5 +7,5 @@ public interface ICreatureModel {
 
 	Spatial getModel();
 	
-	void setAnim(AbstractCreature.Anim anim);
+	void setCreatureAnim(AbstractCreature.Anim anim);
 }

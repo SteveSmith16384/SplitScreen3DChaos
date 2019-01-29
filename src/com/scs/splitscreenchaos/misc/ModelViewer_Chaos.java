@@ -1,9 +1,7 @@
 package com.scs.splitscreenchaos.misc;
 
-import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
-import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.misc.ModelViewer;
 
 
@@ -26,7 +24,9 @@ public class ModelViewer_Chaos extends ModelViewer {
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
 
 		//JMEModelFunctions.scaleModelToHeight(model, 2f);
-		
+		Node n = (Node)model;
+		n.getChild("Wall").removeFromParent();
+		n.getChild("Floor").removeFromParent();
 		return model;
 	}
 	

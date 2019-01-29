@@ -11,9 +11,9 @@ import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.components.IAttackable;
+import com.scs.splitscreenchaos.components.ICreatureModel;
 import com.scs.splitscreenchaos.entities.AbstractCorpse;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenchaos.models.ICreatureModel;
 import com.scs.splitscreenfpsengine.MyBetterCharacterControl;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
@@ -94,7 +94,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			this.getMainNode().attachChild(ball_geo);
 		}
 
-		model.setAnim(Anim.Idle);
+		model.setCreatureAnim(Anim.Idle);
 
 	}
 
@@ -102,7 +102,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private static String getOrbColour(int id) {
 		switch (id) {
 		case 0:
-			return "Textures/orb_yellow";
+			return "Textures/orb_yellow.png";
 		case 1:
 			return "Textures/orb_red.png";
 		case 2:
@@ -139,7 +139,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		if (!dead) {
 			switch (aiMode) {
 			case AwaitingCommand:
-				model.setAnim(Anim.Idle);
+				model.setCreatureAnim(Anim.Idle);
 				physicalTarget = this.findClosestTarget();
 				if (physicalTarget != null) {
 					aiMode = AIMode.WalkToCreature;
@@ -150,7 +150,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 			case WalkToPoint:
 			case WalkToCreature:
-				model.setAnim(Anim.Walk);
+				model.setCreatureAnim(Anim.Walk);
 				/*if (aiMode == AIMode.WalkToCreature) {
 					if (physicalTarget != null) {
 						this.targetPos = this.physicalTarget.getLocation();
@@ -184,10 +184,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				this.turnTowardsDestination();
 				float dist = this.distance((AbstractPhysicalEntity)this.physicalTarget);
 				if (dist > this.attackDist) { // Stop us constantly pushing our attackee
-					model.setAnim(Anim.Walk);
+					model.setCreatureAnim(Anim.Walk);
 					this.moveFwds();
 				} else {
-					model.setAnim(Anim.Attack);
+					model.setCreatureAnim(Anim.Attack);
 				}
 				break;
 
@@ -284,7 +284,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	public void killed(String reason, boolean permanent) {
 		Settings.p(this + " killed by " + reason);
 		dead = true;
-		model.setAnim(Anim.Died);
+		model.setCreatureAnim(Anim.Died);
 		removeAt = System.currentTimeMillis() + 2000;
 
 		if (!permanent) {

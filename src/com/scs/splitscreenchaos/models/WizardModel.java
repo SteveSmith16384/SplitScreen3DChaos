@@ -9,8 +9,11 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.scs.splitscreenchaos.components.ICreatureModel;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature.Anim;
 import com.scs.splitscreenfpsengine.Settings;
+import com.scs.splitscreenfpsengine.components.IAvatarModel;
+import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
@@ -19,7 +22,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
  * 
  * Anims: [Walk, Die, Hit, Idle, Attack]
  */
-public class WizardModel implements ICreatureModel {
+public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wizard avatars and creatures (i.e. ai wizards)
 
 	public static final int ANIM_IDLE = 0;
 	public static final int ANIM_WALKING = 1;
@@ -35,7 +38,9 @@ public class WizardModel implements ICreatureModel {
 
 	// Anim
 	private AnimChannel channel;
-	private Anim currAnimCode = Anim.None;
+	private AbstractPlayersAvatar.Anim currAnimCode = AbstractPlayersAvatar.Anim.None;
+	private Anim currAnimCodeC = Anim.None;
+	
 
 	public WizardModel(AssetManager _assetManager, int playerid) {
 		assetManager = _assetManager;
@@ -50,7 +55,8 @@ public class WizardModel implements ICreatureModel {
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
 		channel = control.createChannel();
-		setAnim(Anim.Idle); // Default
+		setAvatarAnim(AbstractPlayersAvatar.Anim.Idle); // Default
+		setCreatureAnim(Anim.Idle); // Default
 	}
 
 
@@ -76,7 +82,7 @@ public class WizardModel implements ICreatureModel {
 
 
 	@Override
-	public void setAnim(Anim animCode) {
+	public void setAvatarAnim(AbstractPlayersAvatar.Anim animCode) {
 		if (currAnimCode == animCode) {
 			return;			
 		}
@@ -109,6 +115,42 @@ public class WizardModel implements ICreatureModel {
 		currAnimCode = animCode;
 
 
+	}
+
+
+	@Override
+	public void setCreatureAnim(Anim anim) {
+		if (currAnimCodeC == anim) {
+			return;			
+		}
+
+		switch (anim) {
+		case Idle:
+			channel.setLoopMode(LoopMode.Loop);
+			channel.setAnim("Idle");
+			break;
+
+		case Walk:
+			channel.setLoopMode(LoopMode.Loop);
+			channel.setAnim("Walk");
+			break;
+
+		case Attack:
+			channel.setLoopMode(LoopMode.Loop);
+			channel.setAnim("Attack");
+			break;
+
+		case Died:
+			channel.setLoopMode(LoopMode.DontLoop);
+			channel.setAnim("Die");
+			break;
+
+		default:
+			Settings.pe(this.getClass().getSimpleName() + ": Unable to show anim " + anim);
+		}
+
+		currAnimCodeC = anim;
+		
 	}
 
 

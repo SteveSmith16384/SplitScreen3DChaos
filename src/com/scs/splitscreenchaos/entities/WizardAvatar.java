@@ -2,7 +2,6 @@ package com.scs.splitscreenchaos.entities;
 
 import com.jme3.bounding.BoundingBox;
 import com.jme3.renderer.Camera;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.Spatial.CullHint;
 import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.abilities.CycleThroughAbilitiesAbility;
@@ -13,6 +12,7 @@ import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.models.WizardModel;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
+import com.scs.splitscreenfpsengine.components.IAvatarModel;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
@@ -45,13 +45,13 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 
 	@Override
-	protected Spatial getPlayersModel(SplitScreenFpsEngine game, int pid) {
-		WizardModel wiz = new WizardModel(game.getAssetManager(), pid);
+	protected IAvatarModel getPlayersModel(SplitScreenFpsEngine game, int pid) {
+		IAvatarModel wiz = new WizardModel(game.getAssetManager(), pid);
 		/*if (ChaosSettings.HIDE_AVATARS) {
 			wiz.getModel().setCullHint(CullHint.Always);
 		}*/
-		BoundingBox bv = (BoundingBox)wiz.getModel().getWorldBound();
-		return wiz.getModel();
+		//BoundingBox bv = (BoundingBox)wiz.getModel().getWorldBound();
+		return wiz;//.getModel();
 	}
 
 

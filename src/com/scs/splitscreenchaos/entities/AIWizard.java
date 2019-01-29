@@ -2,8 +2,8 @@ package com.scs.splitscreenchaos.entities;
 
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.components.IAttackable;
+import com.scs.splitscreenchaos.components.ICreatureModel;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
-import com.scs.splitscreenchaos.models.ICreatureModel;
 import com.scs.splitscreenchaos.models.WizardModel;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IDamagable;

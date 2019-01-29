@@ -7,6 +7,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.scs.splitscreenchaos.components.ICreatureModel;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
@@ -46,7 +47,7 @@ public class ZombieModel implements ICreatureModel {
 
 
 
-	public void setAnim(AbstractCreature.Anim animCode) {
+	public void setCreatureAnim(AbstractCreature.Anim animCode) {
 		if (currAnimCode == animCode) {
 			return;			
 		}

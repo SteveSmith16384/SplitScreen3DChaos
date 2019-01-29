@@ -7,6 +7,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.scs.splitscreenchaos.components.ICreatureModel;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
@@ -26,6 +27,11 @@ public class SkeletonModel implements ICreatureModel {
 		assetManager = _assetManager;
 
 		model = assetManager.loadModel("Models/boneman/boneman_running.blend");
+		
+		Node n = (Node)model;
+		n.getChild("Wall").removeFromParent();
+		n.getChild("Floor").removeFromParent();
+
 		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/boneman/skin.png");
 		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
@@ -44,7 +50,7 @@ public class SkeletonModel implements ICreatureModel {
 
 
 
-	public void setAnim(AbstractCreature.Anim animCode) {
+	public void setCreatureAnim(AbstractCreature.Anim animCode) {
 		if (currAnimCode == animCode) {
 			return;			
 		}
