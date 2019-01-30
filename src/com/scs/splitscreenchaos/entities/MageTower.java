@@ -14,8 +14,9 @@ public class MageTower extends AbstractPhysicalEntity {
 	public MageTower(SplitScreenFpsEngine _game, AbstractGameModule _module, Vector3f startPos) {
 		super(_game, _module, "MageTower");
 
-		Spatial model = game.getAssetManager().loadModel("Models/mage_tower.blend");
+		Spatial model = game.getAssetManager().loadModel("Models/mage_tower/mage_tower.blend");
 		JMEModelFunctions.moveYOriginTo(model, 0f);
+		JMEModelFunctions.centreXZ(model);
 
 		this.getMainNode().setLocalTranslation(startPos);
 		this.mainNode.attachChild(model);

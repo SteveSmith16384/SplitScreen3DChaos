@@ -60,9 +60,9 @@ public class ChaosGameModule extends AbstractGameModule {
 		//vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(MAP_SIZE_BLOCKS, 1, MAP_SIZE_BLOCKS), LavaBlock.class);
 		//vte.addRectRange_Blocks(BlockCodes.SAND, new Vector3Int(10, 1, 10), new Vector3Int(1, 1, 1));
 
-		new MageTower(game, this, new Vector3f(0, 0, 0));
-		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0));
-		new MageTower(game, this, new Vector3f(0, 0, MAP_SIZE-1));
+		new MageTower(game, this, new Vector3f(0.5f, 0, 0.5f));
+		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0.5f));
+		new MageTower(game, this, new Vector3f(0.5f, 0, MAP_SIZE-1));
 		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, MAP_SIZE-1));
 		
 		
