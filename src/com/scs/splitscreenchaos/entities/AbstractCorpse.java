@@ -38,7 +38,7 @@ public class AbstractCorpse extends AbstractPhysicalEntity {
 
 	public void resurrect(WizardAvatar wiz) {
 		this.markForRemoval();
-		creature.setAIToAwaitingCommand();
+		//creature.setAIToAwaitingCommand();
 		creature.undead = true;
 		module.addEntity(creature);
 	}

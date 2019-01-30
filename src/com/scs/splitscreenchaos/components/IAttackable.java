@@ -17,4 +17,6 @@ public interface IAttackable extends IDamagable {
 	
 	boolean canBeSeen(); // In case a wiz is invisible
 	
+	void setLockedInCombat(IAttackable other);
+	
 }

@@ -1,6 +1,5 @@
 package com.scs.splitscreenchaos.entities;
 
-import com.jme3.bounding.BoundingBox;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial.CullHint;
 import com.scs.splitscreenchaos.GameMechanics;
@@ -30,7 +29,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	public float mana;
 	protected float health;
 	public boolean killed = false;
-	
+
 	public WizardAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
 		super(_game, _module, _playerID, _cam, _input, _side);
 
@@ -47,17 +46,13 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	@Override
 	protected IAvatarModel getPlayersModel(SplitScreenFpsEngine game, int pid) {
 		IAvatarModel wiz = new WizardModel(game.getAssetManager(), pid);
-		/*if (ChaosSettings.HIDE_AVATARS) {
-			wiz.getModel().setCullHint(CullHint.Always);
-		}*/
-		//BoundingBox bv = (BoundingBox)wiz.getModel().getWorldBound();
-		return wiz;//.getModel();
+		return wiz;
 	}
 
 
 	@Override
 	public void process(float tpfSecs) {
-		if (killed) {
+		if (killed) { //this.playerGeometry.getModel().getWorldBound()
 			return;
 		}
 
@@ -72,8 +67,6 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 		this.mana += tpfSecs;
 		super.process(tpfSecs);
-
-		//this.floorSelector.process(tpfSecs);
 
 		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -10f) {
 			killed("Too low");
@@ -150,6 +143,13 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	@Override
 	public boolean canBeSeen() {
 		return this.getMainNode().getCullHint() != CullHint.Always;
+	}
+
+
+	@Override
+	public void setLockedInCombat(IAttackable other) {
+		// Do nothing
+
 	}
 
 

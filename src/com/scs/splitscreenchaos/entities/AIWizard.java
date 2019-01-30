@@ -19,14 +19,23 @@ public class AIWizard extends AbstractCreature implements IWizard, IAttackable, 
 		wizid = _wizid;
 	}
 
+	
 	@Override
 	public ICreatureModel getCreatureModel() {
 		return new WizardModel(game.getAssetManager(), wizid);
 	}
 
+	
 	@Override
 	public void process(float tpfSecs) {
 		// todo
+	}
+
+
+	@Override
+	public void setLockedInCombat(IAttackable other) {
+		// Do nothing
+		
 	}
 	
 }
