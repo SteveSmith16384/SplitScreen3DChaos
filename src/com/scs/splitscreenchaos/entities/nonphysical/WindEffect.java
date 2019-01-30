@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jme3.math.Vector3f;
+import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IAffectedByPhysics;
 import com.scs.splitscreenfpsengine.components.IEntity;
@@ -18,10 +20,12 @@ public class WindEffect extends AbstractEntity implements IProcessable {
 	private List<IEntity> entities = new ArrayList<IEntity>();
 	private RealtimeInterval interval = new RealtimeInterval(2000);
 	private Vector3f dir;
+	private WizardAvatar wiz;
 
-	public WindEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, Vector3f _dir) {
+	public WindEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, WizardAvatar _wiz, Vector3f _dir) {
 		super(_game, _module, "WindEffect");
 
+		wiz = _wiz;
 		dir = _dir;
 		this.module.addEntity(this);
 	}
@@ -37,10 +41,14 @@ public class WindEffect extends AbstractEntity implements IProcessable {
 	public void process(float tpfSecs) {
 		if (interval.hitInterval()) {
 			for (IEntity e : this.entities) {
-				// todo - only blow enemies
-				if (e instanceof IAffectedByPhysics) {
-					IAffectedByPhysics abp = (IAffectedByPhysics)e;
-					abp.applyForce(dir);
+				if (e instanceof AbstractCreature) {
+					if (e instanceof IAffectedByPhysics) {
+						AbstractCreature cre = (AbstractCreature)e;
+						if (cre.getOwner() != this.wiz) {
+							IAffectedByPhysics abp = (IAffectedByPhysics)e;
+							abp.applyForce(dir);
+						}
+					}
 				}
 			}
 		}

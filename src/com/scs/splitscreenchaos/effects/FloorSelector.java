@@ -18,7 +18,7 @@ import ssmith.util.RealtimeInterval;
 public class FloorSelector extends AbstractPhysicalEntity implements IProcessable {
 
 	private WizardAvatar wiz;
-	private RealtimeInterval updateInt = new RealtimeInterval(300);
+	private RealtimeInterval updateInt = new RealtimeInterval(200);
 
 	public FloorSelector(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _wiz) {
 		super(_game, module, "FloorSelector");

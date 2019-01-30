@@ -5,7 +5,6 @@ import ssmith.lang.NumberFunctions;
 public class GameMechanics {
 
 	public GameMechanics() {
-		// TODO Auto-generated constructor stub
 	}
 
 	

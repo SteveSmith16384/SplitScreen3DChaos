@@ -101,7 +101,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
 			mat.setTexture("DiffuseMap", tex);
 			ball_geo.setMaterial(mat);
-			ball_geo.setLocalTranslation(0, bv.getYExtent()*2 + 1f, 0);
+			ball_geo.setLocalTranslation(0, bv.getYExtent()*2 + .2f, 0);
 			this.getMainNode().attachChild(ball_geo);
 		}
 

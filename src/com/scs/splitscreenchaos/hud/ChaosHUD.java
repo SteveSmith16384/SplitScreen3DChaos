@@ -136,33 +136,6 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 			this.updateTextArea();
 		}
 		
-		// Test reticle
-		/*if (Settings.DEBUG_TARGETTER) {
-			int id = 0;
-			for (IEntity entity : module.entities) {
-				if (entity instanceof IShowOnHUD) {
-					if (this.targetting_reticules.size() <= id) {
-						this.addTargetter();
-					}
-					IShowOnHUD soh = (IShowOnHUD) entity;
-					Picture pic = this.targetting_reticules.get(id);
-					pic.setCullHint(CullHint.Inherit);
-
-					Vector3f screen_pos = cam.getScreenCoordinates(soh.getLocation()); // todo - cache vec3f, don't create each time
-					pic.setPosition(screen_pos.x, screen_pos.y);
-					id++;
-				}
-			}
-
-			// Hide the rest
-			for (int i=id ; i<this.targetting_reticules.size() ; i++) {
-				Picture pic = this.targetting_reticules.get(id);
-				pic.setCullHint(CullHint.Always);
-
-			}
-
-		}*/
-
 		if (process_damage_box) {
 			this.dam_box_col.a -= (tpf/2);
 			if (dam_box_col.a <= 0) {

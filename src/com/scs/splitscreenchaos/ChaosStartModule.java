@@ -1,7 +1,7 @@
 package com.scs.splitscreenchaos;
 
 import com.jme3.scene.Spatial;
-import com.scs.splitscreenchaos.models.GoldenDragonModel2;
+import com.scs.splitscreenchaos.models.GoldenDragonModel;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractStartModule;
 
@@ -18,7 +18,7 @@ public class ChaosStartModule extends AbstractStartModule {
 	public void init() {
 		super.init();
 		
-		dragon = new GoldenDragonModel2(this.game.getAssetManager()).getModel();
+		dragon = new GoldenDragonModel(this.game.getAssetManager()).getModel();
 		game.getRootNode().attachChild(dragon);
 /*		
 		// Audio

@@ -24,7 +24,7 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 	public boolean activate(float interpol) {
 		if (this.getWizard().mana < cost) {
 			Settings.p("Not enough mana");
-			//todo return false;
+			return false;
 		}
 		boolean success = cast();
 		if (success) {

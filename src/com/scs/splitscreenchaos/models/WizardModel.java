@@ -46,11 +46,10 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 		assetManager = _assetManager;
 
 		model = assetManager.loadModel("Models/mage/mage.blend");
-		JMEModelFunctions.setTextureOnSpatial(assetManager, model, getTex(playerid));//"Models/mage/mage.png");
+		JMEModelFunctions.setTextureOnSpatial(assetManager, model, getTex(playerid));
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
-		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 1)); // Point model fwds
 		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
@@ -71,7 +70,7 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 		case 3:
 			return "Models/mage/mage_magenta.png";
 		default: 
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown tex for id: " + pid);
 		}
 	}
 
