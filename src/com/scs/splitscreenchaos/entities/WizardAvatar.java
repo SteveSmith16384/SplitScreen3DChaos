@@ -52,7 +52,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 	@Override
 	public void process(float tpfSecs) {
-		if (killed) { //this.playerGeometry.getModel().getWorldBound()
+		if (killed) {
 			return;
 		}
 
@@ -92,6 +92,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	public void damaged(float amt, String reason) {
 		if (!killed) { // check not already dead
 			this.health -= amt;
+			this.hud.showDamageBox();
 			if (this.health <= 0) {
 				killed(reason);
 			}
@@ -118,18 +119,20 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 				}
 			}
 		}
+		
+		this.markForRemoval();
 
 	}
 
 	@Override
 	public void notifiedOfCollision(AbstractPhysicalEntity other) {
-		if (other instanceof IAttackable) {
+		/*if (other instanceof IAttackable) {
 			IAttackable co = (IAttackable)other;
 			float tot = GameMechanics.combat(ATT, co.getDef());
 			if (tot > 0) {
 				co.damaged(tot, "combat with " + this.name);
 			}
-		}
+		}*/
 
 	}
 

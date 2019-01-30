@@ -61,7 +61,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 		super.setLocalTranslation(xBL, yBL, 0);
 
-		log_ta = new TextArea("log", guiFont_small, 6, "Welcome to the Plane of Limbo");
+		log_ta = new TextArea("log", guiFont_small, 4, "Welcome to the Plane of Limbo");
 		log_ta.setLocalTranslation(0, hud_height/2, 0);
 		this.attachChild(log_ta);
 
@@ -177,7 +177,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 		StringBuilder str = new StringBuilder();
 		str.append(player.ability[0].getHudText() + "\n");
 		str.append(player.ability[1].getHudText() + "\n");
-		str.append("Mana: " + player.mana + "\n");
+		str.append("Mana: " + (int)player.mana + "\n");
 		if (player.selectedEntity != null) {
 			str.append(player.selectedEntity.name + "Selected\n");
 		}
@@ -211,7 +211,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 	private void addTargetter(float x, float y) {
 		Picture targetting_reticule = new Picture("HUD Picture");
-		targetting_reticule.setImage(game.getAssetManager(), "Textures/triangle_recticle.png", true);
+		targetting_reticule.setImage(game.getAssetManager(), "Textures/circular_recticle.png", true);
 		float crosshairs_w = cam.getWidth()/10;
 		targetting_reticule.setWidth(crosshairs_w);
 		float crosshairs_h = cam.getHeight()/10;

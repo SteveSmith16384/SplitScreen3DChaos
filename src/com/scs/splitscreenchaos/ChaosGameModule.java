@@ -84,7 +84,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 
 		// Create AI Monsters
-		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(1, 2, 1), null);
+		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
 		this.addEntity(gd);
 	}
 

@@ -5,7 +5,6 @@ import com.jme3.bounding.BoundingBox;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
 import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
@@ -40,12 +39,12 @@ import ssmith.util.RealtimeInterval;
 public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable {
 
 	private static final float ATTACK_LEWAY = .4f;
-	private static final float TURN_SPEED = 1f;
+	private static final float TURN_SPEED = 4f;
 
 	private static final float WEIGHT = 1f;
 
 	public enum Anim {None, Idle, Walk, Attack, Died}; 
-	private enum AIMode {AwaitingCommand, WalkToPoint, WalkToCreature, Attacking}; 
+	//private enum AIMode {AwaitingCommand, WalkToPoint, WalkToCreature, Attacking}; 
 
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
@@ -54,6 +53,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private float health, maxHealth;
 	protected float speed, att, def;
 	private boolean dead = false;
+	public boolean frozen = false;
+
 	private long removeAt;
 	public WizardAvatar owner;
 
@@ -120,7 +121,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		case 3:
 			return "Textures/orb_purple.png";
 		default:
-			throw new RuntimeException("Todo");
+			throw new RuntimeException("Unknown colour for id " + id);
 		}
 	}
 
@@ -134,21 +135,31 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			return;
 		}
 
+		if (this.getMainNode().getWorldTranslation().y < -10) {
+			this.killed("Fallen out of arena", true);
+			return;
+		}
+		if (frozen) {
+			this.model.setCreatureAnim(Anim.None);
+			return;
+		}
+		
+		playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
+
+
 		// Reset any vars
 		if (physicalTarget != null) {
 			if (physicalTarget.isAlive()) {
 				this.targetPos = this.physicalTarget.getLocation();
 			} else {
 				physicalTarget = null;
-				/*if (aiMode == AIMode.Attacking) {
-					aiMode = AIMode.AwaitingCommand;
-				}*/
 			}
 		}
 		if (lockedInCombat != null) {
 			if (lockedInCombat.isAlive()) {
 				float dist = this.distance((AbstractPhysicalEntity)this.lockedInCombat);
 				if (dist > this.attackDist) { // Stop us constantly pushing our attackee
+					Settings.p(this + " no longer locked in combat (dist=" + dist + ")");
 					lockedInCombat = null;
 				}
 			} else {
@@ -160,7 +171,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			if (lockedInCombat != null) {
 				this.model.setCreatureAnim(Anim.Attack);
 				turnTowardsDestination(lockedInCombat.getLocation());
-				if (isValidTarget(lockedInCombat)) {
+				if (canAttack(lockedInCombat)) {
 					if (checkAttackInterval.hitInterval()) {
 						Settings.p("Combat between " + this + " and " + lockedInCombat);
 						float tot = GameMechanics.combat(att, lockedInCombat.getDef());
@@ -181,52 +192,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				physicalTarget = this.findClosestTarget();
 			}
 
-			/*
-			switch (aiMode) {
-			case AwaitingCommand:
-				model.setCreatureAnim(Anim.Idle);
-				physicalTarget = this.findClosestTarget();
-				if (physicalTarget != null) {
-					aiMode = AIMode.WalkToCreature;
-					Settings.p(this + " is now walking towards " + physicalTarget);
-
-				}
-				break;
-
-			case WalkToPoint:
-			case WalkToCreature:
-				model.setCreatureAnim(Anim.Walk);
-				if (checkPosInterval.hitInterval()) {
-					if (this.mainNode.getWorldTranslation().distance(this.prevPos) < .5f) {
-						Settings.p(this + " stuck, changing dir");
-						//this.aiMode = AIMode.AvoidBlockage;
-					}
-					prevPos.set(this.mainNode.getWorldTranslation());
-				}
-
-				if (this.aiMode == AIMode.WalkToPoint || this.aiMode == AIMode.WalkToCreature) {
-					this.turnTowardsDestination();
-					if (this.distance(this.targetPos) < .1f) {
-						this.aiMode = AIMode.AwaitingCommand;
-					}
-				}
-				this.moveFwds();
-				break;
-
-			case Attacking:
-				this.turnTowardsDestination();
-				float dist = this.distance((AbstractPhysicalEntity)this.physicalTarget);
-				if (dist > this.attackDist) { // Stop us constantly pushing our attackee
-					model.setCreatureAnim(Anim.Walk);
-					this.moveFwds();
-				} else {
-					model.setCreatureAnim(Anim.Attack);
-				}
-				break;
-
-			default:
-				throw new RuntimeException("Unknown ai state: " + aiMode);
-			}*/
 		} else {
 			if (this.removeAt < System.currentTimeMillis()) {
 				this.markForRemoval();
@@ -266,9 +231,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private void moveFwds() {
 		Vector3f walkDirection = this.playerControl.getViewDirection();
 		walkDirection.y = 0;
-		//Globals.p("Ant dir: " + walkDirection);
-		playerControl.setWalkDirection(walkDirection.mult(speed));//1));
-
+		Settings.p(this + " walking " + walkDirection);
+		playerControl.setWalkDirection(walkDirection.mult(speed));
 	}
 
 
@@ -348,15 +312,16 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	@Override
 	public void notifiedOfCollision(AbstractPhysicalEntity other) {
+		if (other == this.lockedInCombat) {
+			return;
+		}
 		if (other instanceof IAttackable) {
 			IAttackable co = (IAttackable)other;
-			//if (isValidTarget(co)) {
 			if (co.getSide() != this.getSide()) {
-				//this.setTarget(co);
+				Settings.p(this + " now locked in combat with " + other);
 				this.lockedInCombat = co;
 				co.setLockedInCombat(this);
-				this.attackDist = this.distance(other) + ATTACK_LEWAY;
-				//this.aiMode = AIMode.Attacking;
+				this.attackDist = this.distance(other) * 4;
 			}
 		}
 	}
@@ -383,14 +348,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	}
 
 
-	/**
-	 * For when resurrected.
-	 */
-	/*public void setAIToAwaitingCommand() {
-		this.aiMode = AIMode.AwaitingCommand;
-	}*/
-
-
 	private IAttackable findClosestTarget() {
 		IAttackable closest = null;
 		float closestDist = 9999;
@@ -398,7 +355,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			if (e instanceof IAttackable) {
 				IAttackable golem = (IAttackable)e;
 				if (golem.getSide() != this.getSide()) {
-					if (isValidTarget(golem)) {
+					if (canAttack(golem)) {
 						float dist = this.distance(golem.getLocation());
 						if (dist <= closestDist) {
 							closestDist = dist;
@@ -412,7 +369,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	}
 
 
-	private boolean isValidTarget(IAttackable golem) {
+	private boolean canAttack(IAttackable golem) {
 		if (golem.canBeSeen()) {
 			if (!golem.isUndead() || this.isUndead()) { // Don't attack undead unless we're undead
 				//if (golem.getSide() != this.getSide()) {

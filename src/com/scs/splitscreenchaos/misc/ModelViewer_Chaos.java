@@ -20,9 +20,10 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Spatial model = assetManager.loadModel("Models/cerberus_v002.blend");
-		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus_texture.png");
+		Spatial model = assetManager.loadModel("Models/mage/mage.blend");
+		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus_texture.png");
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
+		JMEModelFunctions.moveYOriginTo(model, 0f);
 
 		//JMEModelFunctions.scaleModelToHeight(model, 2f);
 		return model;
