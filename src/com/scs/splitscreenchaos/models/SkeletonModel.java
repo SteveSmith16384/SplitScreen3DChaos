@@ -12,6 +12,7 @@ import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
+// Anims on 'Skeli (Node)': [idle, forward]
 public class SkeletonModel implements ICreatureModel {
 
 	public static final float MODEL_WIDTH = 0.9f;
@@ -63,12 +64,12 @@ public class SkeletonModel implements ICreatureModel {
 
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("walk");
+			channel.setAnim("forward");
 			break;
 
 		case Attack:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("walk"); // No attack anim
+			channel.setAnim("forward"); // No attack anim
 			break;
 
 		case Died:

@@ -27,24 +27,12 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 import ssmith.util.RealtimeInterval;
 
 
-/*
- * AI PROCESS
- * if locked in combat
- * 		validate if locked
- * 		fight
- * 
- * @author StephenCS
- *
- */
 public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable {
 
-	private static final float ATTACK_LEWAY = .4f;
-	private static final float TURN_SPEED = 4f;
-
+	private static final float TURN_SPEED = 3f;
 	private static final float WEIGHT = 1f;
 
 	public enum Anim {None, Idle, Walk, Attack, Died}; 
-	//private enum AIMode {AwaitingCommand, WalkToPoint, WalkToCreature, Attacking}; 
 
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
@@ -59,15 +47,14 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	public WizardAvatar owner;
 
 	// AI
-	//private AIMode aiMode = AIMode.AwaitingCommand;
 	private Vector3f targetPos;
 	private IAttackable physicalTarget;
 	private IAttackable lockedInCombat;
 	private float attackDist = -1; // How far away the target currrently is when attacking
-	//private float avoidUntil = 0;
-	private RealtimeInterval checkPosInterval = new RealtimeInterval(2000);
-	private Vector3f prevPos = new Vector3f();
-	private RealtimeInterval checkAttackInterval = new RealtimeInterval(2000);
+	private float avoidUntil = 0;
+	//private RealtimeInterval checkPosInterval = new RealtimeInterval(2000);
+	//private Vector3f prevPos = new Vector3f();
+	private RealtimeInterval checkAttackInterval = new RealtimeInterval(2000); // todo - rename
 
 	public AbstractCreature(SplitScreenFpsEngine _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health, boolean _undead) {
 		super(_game, _module, name);
@@ -85,7 +72,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		this.getMainNode().setLocalTranslation(startPos);
 
 		BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
-		playerControl = new MyBetterCharacterControl(bv.getXExtent(), bv.getYExtent()*2, WEIGHT);
+		playerControl = new MyBetterCharacterControl(bv.getXExtent(), bv.getYExtent()*3, WEIGHT); // Make the radius slightly bigger to take into account animations and creatures overlapping
 		playerControl.setJumpForce(new Vector3f(0, Settings.JUMP_FORCE, 0)); 
 		this.getMainNode().addControl(playerControl);
 
@@ -143,7 +130,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			this.model.setCreatureAnim(Anim.None);
 			return;
 		}
-		
+
 		playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
 
 
@@ -166,7 +153,11 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				lockedInCombat = null;
 			}
 		}
-
+		if (avoidUntil > 0) {
+			avoidUntil -= tpfSecs;
+		}
+		
+		
 		if (!dead) {
 			if (lockedInCombat != null) {
 				this.model.setCreatureAnim(Anim.Attack);
@@ -180,6 +171,9 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 						}
 					}
 				}
+			} else if (avoidUntil > 0) {
+				this.turnAwayFromDestination();
+				this.moveBwds();
 			} else if (this.targetPos != null) {
 				this.model.setCreatureAnim(Anim.Walk);
 				this.turnTowardsDestination(targetPos);
@@ -201,7 +195,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 
 	private void turnTowardsDestination(Vector3f pos) {
-		//if (targetPos != null) {
 		float leftDist = this.leftNode.getWorldTranslation().distance(pos); 
 		float rightDist = this.rightNode.getWorldTranslation().distance(pos); 
 		if (leftDist > rightDist) {
@@ -210,7 +203,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			JMEAngleFunctions.turnSpatialLeft(this.mainNode, -TURN_SPEED);
 		}
 		this.playerControl.setViewDirection(mainNode.getWorldRotation().getRotationColumn(2));
-		//}
 	}
 
 
@@ -233,6 +225,33 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		walkDirection.y = 0;
 		Settings.p(this + " walking " + walkDirection);
 		playerControl.setWalkDirection(walkDirection.mult(speed));
+	}
+
+
+	private void moveBwds() {
+		Vector3f walkDirection = this.playerControl.getViewDirection().mult(-1);
+		walkDirection.y = 0;
+		Settings.p(this + " walking backwards " + walkDirection);
+		playerControl.setWalkDirection(walkDirection.mult(speed));
+	}
+
+
+	@Override
+	public void notifiedOfCollision(AbstractPhysicalEntity other) {
+		if (other == this.lockedInCombat) {
+			return;
+		}
+		if (other instanceof IAttackable) {
+			IAttackable co = (IAttackable)other;
+			if (co.getSide() != this.getSide()) {
+				Settings.p(this + " now locked in combat with " + other);
+				this.lockedInCombat = co;
+				co.setLockedInCombat(this);
+				this.attackDist = this.distance(other) * 4;
+			} else {
+				avoidUntil = 4;
+			}
+		}
 	}
 
 
@@ -293,7 +312,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	public void setTarget(IAttackable t) {
 		this.physicalTarget = t;
-		//aiMode = AIMode.WalkToCreature;
 	}
 
 
@@ -307,23 +325,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	@Override
 	public void setLocation(Vector3f pos) {
 		this.playerControl.warp(pos);
-	}
-
-
-	@Override
-	public void notifiedOfCollision(AbstractPhysicalEntity other) {
-		if (other == this.lockedInCombat) {
-			return;
-		}
-		if (other instanceof IAttackable) {
-			IAttackable co = (IAttackable)other;
-			if (co.getSide() != this.getSide()) {
-				Settings.p(this + " now locked in combat with " + other);
-				this.lockedInCombat = co;
-				co.setLockedInCombat(this);
-				this.attackDist = this.distance(other) * 4;
-			}
-		}
 	}
 
 

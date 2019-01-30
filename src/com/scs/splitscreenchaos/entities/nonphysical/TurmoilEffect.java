@@ -5,11 +5,13 @@ import java.util.List;
 
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.ChaosGameModule;
+import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
+import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 import ssmith.lang.NumberFunctions;
@@ -22,7 +24,7 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 
 	public TurmoilEffect(SplitScreenFpsEngine _game, AbstractGameModule _module) {
 		super(_game, _module, "TurmoilEffect");
-		
+
 		this.module.addEntity(this);
 	}
 
@@ -33,15 +35,18 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 
 	}
 
-	
+
 	@Override
 	public void process(float tpfSecs) {
 		if (interval.hitInterval()) {
 			AbstractPhysicalEntity ape = null;
 			while (ape == null && !this.entities.isEmpty()) {
 				IEntity e = this.entities.remove(0);
-				if (e instanceof AbstractPhysicalEntity) {
-					ape = (AbstractPhysicalEntity)e;
+				if (e instanceof AbstractCreature) {
+					ape = (AbstractCreature)e;
+					break;
+				} else if (e instanceof AbstractPlayersAvatar) {
+					ape = (AbstractPlayersAvatar)e;
 					break;
 				}
 			}

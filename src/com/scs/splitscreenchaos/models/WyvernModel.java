@@ -29,8 +29,8 @@ public class WyvernModel implements ICreatureModel {
 	public WyvernModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/wyvern/wyvern.blend");
-		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/wyvern/wyvern.png");
+		model = assetManager.loadModel("Models/wyvern/Wyvern.blend");
+		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/wyvern/Wyvern_red_col5.png");
 		model.setShadowMode(ShadowMode.Cast);
 		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
 		JMEModelFunctions.scaleModelToWidth(model, MODEL_WIDTH);

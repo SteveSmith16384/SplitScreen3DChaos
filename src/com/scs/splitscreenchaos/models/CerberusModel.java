@@ -1,6 +1,5 @@
 package com.scs.splitscreenchaos.models;
 
-
 import com.jme3.animation.AnimChannel;
 import com.jme3.animation.AnimControl;
 import com.jme3.animation.LoopMode;
@@ -13,13 +12,10 @@ import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
-/**
- * Anims are idle, smash, walk
- *
- */
-public class GolemModel implements ICreatureModel {
+// Anims on 'Cerberus (Node)': [Walk, die, hit, Idle, Attack]
 
-	public static final float MODEL_WIDTH = 0.4f;
+public class CerberusModel implements ICreatureModel {
+
 	public static final float MODEL_HEIGHT = 0.7f;
 
 	private AssetManager assetManager;
@@ -29,11 +25,11 @@ public class GolemModel implements ICreatureModel {
 	private AnimChannel channel;
 	private AbstractCreature.Anim currAnimCode = AbstractCreature.Anim.None;
 
-	public GolemModel(AssetManager _assetManager) {
+	public CerberusModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = JMEModelFunctions.loadModel(assetManager, "Models/golem/golem_clean.blend");//assetManager.loadModel("Models/golem/golem_clean.blend");
-		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Textures/lavarock.jpg");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/cerberus/cerberus_v002.blend");
+		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus/cerberus_texture.png");
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
@@ -42,7 +38,6 @@ public class GolemModel implements ICreatureModel {
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
 		channel = control.createChannel();
 
-		//return model;
 	}
 
 
@@ -60,23 +55,22 @@ public class GolemModel implements ICreatureModel {
 		switch (animCode) {
 		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("idle");
+			channel.setAnim("Idle");
 			break;
 
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("walk");
+			channel.setAnim("Walk");
 			break;
 
 		case Attack:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("smash");
+			channel.setAnim("Attack");
 			break;
 
 		case Died:
-			// No die anim
-			//channel.setLoopMode(LoopMode.DontLoop);
-			//channel.setAnim("smash");#
+			channel.setLoopMode(LoopMode.DontLoop);
+			channel.setAnim("die");
 			
 			break;
 
