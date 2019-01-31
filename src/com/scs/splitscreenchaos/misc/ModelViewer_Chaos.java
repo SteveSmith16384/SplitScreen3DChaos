@@ -1,6 +1,5 @@
 package com.scs.splitscreenchaos.misc;
 
-import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.misc.ModelViewer;
@@ -20,7 +19,7 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Spatial model = assetManager.loadModel("Models/cerberus/cerberus_v002.blend");
+		Spatial model = assetManager.loadModel("Models/mage/mage.blend");
 		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus_texture.png");
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
 		JMEModelFunctions.moveYOriginTo(model, 0f);

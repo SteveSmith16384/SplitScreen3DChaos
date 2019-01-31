@@ -11,8 +11,9 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 
 	protected String name;
 	private int cost;
+	private float range;
 	
-	public AbstractSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player, String _name, int _cost) {
+	public AbstractSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player, String _name, int _cost, float _range) {
 		super(_game, module, _player);
 		
 		name = _name;
@@ -58,6 +59,10 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 		return true;
 	}
 
+	
+	public float getRange() {
+		return range;
+	}
 
 	
 }

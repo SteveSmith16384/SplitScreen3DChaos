@@ -2,7 +2,6 @@ package com.scs.splitscreenchaos.entities;
 
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial.CullHint;
-import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.abilities.CycleThroughAbilitiesAbility;
 import com.scs.splitscreenchaos.abilities.FireballSpell;
 import com.scs.splitscreenchaos.components.IAttackable;
@@ -22,7 +21,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAttackable, IDamagable, INotifiedOfCollision {
 
-	private static final float ATT = 1;
+	//private static final float ATT = 1;
 	private static final float DEF = 1;
 
 	public AbstractPhysicalEntity selectedEntity; //e.g. selected creature
@@ -35,11 +34,27 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 		mana = 100;
 		health = 100;
-
+		
 		this.ability[0] = new FireballSpell(game, _module, this);
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
 
 		new FloorSelector(game, module, this);
+	}
+
+
+	public static String getOrbColour(int id) { // todo - rename
+		switch (id) {
+		case 0:
+			return "Textures/orb_yellow.png";
+		case 1:
+			return "Textures/orb_red.png";
+		case 2:
+			return "Textures/orb_blue.png";
+		case 3:
+			return "Textures/orb_purple.png";
+		default:
+			throw new RuntimeException("Unknown colour for id " + id);
+		}
 	}
 
 

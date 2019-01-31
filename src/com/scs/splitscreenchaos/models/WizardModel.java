@@ -34,7 +34,8 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 	public static final float MODEL_HEIGHT = 1.7f;
 
 	private AssetManager assetManager;
-	private Spatial model;
+	//private Spatial model;
+	private Node node;
 
 	// Anim
 	private AnimChannel channel;
@@ -45,17 +46,21 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 	public WizardModel(AssetManager _assetManager, int playerid) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/mage/mage.blend");
+		Spatial model = assetManager.loadModel("Models/mage/mage.blend");
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, getTex(playerid));
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
-		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
+		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 1)); // Point model fwds
+		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 1, 0)); // Point model fwds
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
 		channel = control.createChannel();
 		setAvatarAnim(AbstractPlayersAvatar.Anim.Idle); // Default
 		setCreatureAnim(Anim.Idle); // Default
+		
+		node = new Node("WizardNode");
+		node.attachChild(model);
 	}
 
 
@@ -76,7 +81,7 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 
 
 	public Spatial getModel() {
-		return model;
+		return node;
 	}
 
 

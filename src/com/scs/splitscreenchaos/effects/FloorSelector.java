@@ -4,6 +4,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Box;
+import com.scs.splitscreenchaos.abilities.AbstractSpell;
 import com.scs.splitscreenchaos.abilities.AbstractSummonSpell;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
@@ -28,7 +29,7 @@ public class FloorSelector extends AbstractPhysicalEntity implements IProcessabl
 
 		Box box1 = new Box(.5f, .01f, .5f);
 		Geometry geometry = new Geometry("SquareIndicatorBox", box1);
-		JMEModelFunctions.setTextureOnSpatial(game.getAssetManager(), geometry, "Textures/yellowsun.jpg"); // todo - diff colours
+		JMEModelFunctions.setTextureOnSpatial(game.getAssetManager(), geometry, WizardAvatar.getOrbColour(wiz.playerID));
 		//geometry.setLocalTranslation(.5f, 0, .5f);
 		this.getMainNode().attachChild(geometry);
 
@@ -39,34 +40,30 @@ public class FloorSelector extends AbstractPhysicalEntity implements IProcessabl
 
 	@Override
 	public void process(float tpfSecs) {
-		if (wiz.ability[0] instanceof AbstractSummonSpell == false) {
-			this.getMainNode().setCullHint(CullHint.Always);
-			return;
-		}
-		
 		if (updateInt.hitInterval()) {
-			Vector3f ape = module.getPointWithRay(wiz, FloorOrCeiling.class, -1);
-			if (ape != null) {
+			if (wiz.ability[0] instanceof AbstractSummonSpell == false) {
+				this.getMainNode().setCullHint(CullHint.Always);
+				return;
+			}
+
+			Vector3f position = module.getPointWithRay(wiz, FloorOrCeiling.class, -1);
+			if (position != null) {
+				// Check range
+				if (wiz.ability[0] instanceof AbstractSpell) {
+					AbstractSpell spell = (AbstractSpell)wiz.ability[0];
+					if (spell.getRange() > 0) {
+						float dist = wiz.distance(position);
+						if (dist > spell.getRange()) {
+							this.getMainNode().setCullHint(CullHint.Always);
+						}
+					}
+				}
+
 				this.getMainNode().setCullHint(CullHint.Inherit);
-				this.getMainNode().setLocalTranslation(ape);
+				this.getMainNode().setLocalTranslation(position);
 			} else {
 				this.getMainNode().setCullHint(CullHint.Always);
 			}
-			/*Ray ray = new Ray(this.wiz.getCamera().getLocation(), this.wiz.getCamera().getDirection());
-
-			CollisionResults results = new CollisionResults();
-			game.getRootNode().collideWith(ray, results);
-
-			CollisionResult result = results.getClosestCollision();
-			this.getMainNode().setCullHint(CullHint.Always);
-			if (result != null) {
-				Geometry g = result.getGeometry();
-				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
-				if (ape instanceof FloorOrCeiling) { // || g instanceof FloorSelector) {
-					this.getMainNode().setCullHint(CullHint.Inherit);
-					this.getMainNode().setLocalTranslation(result.getContactPoint());
-				}
-			}*/
 		}
 	}
 

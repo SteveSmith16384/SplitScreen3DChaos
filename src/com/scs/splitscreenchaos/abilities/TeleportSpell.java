@@ -9,7 +9,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class TeleportSpell extends AbstractSpell {
 
 	public TeleportSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Teleport", 1);
+		super(_game, module, p, "Teleport", 1, -1);
 	}
 
 

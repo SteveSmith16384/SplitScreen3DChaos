@@ -5,16 +5,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.jme3.math.Vector3f;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
+import com.jme3.renderer.ViewPort;
 import com.scs.splitscreenchaos.blocks.BrickBlock;
 import com.scs.splitscreenchaos.blocks.ChangingBlock;
 import com.scs.splitscreenchaos.blocks.GrassBlock;
 import com.scs.splitscreenchaos.blocks.WoodBlock;
 import com.scs.splitscreenchaos.entities.MageTower;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
+import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
@@ -50,15 +53,27 @@ public class ChaosGameModule extends AbstractGameModule {
 
 
 	@Override
+	public void init() {
+		super.init();
+		
+		// Point wizards to centre
+		Vector3f centre = new Vector3f(MAP_SIZE/2, 1, MAP_SIZE/2);
+		for (IEntity e : entities) {
+			if (e instanceof WizardAvatar) {
+				WizardAvatar wiz = (WizardAvatar)e;
+				wiz.getMainNode().lookAt(centre, Vector3f.UNIT_Y);
+			}
+		}
+	}
+	
+	
+	@Override
 	public void setupLevel() {
 		FloorOrCeiling floor = new FloorOrCeiling(game, this, 0, 0, 0, MAP_SIZE, 1f, MAP_SIZE, "Textures/blocks/lavarock.jpg");
 		this.addEntity(floor);
 
 		vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
 		this.addEntity(vte);
-
-		//vte.addRectRange_Blocks(new Vector3Int(0, 0, 0), new Vector3Int(MAP_SIZE_BLOCKS, 1, MAP_SIZE_BLOCKS), LavaBlock.class);
-		//vte.addRectRange_Blocks(BlockCodes.SAND, new Vector3Int(10, 1, 10), new Vector3Int(1, 1, 1));
 
 		new MageTower(game, this, new Vector3f(0.5f, 0, 0.5f));
 		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0.5f));
@@ -218,6 +233,23 @@ public class ChaosGameModule extends AbstractGameModule {
 	@Override
 	protected IHud generateHUD(SplitScreenFpsEngine _game, AbstractGameModule _module, AbstractPlayersAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		return new ChaosHUD(_game, _module, (WizardAvatar)_player, xBL, yBL, w, h, _cam);
+	}
+
+
+	@Override
+	protected void onViewportCreated(ViewPort viewport) {
+		if (ChaosSettings.BLOOM) {
+		// Bloom
+		BloomFilter bloom = new BloomFilter();
+		bloom.setDownSamplingFactor(2);
+		bloom.setBlurScale(1.37f);
+		bloom.setExposurePower(3.30f);
+		bloom.setExposureCutOff(0.2f);
+		bloom.setBloomIntensity(1.5f);//2.45f);
+		FilterPostProcessor fpp2 = new FilterPostProcessor(game.getAssetManager());
+		fpp2.addFilter(bloom);
+		viewport.addProcessor(fpp2);
+		}
 	}
 
 

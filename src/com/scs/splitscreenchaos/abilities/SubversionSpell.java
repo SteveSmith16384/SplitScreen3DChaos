@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SubversionSpell extends AbstractSpell {
 
 	public SubversionSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Subversion", 1);
+		super(_game, module, p, "Subversion", 1, -1);
 	}
 
 

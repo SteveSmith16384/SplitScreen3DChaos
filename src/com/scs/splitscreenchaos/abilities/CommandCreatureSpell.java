@@ -17,7 +17,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class CommandCreatureSpell extends AbstractSpell {
 
 	public CommandCreatureSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "CommandCreatureSpell", 0);
+		super(_game, module, p, "CommandCreatureSpell", 0, -1);
 	}
 
 

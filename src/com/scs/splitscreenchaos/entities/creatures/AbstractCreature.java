@@ -2,6 +2,7 @@ package com.scs.splitscreenchaos.entities.creatures;
 
 import com.jme3.asset.TextureKey;
 import com.jme3.bounding.BoundingBox;
+import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -72,7 +73,13 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		this.getMainNode().setLocalTranslation(startPos);
 
 		BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
-		playerControl = new MyBetterCharacterControl(bv.getXExtent(), bv.getYExtent()*3, WEIGHT); // Make the radius slightly bigger to take into account animations and creatures overlapping
+		//playerControl = new BetterCharacterControl(bb.getZExtent()*.9f, bb.getZExtent()*2, 1000f); ASAS
+		float rad = bv.getXExtent();
+		float height = bv.getYExtent()*3;
+		if (rad > height/2) {
+			height = rad*2; // Ensure propertions work for physics
+		}
+		playerControl = new MyBetterCharacterControl(rad, height, WEIGHT); // Make the radius slightly bigger to take into account animations and creatures overlapping
 		playerControl.setJumpForce(new Vector3f(0, Settings.JUMP_FORCE, 0)); 
 		this.getMainNode().addControl(playerControl);
 
@@ -83,7 +90,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			Sphere sphere = new Sphere(8, 8, .2f, true, false);
 			sphere.setTextureMode(Sphere.TextureMode.Projected);
 			Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
-			TextureKey key = new TextureKey(getOrbColour(owner.playerID));
+			TextureKey key = new TextureKey(WizardAvatar.getOrbColour(owner.playerID));
 			Texture tex = game.getAssetManager().loadTexture(key);
 			Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
 			mat.setTexture("DiffuseMap", tex);
@@ -94,22 +101,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 		model.setCreatureAnim(Anim.Idle);
 
-	}
-
-
-	private static String getOrbColour(int id) {
-		switch (id) {
-		case 0:
-			return "Textures/orb_yellow.png";
-		case 1:
-			return "Textures/orb_red.png";
-		case 2:
-			return "Textures/orb_blue.png";
-		case 3:
-			return "Textures/orb_purple.png";
-		default:
-			throw new RuntimeException("Unknown colour for id " + id);
-		}
 	}
 
 

@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public abstract class AbstractShootingSpell extends AbstractSpell {
 
 	public AbstractShootingSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player, String _name, int _cost) {
-		super(_game, module, _player, _name, _cost);
+		super(_game, module, _player, _name, _cost, -1);
 	}
 
 

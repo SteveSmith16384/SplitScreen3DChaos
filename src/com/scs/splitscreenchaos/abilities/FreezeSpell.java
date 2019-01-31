@@ -9,7 +9,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class FreezeSpell extends AbstractSpell {
 
 	public FreezeSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "FreezeSpell", 1);
+		super(_game, module, p, "FreezeSpell", 1, -1);
 	}
 
 

@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class HealSpell extends AbstractSpell {
 
 	public HealSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "HealSpell", 1);
+		super(_game, module, p, "HealSpell", 1, -1);
 	}
 
 

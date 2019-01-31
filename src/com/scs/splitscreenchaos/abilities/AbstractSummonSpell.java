@@ -9,9 +9,11 @@ import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public abstract class AbstractSummonSpell extends AbstractSpell {
+	
+	private static final float RANGE = 8f;
 
 	public AbstractSummonSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p, String name, int cost) {
-		super(_game, module, p, name, cost);
+		super(_game, module, p, name, cost, RANGE);
 	}
 
 
@@ -29,7 +31,7 @@ public abstract class AbstractSummonSpell extends AbstractSpell {
 					Geometry g = result.getGeometry();
 					AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 					if (ape instanceof FloorOrCeiling) {*/
-		Vector3f position = module.getPointWithRay(this.getWizard(), FloorOrCeiling.class, 8f);
+		Vector3f position = module.getPointWithRay(this.getWizard(), FloorOrCeiling.class, RANGE);
 		if (position != null) {
 			player.hud.appendToLog("Summoning " + name);
 			//Vector3f position = result.getContactPoint();

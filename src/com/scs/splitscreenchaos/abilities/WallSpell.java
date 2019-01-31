@@ -13,7 +13,7 @@ public class WallSpell extends AbstractSpell {
 	private static final int SIZE = 1;
 
 	public WallSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Wall", 1);
+		super(_game, module, p, "Wall", 1, -1);
 	}
 
 
