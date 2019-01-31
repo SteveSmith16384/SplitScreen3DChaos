@@ -16,7 +16,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
 public class ZombieModel implements ICreatureModel {
 
-	public static final float MODEL_HEIGHT = 1.f;
+	public static final float MODEL_HEIGHT = 1.7f;
 
 	private AssetManager assetManager;
 	private Spatial model;

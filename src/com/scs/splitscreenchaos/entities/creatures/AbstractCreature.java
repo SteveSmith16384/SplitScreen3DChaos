@@ -124,6 +124,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 		if (this.getMainNode().getWorldTranslation().y < -10) {
 			this.killed("Fallen out of arena", true);
+			this.markForRemoval();
 			return;
 		}
 		if (frozen) {

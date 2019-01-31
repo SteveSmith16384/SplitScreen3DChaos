@@ -84,8 +84,8 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 
 		// Create AI Monsters
-		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
-		this.addEntity(gd);
+		//GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
+		//this.addEntity(gd);
 	}
 
 
@@ -110,9 +110,9 @@ public class ChaosGameModule extends AbstractGameModule {
 		case 2:
 			switch (id) {
 			case 0:
-				return new Vector3f(1, 2, 1);
+				return new Vector3f(2, 2, 2);
 			case 1:
-				return new Vector3f(MAP_SIZE-2, 2, MAP_SIZE-2);
+				return new Vector3f(MAP_SIZE-3, 2, MAP_SIZE-3);
 			default:
 				throw new RuntimeException("No start value for player " + id + " in a " + totalWizards + " player game");
 			}
@@ -120,13 +120,13 @@ public class ChaosGameModule extends AbstractGameModule {
 		case 4:
 			switch (id) {
 			case 0:
-				return new Vector3f(1, 2, 1);
+				return new Vector3f(2, 2, 2);
 			case 1:
-				return new Vector3f(MAP_SIZE-2, 2, MAP_SIZE-2);
+				return new Vector3f(MAP_SIZE-3, 2, MAP_SIZE-3);
 			case 2:
-				return new Vector3f(MAP_SIZE-2, 2, 1);
+				return new Vector3f(MAP_SIZE-3, 2, 2);
 			case 3:
-				return new Vector3f(1, 2, MAP_SIZE-2);
+				return new Vector3f(2, 2, MAP_SIZE-3);
 			default:
 				throw new RuntimeException("No start value for player " + id + " in a " + totalWizards + " player game");
 			}

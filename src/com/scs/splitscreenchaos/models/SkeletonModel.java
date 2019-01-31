@@ -15,7 +15,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 // Anims on 'Skeli (Node)': [idle, forward]
 public class SkeletonModel implements ICreatureModel {
 
-	public static final float MODEL_WIDTH = 0.9f;
+	public static final float MODEL_HEIGHT = 1.7f;
 
 	private AssetManager assetManager;
 	private Spatial model;
@@ -36,7 +36,7 @@ public class SkeletonModel implements ICreatureModel {
 		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/boneman/skin.png");
 		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
-		JMEModelFunctions.scaleModelToWidth(model, MODEL_WIDTH);
+		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
