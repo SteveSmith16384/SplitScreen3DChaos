@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class RunFastSpell extends AbstractSpell {
 
 	public RunFastSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player) {
-		super(_game, module, _player, "RunFast", 1, 0);
+		super(_game, module, _player, "RunFast", 10, 0);
 	}
 
 

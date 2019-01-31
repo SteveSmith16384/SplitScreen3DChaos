@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class WindSpell extends AbstractSpell {
 
 	public WindSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player) {
-		super(_game, module, _player, "Wind", 1, 0);
+		super(_game, module, _player, "Wind", 30, 0);
 	}
 
 	public boolean cast() {

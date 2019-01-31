@@ -121,10 +121,6 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		Settings.p("Player died: " + reason);
 		//todo - die anim - this.pl
 
-		//this.restarting = true;
-		//this.restartTime = MultiplayerVoxelWorldMain.properties.GetRestartTimeSecs();
-		//invulnerableTime = RESTART_DUR*3;
-
 		// Remove all owned creatures
 		for (IEntity e : module.entities) {
 			if (e instanceof AbstractCreature) {

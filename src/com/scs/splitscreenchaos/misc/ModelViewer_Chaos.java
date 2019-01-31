@@ -30,12 +30,12 @@ public class ModelViewer_Chaos extends ModelViewer {
 	
 	
 	public String getAnimNode() {
-		return "Cerberus (Node)";
+		return "Cube (Node)";
 	}
 	
 
 	public String getAnimToShow() {
-		return "Walk";
+		return "Attack";
 	}
 	
 

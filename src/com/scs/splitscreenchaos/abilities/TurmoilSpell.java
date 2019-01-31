@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class TurmoilSpell extends AbstractSpell {
 
 	public TurmoilSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player) {
-		super(_game, module, _player, "Turmoil", 1, 0);
+		super(_game, module, _player, "Turmoil", 30, 0);
 	}
 
 	public boolean cast() {

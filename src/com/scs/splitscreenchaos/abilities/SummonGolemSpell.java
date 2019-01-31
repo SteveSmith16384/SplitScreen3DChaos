@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SummonGolemSpell extends AbstractSummonSpell {
 
 	public SummonGolemSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "SummonGolemSpell", 1);
+		super(_game, module, p, "SummonGolemSpell", 60);
 	}
 
 	@Override

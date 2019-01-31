@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class GiantSpider extends AbstractCreature {
 
 	public GiantSpider(SplitScreenFpsEngine _game, AbstractGameModule _module, Vector3f startPos, WizardAvatar owner) {
-		super(_game, _module, "GiantSpider", startPos, owner, 3f, 3, 1, 3, false);
+		super(_game, _module, "GiantSpider", startPos, owner, 3f, 3, 1, 2, false);
 	}
 
 	

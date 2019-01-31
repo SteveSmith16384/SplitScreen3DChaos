@@ -9,7 +9,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SlowDownSpell extends AbstractSpell {
 
 	public SlowDownSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "SlowDownSpell", 1, -1);
+		super(_game, module, p, "SlowDownSpell", 10, -1);
 	}
 
 

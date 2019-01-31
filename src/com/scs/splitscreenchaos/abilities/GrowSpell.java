@@ -9,7 +9,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class GrowSpell extends AbstractSpell {
 
 	public GrowSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "GrowSpell", 1, -1);
+		super(_game, module, p, "GrowSpell", 10, -1);
 	}
 
 

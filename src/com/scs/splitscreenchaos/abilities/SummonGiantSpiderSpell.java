@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SummonGiantSpiderSpell extends AbstractSummonSpell {
 
 	public SummonGiantSpiderSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Giant Spider", 1);
+		super(_game, module, p, "Giant Spider", 40);
 	}
 
 	@Override

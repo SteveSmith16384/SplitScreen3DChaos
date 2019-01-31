@@ -152,7 +152,7 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 		str.append(player.ability[1].getHudText() + "\n");
 		str.append("Mana: " + (int)player.mana + "\n");
 		if (player.selectedEntity != null) {
-			str.append(player.selectedEntity.name + "Selected\n");
+			str.append(player.selectedEntity.name + " Selected\n");
 		}
 		this.stats.setText(str.toString());
 		//this.textArea.updateGeometry();

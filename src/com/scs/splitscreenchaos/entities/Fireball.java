@@ -1,18 +1,11 @@
 package com.scs.splitscreenchaos.entities;
 
-import com.jme3.asset.TextureKey;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.renderer.queue.RenderQueue.ShadowMode;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Sphere;
-import com.jme3.texture.Texture;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
-import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.components.ICanShoot;
 import com.scs.splitscreenfpsengine.entities.AbstractBullet;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -22,13 +15,13 @@ public class Fireball extends AbstractBullet {
 	private ParticleEmitter fire;
 
 	public Fireball(SplitScreenFpsEngine _game, AbstractGameModule _module, ICanShoot _shooter) {
-		super(_game, _module, "Fireball", _shooter);
+		super(_game, _module, "Fireball", _shooter, 1);
 
 	}
 
 	@Override
 	protected Spatial createBulletModel() {		
-		if (Settings.DEBUG_FIREBALL_POS) {
+		/*if (Settings.DEBUG_FIREBALL_POS) {
 			Mesh sphere = new Sphere(8, 8, .2f, true, false);
 			Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
 			ball_geo.setShadowMode(ShadowMode.Cast);
@@ -39,7 +32,7 @@ public class Fireball extends AbstractBullet {
 			ball_geo.setMaterial(mat);
 			return ball_geo;
 			
-		} else {
+		} else {*/
 			fire = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
 			Material mat_red = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Particle.j3md");
 			mat_red.setTexture("Texture", game.getAssetManager().loadTexture("Textures/flame.png"));
@@ -58,7 +51,7 @@ public class Fireball extends AbstractBullet {
 			fire.getParticleInfluencer().setVelocityVariation(0.3f);
 
 			return fire;
-		}
+		//}
 	}
 
 }

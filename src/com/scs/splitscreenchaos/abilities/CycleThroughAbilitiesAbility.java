@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	
-	private ArrayList<IAbility> abilities = new ArrayList<>();
+	public ArrayList<IAbility> abilities = new ArrayList<>();
 	private int index;
 
 	public CycleThroughAbilitiesAbility(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {

@@ -1,6 +1,7 @@
 package com.scs.splitscreenchaos.entities.nonphysical;
 
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
+import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
@@ -14,6 +15,8 @@ public class FreezeEffect extends AbstractTimedEffect {
 		creature = _creature;
 		
 		creature.frozen = true;
+		
+		Settings.p(creature + " is frozen");
 
 	}
 
@@ -21,6 +24,7 @@ public class FreezeEffect extends AbstractTimedEffect {
 	@Override
 	protected void effectFinished() {
 		creature.frozen = false;
+		Settings.p(creature + " is no longer frozen");
 		
 	}
 

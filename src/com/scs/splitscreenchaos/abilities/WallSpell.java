@@ -13,7 +13,7 @@ public class WallSpell extends AbstractSpell {
 	private static final int SIZE = 1;
 
 	public WallSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Wall", 1, -1);
+		super(_game, module, p, "Wall", 10, -1);
 	}
 
 
@@ -22,7 +22,7 @@ public class WallSpell extends AbstractSpell {
 		Vector3f position = module.getPointWithRay(this.getWizard(), FloorOrCeiling.class, -1);
 		if (position != null) {
 			ChaosGameModule m = (ChaosGameModule)module;
-			m.vte.addRectRange_Actual(position, new Vector3f(SIZE, SIZE, SIZE), WallBlock.class);
+			m.vte.addRectRange_Actual(position, new Vector3f(SIZE, SIZE*2, SIZE), WallBlock.class);
 			return true;
 		}
 		return false;

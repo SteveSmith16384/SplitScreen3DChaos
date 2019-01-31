@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class InvisibilitySpell extends AbstractSpell {
 
 	public InvisibilitySpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player) {
-		super(_game, module, _player, "Invisibility", 1, 0);
+		super(_game, module, _player, "Invisibility", 10, 0);
 	}
 
 

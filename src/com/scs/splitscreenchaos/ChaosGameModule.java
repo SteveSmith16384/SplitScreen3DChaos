@@ -15,6 +15,7 @@ import com.scs.splitscreenchaos.blocks.GrassBlock;
 import com.scs.splitscreenchaos.blocks.WoodBlock;
 import com.scs.splitscreenchaos.entities.MageTower;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IEntity;
@@ -99,8 +100,8 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 
 		// Create AI Monsters
-		//GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
-		//this.addEntity(gd);
+		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
+		this.addEntity(gd);
 	}
 
 

@@ -118,12 +118,13 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			this.markForRemoval();
 			return;
 		}
+
+		playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
+
 		if (frozen) {
 			this.model.setCreatureAnim(Anim.None);
 			return;
 		}
-
-		playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
 
 
 		// Reset any vars
@@ -215,7 +216,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private void moveFwds() {
 		Vector3f walkDirection = this.playerControl.getViewDirection();
 		walkDirection.y = 0;
-		Settings.p(this + " walking " + walkDirection);
+		//Settings.p(this + " walking " + walkDirection);
 		playerControl.setWalkDirection(walkDirection.mult(speed));
 	}
 
@@ -223,7 +224,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private void moveBwds() {
 		Vector3f walkDirection = this.playerControl.getViewDirection().mult(-1);
 		walkDirection.y = 0;
-		Settings.p(this + " walking backwards " + walkDirection);
+		//Settings.p(this + " walking backwards " + walkDirection);
 		playerControl.setWalkDirection(walkDirection.mult(speed));
 	}
 

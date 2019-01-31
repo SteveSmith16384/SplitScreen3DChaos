@@ -8,21 +8,22 @@ import com.jme3.scene.Geometry;
 import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
-import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
+import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class CommandCreatureSpell extends AbstractSpell {
+public class CommandCreatureSpell extends AbstractAbility {
 
 	public CommandCreatureSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "CommandCreatureSpell", 0, -1);
+		super(_game, module, p);//, 0, -1);
 	}
 
 
 	@Override
-	public boolean cast() {
+	public boolean activate(float interpol) {
 		Ray ray = new Ray(this.player.getCamera().getLocation(), this.player.getCamera().getDirection());
 
 		CollisionResults results = new CollisionResults();
@@ -63,6 +64,18 @@ public class CommandCreatureSpell extends AbstractSpell {
 			}
 		}
 		return false;
+	}
+
+
+	@Override
+	public boolean process(float tpfSecs) {
+		return false;
+	}
+
+
+	@Override
+	public String getHudText() {
+		return "Command Creature";
 	}
 
 
