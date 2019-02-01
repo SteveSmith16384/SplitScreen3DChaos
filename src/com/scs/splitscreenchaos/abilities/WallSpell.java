@@ -23,7 +23,6 @@ public class WallSpell extends AbstractSpell {
 		if (position != null) {
 			ChaosGameModule m = (ChaosGameModule)module;
 			// todo - check area clear
-			// todo - do particle effect when casting spell
 			// todo - rrmove wall after a while
 			// todo - don't use voxels
 			m.vte.addRectRange_Actual(position, new Vector3f(SIZE, SIZE*2, SIZE), WallBlock.class);

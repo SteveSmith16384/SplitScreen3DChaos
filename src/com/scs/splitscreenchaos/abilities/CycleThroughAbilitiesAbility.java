@@ -22,7 +22,7 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 		abilities.add(new SummonGoldenDragonSpell(game, module, p));
 		abilities.add(new SummonGreenDragonSpell(game, module, p));
 		abilities.add(new SummonRedDragonSpell(game, module, p));
-		abilities.add(new SummonWyvernSpell(game, module, p));
+		//abilities.add(new SummonWyvernSpell(game, module, p));
 		abilities.add(new SummonSkeletonSpell(game, module, p));
 		abilities.add(new SummonCerberusSpell(game, module, p));
 		

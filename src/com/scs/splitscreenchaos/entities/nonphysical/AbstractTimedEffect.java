@@ -5,7 +5,7 @@ import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractEntity;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public abstract class AbstractTimedEffect extends AbstractEntity implements IProcessable {
+public abstract class AbstractTimedEffect extends AbstractEntity implements IProcessable { // todo - delete this, use the ExpiringEffectSystem
 
 	private float timeLeftSecs;
 	

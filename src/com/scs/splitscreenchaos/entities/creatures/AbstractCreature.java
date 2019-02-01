@@ -46,16 +46,15 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	private long removeAt;
 	public WizardAvatar owner;
+	private Geometry ball_geo; //todo - rename
 
 	// AI
 	private Vector3f targetPos;
 	private IAttackable physicalTarget;
 	private IAttackable lockedInCombat;
-	private float attackDist = -1; // How far away the target currrently is when attacking
+	private float attackDist = -1; // How far away the target currently is when attacking
 	private float avoidUntil = 0;
-	//private RealtimeInterval checkPosInterval = new RealtimeInterval(2000);
-	//private Vector3f prevPos = new Vector3f();
-	private RealtimeInterval checkAttackInterval = new RealtimeInterval(2000); // todo - rename
+	private RealtimeInterval attackInterval = new RealtimeInterval(2000);
 
 	public AbstractCreature(SplitScreenFpsEngine _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health, boolean _undead) {
 		super(_game, _module, name);
@@ -85,25 +84,34 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 		playerControl.getPhysicsRigidBody().setUserObject(this);
 
-		// Add sphere above to show side
-		if (this.owner != null) {
-			Sphere sphere = new Sphere(8, 8, .2f, true, false);
-			sphere.setTextureMode(Sphere.TextureMode.Projected);
-			Geometry ball_geo = new Geometry("DebuggingSphere", sphere);
-			TextureKey key = new TextureKey(WizardAvatar.getOrbColour(owner.playerID));
-			Texture tex = game.getAssetManager().loadTexture(key);
-			Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
-			mat.setTexture("DiffuseMap", tex);
-			ball_geo.setMaterial(mat);
-			ball_geo.setLocalTranslation(0, bv.getYExtent()*2 + .2f, 0);
-			this.getMainNode().attachChild(ball_geo);
-		}
-
+		addOrb();
 		model.setCreatureAnim(Anim.Idle);
 
 	}
 
 
+	private void addOrb() {
+		// Add sphere above to show side
+		if (this.ball_geo != null) {
+			this.ball_geo.removeFromParent();
+		}
+		if (this.owner != null) {
+			Sphere sphere = new Sphere(8, 8, .2f, true, false);
+			sphere.setTextureMode(Sphere.TextureMode.Projected);
+			ball_geo = new Geometry("DebuggingSphere", sphere);
+			TextureKey key = new TextureKey(WizardAvatar.getOrbColour(owner.playerID));
+			Texture tex = game.getAssetManager().loadTexture(key);
+			Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
+			mat.setTexture("DiffuseMap", tex);
+			ball_geo.setMaterial(mat);
+			BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
+			ball_geo.setLocalTranslation(0, bv.getYExtent()*2 + .2f, 0);
+			this.getMainNode().attachChild(ball_geo);
+		}
+
+	}
+	
+	
 	public abstract ICreatureModel getCreatureModel();
 
 
@@ -156,7 +164,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				this.model.setCreatureAnim(Anim.Attack);
 				turnTowardsDestination(lockedInCombat.getLocation());
 				if (canAttack(lockedInCombat)) {
-					if (checkAttackInterval.hitInterval()) {
+					if (attackInterval.hitInterval()) {
 						Settings.p("Combat between " + this + " and " + lockedInCombat);
 						float tot = GameMechanics.combat(att, lockedInCombat.getDef());
 						if (tot > 0) {
@@ -165,7 +173,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 					}
 				}
 			} else if (avoidUntil > 0) {
-				this.turnAwayFromDestination();
+				this.turnAwayFromDestination(TURN_SPEED/4);
 				this.moveBwds();
 			} else if (this.targetPos != null) {
 				this.model.setCreatureAnim(Anim.Walk);
@@ -199,14 +207,14 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	}
 
 
-	private void turnAwayFromDestination() {
+	private void turnAwayFromDestination(float turnSpeed) {
 		if (targetPos != null) {
 			float leftDist = this.leftNode.getWorldTranslation().distance(targetPos); 
 			float rightDist = this.rightNode.getWorldTranslation().distance(targetPos); 
 			if (leftDist < rightDist) {
-				JMEAngleFunctions.turnSpatialLeft(this.mainNode, TURN_SPEED);
+				JMEAngleFunctions.turnSpatialLeft(this.mainNode, turnSpeed);
 			} else {
-				JMEAngleFunctions.turnSpatialLeft(this.mainNode, -TURN_SPEED);
+				JMEAngleFunctions.turnSpatialLeft(this.mainNode, -turnSpeed);
 			}
 			this.playerControl.setViewDirection(mainNode.getWorldRotation().getRotationColumn(2));
 		}
@@ -393,4 +401,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	}
 
+	
+	public void subverted(WizardAvatar wiz) {
+		this.owner = wiz;
+		this.lockedInCombat = null;
+		addOrb();
+	}
 }
