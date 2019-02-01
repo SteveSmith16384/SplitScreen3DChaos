@@ -10,14 +10,14 @@ public class FreezeEffect extends AbstractTimedEffect {
 	private AbstractCreature creature;
 	
 	public FreezeEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, AbstractCreature _creature) {
-		super(_game, _module, "FreezeEffect", 6);
+		super(_game, _module, "FreezeEffect", 10);
 		
 		creature = _creature;
 		
 		creature.frozen = true;
 		
 		Settings.p(creature + " is frozen");
-
+		
 	}
 
 	

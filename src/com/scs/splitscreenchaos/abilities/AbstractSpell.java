@@ -19,6 +19,7 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 
 		name = _name;
 		cost = _cost;
+		range = _range;
 	}
 
 
@@ -33,7 +34,7 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 		if (success) {
 			this.getWizard().mana -= cost;
 			Settings.p(this.name + " cast");
-			this.player.hud.appendToLog("Spell cast!");
+			this.player.hud.appendToLog(this.name + " cast");
 
 			if (ChaosSettings.REMOVE_SPELLS_WHEN_CAST) {
 				if (this.player.ability[0] instanceof CycleThroughAbilitiesAbility) {

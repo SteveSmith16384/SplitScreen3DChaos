@@ -18,6 +18,8 @@ public class SubversionSpell extends AbstractSpell {
 		if (creature != null) {
 			if (creature.getOwner() != player) {
 				creature.setOwner((WizardAvatar)player);
+				// todo - clear targets etc...
+				//. todo - add orb
 				return true;
 			}
 		}

@@ -15,6 +15,7 @@ import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
 // Anims on 'Wyvern (Node)': [Walk, Idle.001, Idle, Walk.001]
+// todo -model wrong way around
 public class WyvernModel implements ICreatureModel {
 
 	public static final float MODEL_WIDTH = 0.9f;
@@ -61,12 +62,12 @@ public class WyvernModel implements ICreatureModel {
 
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("walk");
+			channel.setAnim("Walk");
 			break;
 
 		case Attack:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("walk"); // No attack anim
+			channel.setAnim("Walk"); // No attack anim
 			break;
 
 		case Died:

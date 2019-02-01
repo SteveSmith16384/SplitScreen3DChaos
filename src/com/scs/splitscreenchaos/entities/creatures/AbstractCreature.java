@@ -33,7 +33,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private static final float TURN_SPEED = 3f;
 	private static final float WEIGHT = 1f;
 
-	public enum Anim {None, Idle, Walk, Attack, Died}; 
+	public enum Anim {None, Idle, Walk, Attack, Died, Frozen}; // todo - handle Frozen in models 
 
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
@@ -122,7 +122,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
 
 		if (frozen) {
-			this.model.setCreatureAnim(Anim.None);
+			this.model.setCreatureAnim(Anim.Frozen);
 			return;
 		}
 
@@ -240,7 +240,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				Settings.p(this + " now locked in combat with " + other);
 				this.lockedInCombat = co;
 				co.setLockedInCombat(this);
-				this.attackDist = this.distance(other) * 4;
+				this.attackDist = this.distance(other) * 1.5f;
 			} else {
 				avoidUntil = 4;
 			}

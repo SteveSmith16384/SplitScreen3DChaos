@@ -19,8 +19,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
  */
 public class GolemModel implements ICreatureModel {
 
-	public static final float MODEL_WIDTH = 0.4f;
-	public static final float MODEL_HEIGHT = 0.7f;
+	public static final float MODEL_HEIGHT = 2f;
 
 	private AssetManager assetManager;
 	private Spatial model;
@@ -37,6 +36,7 @@ public class GolemModel implements ICreatureModel {
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
+		// todo - centre creatures on x/z
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 0)); // Point model fwds
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);

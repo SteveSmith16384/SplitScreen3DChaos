@@ -72,9 +72,11 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		}
 
 		if (this.input.isCycleAbilityPressed(true)) {
+			Settings.p("Cycling fwd");
 			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
 			c.selectNext();
 		} else if (this.input.isCycleAbilityPressed(false)) {
+			Settings.p("Cycling bwd");
 			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
 			c.selectPrev();
 
