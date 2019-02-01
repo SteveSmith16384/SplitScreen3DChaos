@@ -23,6 +23,7 @@ import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
+import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 import ssmith.util.RealtimeInterval;
@@ -33,7 +34,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private static final float TURN_SPEED = 3f;
 	private static final float WEIGHT = 1f;
 
-	public enum Anim {None, Idle, Walk, Attack, Died, Frozen}; // todo - handle Frozen in models 
+	public enum Anim {None, Idle, Walk, Attack, Died, Frozen}; 
 
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
@@ -46,7 +47,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	private long removeAt;
 	public WizardAvatar owner;
-	private Geometry ball_geo; //todo - rename
+	private Geometry orbGeom;
 
 	// AI
 	private Vector3f targetPos;
@@ -68,12 +69,14 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		undead = _undead;
 
 		model = getCreatureModel();
+		JMEModelFunctions.moveYOriginTo(model.getModel(), 0f);
+		JMEModelFunctions.centreXZ(model.getModel());
 		this.getMainNode().attachChild(model.getModel());
 		this.getMainNode().setLocalTranslation(startPos);
 
 		BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
 		//playerControl = new BetterCharacterControl(bb.getZExtent()*.9f, bb.getZExtent()*2, 1000f); ASAS
-		float rad = bv.getXExtent();
+		float rad = Math.max(bv.getXExtent(), bv.getZExtent());
 		float height = bv.getYExtent()*3;
 		if (rad > height/2) {
 			height = rad*2; // Ensure propertions work for physics
@@ -92,21 +95,21 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	private void addOrb() {
 		// Add sphere above to show side
-		if (this.ball_geo != null) {
-			this.ball_geo.removeFromParent();
+		if (this.orbGeom != null) {
+			this.orbGeom.removeFromParent();
 		}
 		if (this.owner != null) {
 			Sphere sphere = new Sphere(8, 8, .2f, true, false);
 			sphere.setTextureMode(Sphere.TextureMode.Projected);
-			ball_geo = new Geometry("DebuggingSphere", sphere);
+			orbGeom = new Geometry("DebuggingSphere", sphere);
 			TextureKey key = new TextureKey(WizardAvatar.getOrbColour(owner.playerID));
 			Texture tex = game.getAssetManager().loadTexture(key);
 			Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
 			mat.setTexture("DiffuseMap", tex);
-			ball_geo.setMaterial(mat);
+			orbGeom.setMaterial(mat);
 			BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
-			ball_geo.setLocalTranslation(0, bv.getYExtent()*2 + .2f, 0);
-			this.getMainNode().attachChild(ball_geo);
+			orbGeom.setLocalTranslation(0, bv.getYExtent()*2 + .2f, 0);
+			this.getMainNode().attachChild(orbGeom);
 		}
 
 	}

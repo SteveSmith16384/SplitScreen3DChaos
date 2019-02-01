@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class Spellbook extends AbstractAbility { // todo - use this?
+public class Spellbook extends AbstractAbility { // todo - delete this
 
 	private static final float SPELL_INTERVAL = 5;
 	

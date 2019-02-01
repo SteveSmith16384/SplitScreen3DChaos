@@ -2,10 +2,11 @@ package com.scs.splitscreenchaos.abilities;
 
 import com.scs.splitscreenchaos.ChaosSettings;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.Settings;
+import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.abilities.IAbility;
+import com.scs.splitscreenfpsengine.entities.ParticleCastEffect;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public abstract class AbstractSpell extends AbstractAbility implements IAbility {
@@ -27,18 +28,19 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 	public boolean activate(float interpol) {
 		if (this.getWizard().mana < cost) {
 			Settings.p("Not enough mana!");
-			this.player.hud.appendToLog("Not enough mana!");
+			this.avatar.hud.appendToLog("Not enough mana!");
 			return false;
 		}
 		boolean success = cast();
 		if (success) {
+			new ParticleCastEffect(game, module, this.avatar);
 			this.getWizard().mana -= cost;
 			Settings.p(this.name + " cast");
-			this.player.hud.appendToLog(this.name + " cast");
+			this.avatar.hud.appendToLog(this.name + " cast");
 
 			if (ChaosSettings.REMOVE_SPELLS_WHEN_CAST) {
-				if (this.player.ability[0] instanceof CycleThroughAbilitiesAbility) {
-					CycleThroughAbilitiesAbility cy = (CycleThroughAbilitiesAbility)this.player.ability[0];
+				if (this.avatar.ability[0] instanceof CycleThroughAbilitiesAbility) {
+					CycleThroughAbilitiesAbility cy = (CycleThroughAbilitiesAbility)this.avatar.ability[0];
 					cy.abilities.remove(this);
 				}
 			}
@@ -50,7 +52,7 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 	protected abstract boolean cast();
 
 	protected WizardAvatar getWizard() {
-		return (WizardAvatar)this.player;
+		return (WizardAvatar)this.avatar;
 	}
 
 

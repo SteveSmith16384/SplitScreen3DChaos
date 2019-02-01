@@ -15,7 +15,7 @@ public class SummonSkeletonSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		Skeleton golem = new Skeleton(game, module, pos, (WizardAvatar)this.player);
+		Skeleton golem = new Skeleton(game, module, pos, (WizardAvatar)this.avatar);
 		return golem;
 	}
 

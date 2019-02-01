@@ -2,7 +2,7 @@ package com.scs.splitscreenchaos.abilities;
 
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.ChaosGameModule;
-import com.scs.splitscreenchaos.blocks.WallBlock;
+import com.scs.splitscreenchaos.entities.Wall;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
@@ -23,9 +23,7 @@ public class WallSpell extends AbstractSpell {
 		if (position != null) {
 			ChaosGameModule m = (ChaosGameModule)module;
 			// todo - check area clear
-			// todo - rrmove wall after a while
-			// todo - don't use voxels
-			m.vte.addRectRange_Actual(position, new Vector3f(SIZE, SIZE*2, SIZE), WallBlock.class);
+			new Wall(game, module, position);
 			return true;
 		}
 		return false;

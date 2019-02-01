@@ -42,7 +42,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	}
 
 
-	public static String getOrbColour(int id) { // todo - rename
+	public static String getOrbColour(int id) {
 		switch (id) {
 		case 0:
 			return "Textures/orb_yellow.png";
@@ -86,8 +86,8 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		super.process(tpfSecs);
 
 		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -10f) {
-			killed("Too low");
-			return;
+			//killed("Too low");
+			//return;
 		}
 
 	}

@@ -71,7 +71,11 @@ public class CerberusModel implements ICreatureModel {
 		case Died:
 			channel.setLoopMode(LoopMode.DontLoop);
 			channel.setAnim("die");
-			
+			break;
+
+		case Frozen:
+			channel.setLoopMode(LoopMode.DontLoop);
+			channel.reset(false);
 			break;
 
 		default:

@@ -33,11 +33,11 @@ public abstract class AbstractSummonSpell extends AbstractSpell {
 					if (ape instanceof FloorOrCeiling) {*/
 		Vector3f position = module.getPointWithRay(this.getWizard(), FloorOrCeiling.class, RANGE);
 		if (position != null) {
-			player.hud.appendToLog("Summoning " + name);
+			avatar.hud.appendToLog("Summoning " + name);
 			//Vector3f position = result.getContactPoint();
 			position.y = ChaosSettings.SUMMON_Y_POS; // Drop from sky
 			AbstractCreature c = this.createCreature(position);
-			c.getMainNode().lookAt(player.getLocation(), Vector3f.UNIT_Y); // Look at wizard
+			c.getMainNode().lookAt(avatar.getLocation(), Vector3f.UNIT_Y); // Look at wizard
 			module.addEntity(c);
 			return true;
 		}

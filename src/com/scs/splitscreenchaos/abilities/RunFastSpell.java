@@ -14,7 +14,7 @@ public class RunFastSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		new RunFastEffect(game, module, player);
+		new RunFastEffect(game, module, avatar);
 		return  true;
 	}
 

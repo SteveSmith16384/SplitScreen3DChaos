@@ -12,7 +12,7 @@ public class WindSpell extends AbstractSpell {
 	}
 
 	public boolean cast() {
-		new WindEffect(game, module, (WizardAvatar)player, player.camDir);
+		new WindEffect(game, module, (WizardAvatar)avatar, avatar.camDir);
 		return true;
 	}
 }

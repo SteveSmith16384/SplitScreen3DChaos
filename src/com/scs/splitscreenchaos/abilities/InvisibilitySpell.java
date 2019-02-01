@@ -14,7 +14,7 @@ public class InvisibilitySpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		new InvisibilityEffect(game, module, player);
+		new InvisibilityEffect(game, module, avatar);
 		return  true;
 	}
 

@@ -15,7 +15,7 @@ public class SummonWyvernSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		Wyvern golem = new Wyvern(game, module, pos, (WizardAvatar)this.player);
+		Wyvern golem = new Wyvern(game, module, pos, (WizardAvatar)this.avatar);
 		return golem;
 	}
 

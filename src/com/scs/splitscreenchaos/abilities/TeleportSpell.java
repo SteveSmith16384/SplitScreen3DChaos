@@ -17,7 +17,7 @@ public class TeleportSpell extends AbstractSpell {
 	public boolean cast() {
 		Vector3f position = module.getPointWithRay(this.getWizard(), FloorOrCeiling.class, -1);
 		if (position != null) {
-			player.playerControl.warp(position);
+			avatar.playerControl.warp(position);
 			return true;
 		}
 		return false;

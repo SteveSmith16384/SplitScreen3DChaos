@@ -14,7 +14,7 @@ public class FireballSpell extends AbstractShootingSpell {
 
 	@Override
 	protected AbstractBullet getBullet() {
-		return new Fireball(game, module, player);
+		return new Fireball(game, module, avatar);
 	}
 
 }

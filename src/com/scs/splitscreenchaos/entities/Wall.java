@@ -54,17 +54,19 @@ public class Wall extends AbstractPhysicalEntity implements IExpiringEffect {
 
 	}
 
+
 	@Override
 	public float getTimeRemaining() {
 		return timeRemaining;
 	}
 
+	
 	@Override
 	public void setTimeRemaining(float t) {
 		timeRemaining = t;
-		
 	}
 
+	
 	@Override
 	public void effectFinished() {
 		module.markEntityForRemoval(this);

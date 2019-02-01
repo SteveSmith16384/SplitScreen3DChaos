@@ -73,6 +73,11 @@ public class ZombieModel implements ICreatureModel {
 			channel.setAnim("dead1");
 			break;
 
+		case Frozen:
+			channel.setLoopMode(LoopMode.DontLoop);
+			channel.reset(false);
+			break;
+
 		default:
 			Settings.pe(this.getClass().getSimpleName() + ": Unable to show anim " + animCode);
 		}

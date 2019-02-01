@@ -19,7 +19,7 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Spatial model = assetManager.loadModel("Models/mage/mage.blend");
+		Spatial model = assetManager.loadModel("Models/orc/orc.blend");
 		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus_texture.png");
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
 		JMEModelFunctions.moveYOriginTo(model, 0f);
@@ -30,12 +30,12 @@ public class ModelViewer_Chaos extends ModelViewer {
 	
 	
 	public String getAnimNode() {
-		return "Cube (Node)";
+		return "warhammer (Node)";
 	}
 	
 
 	public String getAnimToShow() {
-		return "Attack";
+		return "walk";
 	}
 	
 

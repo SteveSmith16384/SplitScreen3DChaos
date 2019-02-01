@@ -14,8 +14,8 @@ public class HealSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		AbstractCreature ape = (AbstractCreature)module.getWithRay(this.player, AbstractCreature.class, -1);
-		if (ape != null && ape.getOwner() == this.player) {
+		AbstractCreature ape = (AbstractCreature)module.getWithRay(this.avatar, AbstractCreature.class, -1);
+		if (ape != null && ape.getOwner() == this.avatar) {
 			ape.restoreHealth();
 			return true;
 		}

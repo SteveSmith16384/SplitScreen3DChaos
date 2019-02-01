@@ -15,7 +15,7 @@ public class SummonGolemSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		Golem golem = new Golem(game, module, pos, (WizardAvatar)this.player);
+		Golem golem = new Golem(game, module, pos, (WizardAvatar)this.avatar);
 		return golem;
 	}
 

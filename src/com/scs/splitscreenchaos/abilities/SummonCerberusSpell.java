@@ -15,7 +15,7 @@ public class SummonCerberusSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		Cerberus golem = new Cerberus(game, module, pos, (WizardAvatar)this.player);
+		Cerberus golem = new Cerberus(game, module, pos, (WizardAvatar)this.avatar);
 		return golem;
 	}
 

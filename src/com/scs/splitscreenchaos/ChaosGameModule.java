@@ -13,14 +13,16 @@ import com.scs.splitscreenchaos.blocks.BrickBlock;
 import com.scs.splitscreenchaos.blocks.ChangingBlock;
 import com.scs.splitscreenchaos.blocks.GrassBlock;
 import com.scs.splitscreenchaos.blocks.WoodBlock;
+import com.scs.splitscreenchaos.entities.AIWizard;
 import com.scs.splitscreenchaos.entities.MageTower;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
-import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
+import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
+import com.scs.splitscreenfpsengine.entities.TerrainEntity;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
 import com.scs.splitscreenfpsengine.hud.IHud;
 import com.scs.splitscreenfpsengine.input.IInputDevice;
@@ -56,7 +58,7 @@ public class ChaosGameModule extends AbstractGameModule {
 	@Override
 	public void init() {
 		super.init();
-		
+
 		// Point wizards to centre
 		Vector3f centre = new Vector3f(MAP_SIZE/2, 1, MAP_SIZE/2);
 		for (IEntity e : entities) {
@@ -66,12 +68,17 @@ public class ChaosGameModule extends AbstractGameModule {
 			}
 		}
 	}
-	
-	
+
+
 	@Override
 	public void setupLevel() {
-		FloorOrCeiling floor = new FloorOrCeiling(game, this, 0, 0, 0, MAP_SIZE, 1f, MAP_SIZE, "Textures/blocks/lavarock.jpg");
-		this.addEntity(floor);
+		if (!Settings.USE_TERRAIN) {
+			FloorOrCeiling floor = new FloorOrCeiling(game, this, 0, 0, 0, MAP_SIZE, 1f, MAP_SIZE, "Textures/blocks/lavarock.jpg");
+			this.addEntity(floor);
+		} else {
+			TerrainEntity t = new TerrainEntity(game, this);
+			this.addEntity(t);
+		}
 
 		vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
 		this.addEntity(vte);
@@ -80,23 +87,30 @@ public class ChaosGameModule extends AbstractGameModule {
 		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0.5f));
 		new MageTower(game, this, new Vector3f(0.5f, 0, MAP_SIZE-1));
 		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, MAP_SIZE-1));
-		
-		
-		for (int i=0 ; i<5 ; i++) {
-			Point p = this.getRandomBlockPos(1);
-			this.createTree(vte, new Vector3f(p.x, 1, p.y));
-		}
-/*
+
+		if (!Settings.USE_TERRAIN) {
+			for (int i=0 ; i<5 ; i++) {
+				Point p = this.getRandomBlockPos(1);
+				this.createTree(vte, new Vector3f(p.x, 1, p.y));
+			}
+			/*
 		for (int i=0 ; i<10 ; i++) {
 			Point p = this.getRandomBlockPos(20);
 			this.createWall_Horiz(vte, new Vector3f(p.x, 1, p.y));
 			p = this.getRandomBlockPos(20);
 			this.createWall_Vert(vte, new Vector3f(p.x, 1, p.y));
 		}
-*/
+			 */
+		}
+
 		// Create AI Wiz
-		for (int i=0 ; i<totalAI ; i++) {
-			// todo
+		if (Settings.AI_WIZARDS) {
+			int num = this.totalHumans;
+			for (int i=0 ; i<totalAI ; i++) {
+				AIWizard wiz = new AIWizard(game, this, this.getPlayerStartPos(num), num);
+				this.addEntity(wiz);
+				num++;
+			}
 		}
 
 		// Create AI Monsters
@@ -120,15 +134,16 @@ public class ChaosGameModule extends AbstractGameModule {
 
 	@Override
 	public Vector3f getPlayerStartPos(int id) {
+		float DEF_HEIGHT = 15;
 		switch (this.totalWizards) {
 		case 1:
-			return new Vector3f(MAP_SIZE/2, 2, MAP_SIZE/2);
+			return new Vector3f(MAP_SIZE/2, DEF_HEIGHT, MAP_SIZE/2);
 		case 2:
 			switch (id) {
 			case 0:
-				return new Vector3f(2, 2, 2);
+				return new Vector3f(2, DEF_HEIGHT, 2);
 			case 1:
-				return new Vector3f(MAP_SIZE-3, 2, MAP_SIZE-3);
+				return new Vector3f(MAP_SIZE-3, DEF_HEIGHT, MAP_SIZE-3);
 			default:
 				throw new RuntimeException("No start value for player " + id + " in a " + totalWizards + " player game");
 			}
@@ -136,13 +151,13 @@ public class ChaosGameModule extends AbstractGameModule {
 		case 4:
 			switch (id) {
 			case 0:
-				return new Vector3f(2, 2, 2);
+				return new Vector3f(2, DEF_HEIGHT, 2);
 			case 1:
-				return new Vector3f(MAP_SIZE-3, 2, MAP_SIZE-3);
+				return new Vector3f(MAP_SIZE-3, DEF_HEIGHT, MAP_SIZE-3);
 			case 2:
-				return new Vector3f(MAP_SIZE-3, 2, 2);
+				return new Vector3f(MAP_SIZE-3, DEF_HEIGHT, 2);
 			case 3:
-				return new Vector3f(2, 2, MAP_SIZE-3);
+				return new Vector3f(2, DEF_HEIGHT, MAP_SIZE-3);
 			default:
 				throw new RuntimeException("No start value for player " + id + " in a " + totalWizards + " player game");
 			}
@@ -240,16 +255,16 @@ public class ChaosGameModule extends AbstractGameModule {
 	@Override
 	protected void onViewportCreated(ViewPort viewport) {
 		if (ChaosSettings.BLOOM) {
-		// Bloom
-		BloomFilter bloom = new BloomFilter();
-		bloom.setDownSamplingFactor(2);
-		bloom.setBlurScale(1.37f);
-		bloom.setExposurePower(3.30f);
-		bloom.setExposureCutOff(0.2f);
-		bloom.setBloomIntensity(1.5f);//2.45f);
-		FilterPostProcessor fpp2 = new FilterPostProcessor(game.getAssetManager());
-		fpp2.addFilter(bloom);
-		viewport.addProcessor(fpp2);
+			// Bloom
+			BloomFilter bloom = new BloomFilter();
+			bloom.setDownSamplingFactor(2);
+			bloom.setBlurScale(1.37f);
+			bloom.setExposurePower(3.30f);
+			bloom.setExposureCutOff(0.2f);
+			bloom.setBloomIntensity(1.5f);//2.45f);
+			FilterPostProcessor fpp2 = new FilterPostProcessor(game.getAssetManager());
+			fpp2.addFilter(bloom);
+			viewport.addProcessor(fpp2);
 		}
 	}
 

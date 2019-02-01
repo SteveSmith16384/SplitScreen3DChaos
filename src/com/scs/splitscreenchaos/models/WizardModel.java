@@ -23,18 +23,16 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
  * Anims: [Walk, Die, Hit, Idle, Attack]
  */
 public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wizard avatars and creatures (i.e. ai wizards)
-
+/*
 	public static final int ANIM_IDLE = 0;
 	public static final int ANIM_WALKING = 1;
 	public static final int ANIM_ATTACK = 2;
 	public static final int ANIM_DIED = 3;
-
-	//public static final float MODEL_WIDTH = 0.4f;
-	//private static final float MODEL_DEPTH = 0.3f;
+*/
 	public static final float MODEL_HEIGHT = 1.7f;
 
 	private AssetManager assetManager;
-	//private Spatial model;
+	private Spatial model;
 	private Node node;
 
 	// Anim
@@ -46,12 +44,12 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 	public WizardModel(AssetManager _assetManager, int playerid) {
 		assetManager = _assetManager;
 
-		Spatial model = assetManager.loadModel("Models/mage/mage.blend");
+		model = assetManager.loadModel("Models/mage/mage.blend");
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, getTex(playerid));
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
-		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 1)); // Point model fwds
+		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 1)); // Point model fwds
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 1, 0)); // Point model fwds
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
@@ -91,6 +89,8 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 			return;			
 		}
 
+		Settings.p("Setting wiz anim " + animCode);
+
 		switch (animCode) {
 		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
@@ -100,6 +100,7 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("Walk");
+			JMEAngleFunctions.rotateYAxisBy(model, 1);
 			break;
 
 		case Attack:
@@ -147,6 +148,11 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 		case Died:
 			channel.setLoopMode(LoopMode.DontLoop);
 			channel.setAnim("Die");
+			break;
+
+		case Frozen:
+			channel.setLoopMode(LoopMode.DontLoop);
+			channel.reset(false);
 			break;
 
 		default:

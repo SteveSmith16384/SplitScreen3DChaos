@@ -16,9 +16,9 @@ public class RaiseDeadSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		AbstractCorpse corpse = (AbstractCorpse)module.getWithRay(this.player, AbstractCorpse.class, RANGE);
+		AbstractCorpse corpse = (AbstractCorpse)module.getWithRay(this.avatar, AbstractCorpse.class, RANGE);
 		if (corpse != null) {
-			corpse.resurrect((WizardAvatar)player);
+			corpse.resurrect((WizardAvatar)avatar);
 			return true;
 		}
 		return false;

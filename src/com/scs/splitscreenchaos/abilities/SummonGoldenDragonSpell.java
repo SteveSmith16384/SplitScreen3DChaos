@@ -15,7 +15,7 @@ public class SummonGoldenDragonSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		GoldenDragon golem = new GoldenDragon(game, module, pos, (WizardAvatar)this.player);
+		GoldenDragon golem = new GoldenDragon(game, module, pos, (WizardAvatar)this.avatar);
 		return golem;
 	}
 

@@ -36,7 +36,6 @@ public class GolemModel implements ICreatureModel {
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
-		// todo - centre creatures on x/z
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 0)); // Point model fwds
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
@@ -77,7 +76,11 @@ public class GolemModel implements ICreatureModel {
 			// No die anim
 			//channel.setLoopMode(LoopMode.DontLoop);
 			//channel.setAnim("smash");#
-			
+			break;
+
+		case Frozen:
+			channel.setLoopMode(LoopMode.DontLoop);
+			channel.reset(false);
 			break;
 
 		default:

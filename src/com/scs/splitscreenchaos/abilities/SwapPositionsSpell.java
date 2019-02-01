@@ -14,7 +14,7 @@ public class SwapPositionsSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		WizardAvatar enemyWizard = (WizardAvatar)module.getWithRay(this.player, WizardAvatar.class, -1);
+		WizardAvatar enemyWizard = (WizardAvatar)module.getWithRay(this.avatar, WizardAvatar.class, -1);
 		if (enemyWizard != null) {
 			Vector3f enemyPos = enemyWizard.getLocation().clone();
 			Vector3f ourPos = this.getWizard().getLocation().clone();

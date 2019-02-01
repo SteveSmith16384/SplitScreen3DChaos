@@ -24,7 +24,7 @@ public class CommandCreatureSpell extends AbstractAbility {
 
 	@Override
 	public boolean activate(float interpol) {
-		Ray ray = new Ray(this.player.getCamera().getLocation(), this.player.getCamera().getDirection());
+		Ray ray = new Ray(this.avatar.getCamera().getLocation(), this.avatar.getCamera().getDirection());
 
 		CollisionResults results = new CollisionResults();
 		module.getRootNode().collideWith(ray, results);
@@ -35,9 +35,9 @@ public class CommandCreatureSpell extends AbstractAbility {
 				Geometry g = result.getGeometry();
 				AbstractPhysicalEntity ape = (AbstractPhysicalEntity)AbstractGameModule.getEntityFromSpatial(g);
 				if (ape instanceof IAttackable) {
-					WizardAvatar w = (WizardAvatar)this.player;
+					WizardAvatar w = (WizardAvatar)this.avatar;
 					AbstractCreature c = (AbstractCreature)ape;
-					if (c.getOwner() == player) {
+					if (c.getOwner() == avatar) {
 						w.selectedEntity = ape;
 						Settings.p(ape + " selected");
 						return true;
@@ -51,7 +51,7 @@ public class CommandCreatureSpell extends AbstractAbility {
 					}
 				} else if (ape instanceof FloorOrCeiling) {
 					Vector3f position = result.getContactPoint();
-					WizardAvatar w = (WizardAvatar)this.player;
+					WizardAvatar w = (WizardAvatar)this.avatar;
 					if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
 						AbstractCreature c = (AbstractCreature)w.selectedEntity;
 						c.setTarget(position);

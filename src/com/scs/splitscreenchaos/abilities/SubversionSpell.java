@@ -14,10 +14,10 @@ public class SubversionSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		AbstractCreature creature = (AbstractCreature)module.getWithRay(this.player, AbstractCreature.class, -1);
+		AbstractCreature creature = (AbstractCreature)module.getWithRay(this.avatar, AbstractCreature.class, -1);
 		if (creature != null) {
-			if (creature.getOwner() != player) {
-				creature.subverted((WizardAvatar)player);
+			if (creature.getOwner() != avatar) {
+				creature.subverted((WizardAvatar)avatar);
 				return true;
 			}
 		}
