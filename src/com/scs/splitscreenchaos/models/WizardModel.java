@@ -23,12 +23,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
  * Anims: [Walk, Die, Hit, Idle, Attack]
  */
 public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wizard avatars and creatures (i.e. ai wizards)
-/*
-	public static final int ANIM_IDLE = 0;
-	public static final int ANIM_WALKING = 1;
-	public static final int ANIM_ATTACK = 2;
-	public static final int ANIM_DIED = 3;
-*/
+
 	public static final float MODEL_HEIGHT = 1.7f;
 
 	private AssetManager assetManager;
@@ -95,12 +90,13 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("Idle");
+			JMEAngleFunctions.rotateYAxisBy2(model, -45);
 			break;
 
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("Walk");
-			JMEAngleFunctions.rotateYAxisBy(model, 1);
+			JMEAngleFunctions.rotateYAxisBy2(model, 45);
 			break;
 
 		case Attack:

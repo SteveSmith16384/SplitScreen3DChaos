@@ -25,4 +25,8 @@ public class SubversionSpell extends AbstractSpell {
 	}
 
 
+	@Override
+	public boolean showFloorSelector() {
+		return false;
+	}
 }

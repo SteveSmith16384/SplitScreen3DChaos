@@ -19,12 +19,12 @@ public class ChaosMain extends SplitScreenFpsEngine {
 			properties = new MultiplayerVoxelWorldProperties(PROPS_FILE);
 			settings = new AppSettings(true);
 			try {
-				settings.load(Settings.NAME);
+				settings.load(ChaosSettings.NAME);
 			} catch (BackingStoreException e) {
 				e.printStackTrace();
 			}
 			//settings.setUseJoysticks(true);
-			settings.setTitle(Settings.NAME + " (v" + Settings.VERSION + ")");
+			settings.setTitle(ChaosSettings.NAME + " (v" + ChaosSettings.VERSION + ")");
 			if (Settings.RELEASE_MODE) {
 				//todo settings.setSettingsDialogImage("Textures/text/multiplayerarena.png");
 			} else {
@@ -38,7 +38,7 @@ public class ChaosMain extends SplitScreenFpsEngine {
 			app.setSettings(settings);
 
 			try {
-				settings.save(Settings.NAME);
+				settings.save(ChaosSettings.NAME);
 			} catch (BackingStoreException e) {
 				e.printStackTrace();
 			}

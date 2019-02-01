@@ -26,4 +26,9 @@ public class FreezeSpell extends AbstractSpell {
 	}
 
 
+	@Override
+	public boolean showFloorSelector() {
+		return false;
+	}
+
 }

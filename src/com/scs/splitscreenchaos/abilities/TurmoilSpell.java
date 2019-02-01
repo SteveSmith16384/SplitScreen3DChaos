@@ -15,4 +15,11 @@ public class TurmoilSpell extends AbstractSpell {
 		new TurmoilEffect(game, module);
 		return true;
 	}
+
+
+	@Override
+	public boolean showFloorSelector() {
+		return false;
+	}
+
 }

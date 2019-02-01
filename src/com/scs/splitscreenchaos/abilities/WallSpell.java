@@ -5,7 +5,6 @@ import com.scs.splitscreenchaos.ChaosGameModule;
 import com.scs.splitscreenchaos.entities.Wall;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
-import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class WallSpell extends AbstractSpell {
@@ -19,12 +18,15 @@ public class WallSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		Vector3f position = module.getPointWithRay(this.getWizard(), FloorOrCeiling.class, -1);
+		Vector3f position = module.getFloorPointWithRay(this.getWizard(), -1);
 		if (position != null) {
 			ChaosGameModule m = (ChaosGameModule)module;
-			// todo - check area clear
-			new Wall(game, module, position);
-			return true;
+			Wall wall = new Wall(game, module, position);
+			if (module.isAreaClear(wall.getMainNode().getWorldBound())) {
+				return true;
+			} else {
+				wall.markForRemoval();
+			}
 		}
 		return false;
 	}

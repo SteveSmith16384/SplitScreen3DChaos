@@ -18,4 +18,9 @@ public class RunFastSpell extends AbstractSpell {
 		return  true;
 	}
 
+
+	@Override
+	public boolean showFloorSelector() {
+		return false;
+	}
 }

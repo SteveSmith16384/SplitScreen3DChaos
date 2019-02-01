@@ -19,4 +19,16 @@ public abstract class AbstractShootingSpell extends AbstractSpell {
 	
 	
 	protected abstract AbstractBullet getBullet();
+	
+	
+	@Override
+	protected boolean showCastEffect() {
+		return false;
+	}
+
+
+	@Override
+	public boolean showFloorSelector() {
+		return false;
+	}
 }

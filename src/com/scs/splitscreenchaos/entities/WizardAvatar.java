@@ -30,7 +30,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	public boolean killed = false;
 
 	public WizardAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
-		super(_game, _module, _playerID, _cam, _input, _side);
+		super(_game, _module, _playerID, _cam, _input, _side, 2f);
 
 		mana = 100;
 		health = 100;

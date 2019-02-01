@@ -33,7 +33,9 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 		}
 		boolean success = cast();
 		if (success) {
-			new ParticleCastEffect(game, module, this.avatar);
+			if (showCastEffect()) {
+				new ParticleCastEffect(game, module, this.avatar);
+			}
 			this.getWizard().mana -= cost;
 			Settings.p(this.name + " cast");
 			this.avatar.hud.appendToLog(this.name + " cast");
@@ -49,6 +51,15 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 	}
 
 
+	/**
+	 * Override if required
+	 * @return
+	 */
+	protected boolean showCastEffect() {
+		return true;
+	}
+	
+	
 	protected abstract boolean cast();
 
 	protected WizardAvatar getWizard() {
@@ -76,6 +87,15 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 
 	public float getRange() {
 		return range;
+	}
+	
+	
+	/**
+	 * Override if required
+	 * @return
+	 */
+	public boolean showFloorSelector() {
+		return true;
 	}
 
 

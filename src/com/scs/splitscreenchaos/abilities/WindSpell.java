@@ -15,4 +15,11 @@ public class WindSpell extends AbstractSpell {
 		new WindEffect(game, module, (WizardAvatar)avatar, avatar.camDir);
 		return true;
 	}
+
+
+	@Override
+	public boolean showFloorSelector() {
+		return false;
+	}
+
 }

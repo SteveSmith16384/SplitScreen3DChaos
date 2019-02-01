@@ -7,6 +7,7 @@ import com.jme3.scene.shape.Box;
 import com.scs.splitscreenchaos.abilities.AbstractSpell;
 import com.scs.splitscreenchaos.abilities.AbstractSummonSpell;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
@@ -41,12 +42,15 @@ public class FloorSelector extends AbstractPhysicalEntity implements IProcessabl
 	@Override
 	public void process(float tpfSecs) {
 		if (updateInt.hitInterval()) {
-			if (wiz.ability[0] instanceof AbstractSummonSpell == false) {
-				this.getMainNode().setCullHint(CullHint.Always);
-				return;
+			if (wiz.ability[0] instanceof AbstractSpell) {
+				AbstractSpell spell = (AbstractSpell)wiz.ability[0];
+				if (spell.showFloorSelector() == false) {
+					this.getMainNode().setCullHint(CullHint.Always);
+					return;
+				}
 			}
 
-			Vector3f position = module.getPointWithRay(wiz, FloorOrCeiling.class, -1);
+			Vector3f position = module.getFloorPointWithRay(wiz, -1);
 			if (position != null) {
 				// Check range
 				if (wiz.ability[0] instanceof AbstractSpell) {

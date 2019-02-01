@@ -25,4 +25,8 @@ public class RaiseDeadSpell extends AbstractSpell {
 	}
 
 
+	@Override
+	public boolean showFloorSelector() {
+		return false;
+	}
 }

@@ -26,6 +26,7 @@ import com.scs.splitscreenfpsengine.entities.TerrainEntity;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
 import com.scs.splitscreenfpsengine.hud.IHud;
 import com.scs.splitscreenfpsengine.input.IInputDevice;
+import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 import mygame.util.Vector3Int;
@@ -35,7 +36,7 @@ import ssmith.util.RealtimeInterval;
 public class ChaosGameModule extends AbstractGameModule {
 
 	private static final float BLOCK_SIZE = .1f;
-	public static final int MAP_SIZE = 30;
+	public static final int MAP_SIZE = 32;
 	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
 
 	private List<ChangingBlock> changingBlocks;
@@ -75,18 +76,29 @@ public class ChaosGameModule extends AbstractGameModule {
 		if (!Settings.USE_TERRAIN) {
 			FloorOrCeiling floor = new FloorOrCeiling(game, this, 0, 0, 0, MAP_SIZE, 1f, MAP_SIZE, "Textures/blocks/lavarock.jpg");
 			this.addEntity(floor);
+			
+			new MageTower(game, this, new Vector3f(0.5f, 0, 0.5f));
+			new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0.5f));
+			new MageTower(game, this, new Vector3f(0.5f, 0, MAP_SIZE-1));
+			new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, MAP_SIZE-1));
+
 		} else {
-			TerrainEntity t = new TerrainEntity(game, this);
+			TerrainEntity t = new TerrainEntity(game, this, MAP_SIZE);
 			this.addEntity(t);
+			
+			Vector3f pos = JMEModelFunctions.getHeightAtPoint(0.5f, 0.5f, t.getMainNode());
+			new MageTower(game, this, pos);
+			pos = JMEModelFunctions.getHeightAtPoint(MAP_SIZE-1, 0.5f, t.getMainNode());
+			new MageTower(game, this, pos);
+			pos = JMEModelFunctions.getHeightAtPoint(0.5f, MAP_SIZE-1, t.getMainNode());
+			new MageTower(game, this, pos);
+			pos = JMEModelFunctions.getHeightAtPoint(MAP_SIZE-1, MAP_SIZE-1, t.getMainNode());
+			new MageTower(game, this, pos);
+
 		}
 
 		vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
 		this.addEntity(vte);
-
-		new MageTower(game, this, new Vector3f(0.5f, 0, 0.5f));
-		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0.5f));
-		new MageTower(game, this, new Vector3f(0.5f, 0, MAP_SIZE-1));
-		new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, MAP_SIZE-1));
 
 		if (!Settings.USE_TERRAIN) {
 			for (int i=0 ; i<5 ; i++) {

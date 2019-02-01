@@ -28,9 +28,10 @@ public class Wall extends AbstractPhysicalEntity implements IExpiringEffect {
 		float w = .5f;
 		float h = 1f;
 		float d = .5f;
+		
 		Box box1 = new Box(w/2, h/2, d/2);
 		Geometry geometry = new Geometry("FloorGeom", box1);
-		TextureKey key3 = new TextureKey("Textures/wall.png");
+		TextureKey key3 = new TextureKey("Textures/skulls-texture-scary-horror-skulls.jpg");
 		key3.setGenerateMips(true);
 		Texture tex3 = game.getAssetManager().loadTexture(key3);
 		tex3.setWrap(WrapMode.Repeat);

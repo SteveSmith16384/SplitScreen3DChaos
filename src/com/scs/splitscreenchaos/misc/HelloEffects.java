@@ -37,8 +37,7 @@ public class HelloEffects extends SimpleApplication {
 				new ParticleEmitter("Debris", ParticleMesh.Type.Triangle, 10);
 		Material debris_mat = new Material(assetManager,
 				"Common/MatDefs/Misc/Particle.j3md");
-		debris_mat.setTexture("Texture", assetManager.loadTexture(
-				"Effects/Explosion/Debris.png"));
+		debris_mat.setTexture("Texture", assetManager.loadTexture("Effects/Explosion/Debris.png"));
 		debris.setMaterial(debris_mat);
 		debris.setImagesX(3);
 		debris.setImagesY(3); // 3x3 texture animation
