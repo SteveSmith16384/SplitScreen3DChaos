@@ -22,6 +22,7 @@ public class GrowSpell extends AbstractSpell {
 				return true;
 			}
 		}
+		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

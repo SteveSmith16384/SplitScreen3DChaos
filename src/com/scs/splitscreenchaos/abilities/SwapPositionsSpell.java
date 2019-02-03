@@ -24,6 +24,7 @@ public class SwapPositionsSpell extends AbstractSpell {
 			enemyWizard.hud.appendToLog("You have swapped positions!");
 			return true;
 		}
+		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

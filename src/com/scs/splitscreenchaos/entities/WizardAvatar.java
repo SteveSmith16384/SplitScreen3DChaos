@@ -30,13 +30,13 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	public boolean killed = false;
 
 	public WizardAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
-		super(_game, _module, _playerID, _cam, _input, _side, 2f);
+		super(_game, _module, _playerID, _cam, _input, _side, 1.6f);
 
 		mana = 100;
 		health = 100;
 		
-		this.ability[0] = new FireballSpell(game, _module, this);
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
+		this.ability[0] = new FireballSpell(game, _module, this); // todo - default to first spell
 
 		new FloorSelector(game, module, this);
 	}
@@ -75,14 +75,18 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 			Settings.p("Cycling fwd");
 			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
 			c.selectNext();
+			this.hud.refresh();
 		} else if (this.input.isCycleAbilityPressed(false)) {
 			Settings.p("Cycling bwd");
 			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
 			c.selectPrev();
-
+			this.hud.refresh();
 		}
 
 		this.mana += tpfSecs;
+		if (mana > 200) {
+			mana = 200;
+		}
 		super.process(tpfSecs);
 
 		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -10f) {
@@ -110,6 +114,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		if (!killed) { // check not already dead
 			this.health -= amt;
 			this.hud.showDamageBox();
+			this.hud.appendToLog("Wounded " + (int)amt + " by " + reason);
 			if (this.health <= 0) {
 				killed(reason);
 			}

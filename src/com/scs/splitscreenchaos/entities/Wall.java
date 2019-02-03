@@ -20,16 +20,16 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class Wall extends AbstractPhysicalEntity implements IExpiringEffect {
 
-	private float timeRemaining = 20;
+	private float timeRemaining = 60;
 	
 	public Wall(SplitScreenFpsEngine _game, AbstractGameModule _module, Vector3f startPos) {
 		super(_game, _module, "Wall");
 
-		float w = .5f;
-		float h = 1f;
-		float d = .5f;
+		float w = 1f;
+		float h = 2f;
+		float d = w;//.5f;
 		
-		Box box1 = new Box(w/2, h/2, d/2);
+		Box box1 = new Box(w/2, h/2, d/2); // todo - tile tex
 		Geometry geometry = new Geometry("FloorGeom", box1);
 		TextureKey key3 = new TextureKey("Textures/skulls-texture-scary-horror-skulls.jpg");
 		key3.setGenerateMips(true);
@@ -70,7 +70,8 @@ public class Wall extends AbstractPhysicalEntity implements IExpiringEffect {
 	
 	@Override
 	public void effectFinished() {
-		module.markEntityForRemoval(this);
+		super.markForRemoval();
+		//module.markEntityForRemoval(this);
 	
 	}
 

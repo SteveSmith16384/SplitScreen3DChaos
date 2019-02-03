@@ -18,9 +18,13 @@ public class SubversionSpell extends AbstractSpell {
 		if (creature != null) {
 			if (creature.getOwner() != avatar) {
 				creature.subverted((WizardAvatar)avatar);
+				avatar.hud.appendToLog(creature.name + " subverted!");
 				return true;
+			} else {
+				avatar.hud.appendToLog("You already control " + creature.name);
 			}
 		}
+		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

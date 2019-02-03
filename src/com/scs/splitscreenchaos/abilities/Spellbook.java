@@ -17,7 +17,7 @@ public class Spellbook extends AbstractAbility { // todo - delete this
 	private List<AbstractSpell> spells = new ArrayList<>();
 	
 	public Spellbook(SplitScreenFpsEngine _game, AbstractGameModule module, AbstractPlayersAvatar _player) {
-		super(_game, module, _player);
+		super(_game, module, _player, "Spellbook");
 		
 		//currentSpell = new WallSpell(module, _player);
 	}

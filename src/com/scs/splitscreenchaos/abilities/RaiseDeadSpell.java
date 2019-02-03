@@ -21,6 +21,7 @@ public class RaiseDeadSpell extends AbstractSpell {
 			corpse.resurrect((WizardAvatar)avatar);
 			return true;
 		}
+		avatar.hud.appendToLog("No valid corpse found");
 		return false;
 	}
 

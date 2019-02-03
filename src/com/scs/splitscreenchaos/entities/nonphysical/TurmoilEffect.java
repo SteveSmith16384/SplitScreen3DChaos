@@ -12,6 +12,7 @@ import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 import ssmith.lang.NumberFunctions;
@@ -53,7 +54,8 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 			if (ape != null) {
 				float x = NumberFunctions.rndFloat(0,  ChaosGameModule.MAP_SIZE);
 				float z = NumberFunctions.rndFloat(0,  ChaosGameModule.MAP_SIZE);
-				Vector3f pos = new Vector3f(x, 0f, z);
+				Vector3f pos = JMEModelFunctions.getHeightAtPoint(x, z, game.getRootNode());
+				//Vector3f pos = new Vector3f(x, 0f, z); // todo - fall from sky, and check heightn errainn
 				ape.setLocation(pos);
 			}
 		}

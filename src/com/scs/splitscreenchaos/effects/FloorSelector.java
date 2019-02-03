@@ -40,6 +40,12 @@ public class FloorSelector extends AbstractPhysicalEntity implements IProcessabl
 
 
 	@Override
+	public boolean collides() {
+		return false;
+	}
+	
+
+	@Override
 	public void process(float tpfSecs) {
 		if (updateInt.hitInterval()) {
 			if (wiz.ability[0] instanceof AbstractSpell) {

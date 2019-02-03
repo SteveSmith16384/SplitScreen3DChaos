@@ -20,14 +20,16 @@ public class WallSpell extends AbstractSpell {
 	public boolean cast() {
 		Vector3f position = module.getFloorPointWithRay(this.getWizard(), -1);
 		if (position != null) {
-			ChaosGameModule m = (ChaosGameModule)module;
+			//ChaosGameModule m = (ChaosGameModule)module;
 			Wall wall = new Wall(game, module, position);
 			if (module.isAreaClear(wall.getMainNode().getWorldBound())) {
 				return true;
 			} else {
+				avatar.hud.appendToLog("Area not clear");
 				wall.markForRemoval();
 			}
 		}
+		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

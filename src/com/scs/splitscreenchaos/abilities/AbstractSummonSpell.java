@@ -22,7 +22,7 @@ public abstract class AbstractSummonSpell extends AbstractSpell {
 	public boolean cast() {
 		Vector3f position = module.getFloorPointWithRay(this.getWizard(), RANGE);
 		if (position != null) {
-			avatar.hud.appendToLog("Summoning " + name);
+			//avatar.hud.appendToLog("Summoning " + name);
 			Vector3f pos = JMEModelFunctions.getHeightAtPoint(position.x, position.z, game.getRootNode());
 			position.y = pos.y + ChaosSettings.SUMMON_Y_POS; // Drop from sky
 			AbstractCreature c = this.createCreature(position);

@@ -144,6 +144,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				this.targetPos = this.physicalTarget.getLocation();
 			} else {
 				physicalTarget = null;
+				targetPos = null;
 			}
 		}
 		if (lockedInCombat != null) {
@@ -182,7 +183,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				this.model.setCreatureAnim(Anim.Walk);
 				this.turnTowardsDestination(targetPos);
 				this.moveFwds();
-				if (this.distance(this.targetPos) < .1f) {
+				if (this.distance(this.targetPos) < 1f) {
 					targetPos = null;
 				}
 			} else {

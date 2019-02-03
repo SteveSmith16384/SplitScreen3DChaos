@@ -11,14 +11,12 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public abstract class AbstractSpell extends AbstractAbility implements IAbility {
 
-	protected String name;
 	private int cost;
 	private float range;
 
 	public AbstractSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar _player, String _name, int _cost, float _range) {
-		super(_game, module, _player);
+		super(_game, module, _player, _name);
 
-		name = _name;
 		cost = _cost;
 		range = _range;
 	}
@@ -98,5 +96,6 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 		return true;
 	}
 
+	
 
 }

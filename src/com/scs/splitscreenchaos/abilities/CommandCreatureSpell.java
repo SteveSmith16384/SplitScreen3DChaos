@@ -13,12 +13,13 @@ import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
+import com.scs.splitscreenfpsengine.entities.TerrainEntity;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class CommandCreatureSpell extends AbstractAbility {
 
 	public CommandCreatureSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p);//, 0, -1);
+		super(_game, module, p, "CommandCreatureSpell");//, 0, -1);
 	}
 
 
@@ -49,17 +50,18 @@ public class CommandCreatureSpell extends AbstractAbility {
 							return true;
 						}
 					}
-				} else if (ape instanceof FloorOrCeiling) {
+				} else if (ape instanceof FloorOrCeiling || ape instanceof TerrainEntity) {
 					Vector3f position = result.getContactPoint();
 					WizardAvatar w = (WizardAvatar)this.avatar;
 					if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
 						AbstractCreature c = (AbstractCreature)w.selectedEntity;
 						c.setTarget(position);
 						Settings.p("Destination " + position + " selected");
+						this.avatar.hud.appendToLog("Destination " + position + " selected");
 					}
 					return true;
 				} else {
-					//Settings.p(ape + " selected");
+					Settings.p(ape + " selected");
 				}
 			}
 		}

@@ -18,10 +18,11 @@ public class SlowDownSpell extends AbstractSpell {
 		AbstractCreature creature = (AbstractCreature)module.getWithRay(this.avatar, AbstractCreature.class, -1);
 		if (creature != null) {
 			if (creature.getSide() != this.getWizard().getSide()) {
-			new SlowDownEffect(game, module, creature);
-			return true;
+				new SlowDownEffect(game, module, creature);
+				return true;
 			}
 		}
+		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

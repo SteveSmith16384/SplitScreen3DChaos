@@ -20,6 +20,7 @@ public class TeleportSpell extends AbstractSpell {
 			avatar.playerControl.warp(position);
 			return true;
 		}
+		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

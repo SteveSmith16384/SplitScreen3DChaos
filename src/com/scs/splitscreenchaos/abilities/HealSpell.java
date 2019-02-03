@@ -19,6 +19,7 @@ public class HealSpell extends AbstractSpell {
 			ape.restoreHealth();
 			return true;
 		}
+		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

@@ -14,7 +14,7 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	private int index;
 
 	public CycleThroughAbilitiesAbility(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p);
+		super(_game, module, p, "CycleThroughAbilitiesAbility");
 		
 		abilities.add(new SummonGolemSpell(game, module, p));
 		abilities.add(new SummonGiantSpiderSpell(game, module, p));
