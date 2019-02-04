@@ -12,6 +12,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class AIWizard extends AbstractCreature implements IWizard, IAttackable, IDamagable {
 
 	private int wizid;
+	private float mana;
 	
 	public AIWizard(SplitScreenFpsEngine _game, AbstractGameModule _module, Vector3f startPos, int _wizid) {
 		super(_game, _module, "Wizard", startPos, null, 1, 1, 1, 1, false);
@@ -28,7 +29,12 @@ public class AIWizard extends AbstractCreature implements IWizard, IAttackable, 
 	
 	@Override
 	public void process(float tpfSecs) {
-		// todo
+		this.mana += tpfSecs;
+		if (mana > 200) {
+			mana = 200;
+		}
+		
+		// todo - cast spells
 	}
 
 

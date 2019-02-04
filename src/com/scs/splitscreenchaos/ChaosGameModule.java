@@ -15,14 +15,16 @@ import com.scs.splitscreenchaos.blocks.GrassBlock;
 import com.scs.splitscreenchaos.blocks.WoodBlock;
 import com.scs.splitscreenchaos.entities.AIWizard;
 import com.scs.splitscreenchaos.entities.MageTower;
+import com.scs.splitscreenchaos.entities.ChaosTerrainEntity;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
+import com.scs.splitscreenfpsengine.entities.AbstractTerrainEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
-import com.scs.splitscreenfpsengine.entities.TerrainEntity;
 import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
 import com.scs.splitscreenfpsengine.hud.IHud;
 import com.scs.splitscreenfpsengine.input.IInputDevice;
@@ -83,7 +85,7 @@ public class ChaosGameModule extends AbstractGameModule {
 			new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, MAP_SIZE-1));
 
 		} else {
-			TerrainEntity t = new TerrainEntity(game, this, MAP_SIZE);
+			AbstractTerrainEntity t = new ChaosTerrainEntity(game, this, MAP_SIZE);
 			this.addEntity(t);
 			
 			Vector3f pos = JMEModelFunctions.getHeightAtPoint(0.5f, 0.5f, t.getMainNode());
@@ -126,8 +128,8 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 
 		// Create AI Monsters
-		//GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
-		//this.addEntity(gd);
+		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
+		this.addEntity(gd);
 	}
 
 

@@ -7,21 +7,21 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class SlowDownEffect extends AbstractTimedEffect {
 
-	private AbstractCreature wiz;
+	private AbstractCreature creature;
 	
-	public SlowDownEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, AbstractCreature _wiz) {
+	public SlowDownEffect(SplitScreenFpsEngine _game, AbstractGameModule _module, AbstractCreature _cre) {
 		super(_game, _module, "SlowDownEffect", 10);
 		
-		wiz = _wiz;
+		creature = _cre;
 		
-		//todo this.wiz.moveSpeed = this.wiz.moveSpeed / 2;
+		this.creature.speed = this.creature.speed / 4;
 
 	}
 
 	
 	@Override
 	protected void effectFinished() {
-		//todo wiz.moveSpeed = wiz.moveSpeed * 2;
+		creature.speed  = creature.speed * 4;
 		
 	}
 

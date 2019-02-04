@@ -45,7 +45,8 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 	private List<Picture> targetting_reticules = new ArrayList<>();
 	//private TrueTypeContainer textArea; // For showing all other stats 
 	private TextArea log_ta;
-	private BitmapText stats;
+	private BitmapText wizardStats;
+	public BitmapText creatureStats;
 	
 	public ChaosHUD(SplitScreenFpsEngine _game, AbstractGameModule _module, WizardAvatar _player, float xBL, float yBL, float w, float h, Camera _cam) {
 		super("HUD");
@@ -65,9 +66,13 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 		log_ta.setLocalTranslation(0, hud_height/2, 0);
 		this.attachChild(log_ta);
 
-		stats = new BitmapText(guiFont_small, false);
-		stats.setLocalTranslation(10, hud_height-20, 0);
-		this.attachChild(stats);
+		wizardStats = new BitmapText(guiFont_small, false);
+		wizardStats.setLocalTranslation(10, hud_height-20, 0);
+		this.attachChild(wizardStats);
+		
+		creatureStats = new BitmapText(guiFont_small, false);
+		//creatureStats.setLocalTranslation(10, hud_height-20, 0);
+		this.attachChild(creatureStats);
 		
 		/*
 		TrueTypeKeyMesh ttkSmall = new TrueTypeKeyMesh("Fonts/ERASBD.TTF", Style.Bold, (int)10);
@@ -148,13 +153,14 @@ public class ChaosHUD extends Node implements IHud, IEntity, IProcessable {
 
 	private void updateTextArea() {
 		StringBuilder str = new StringBuilder();
-		str.append(player.ability[0].getHudText() + "\n");
-		str.append(player.ability[1].getHudText() + "\n");
+		str.append("Current Spell: " + player.ability[0].getHudText() + "\n");
+		//str.append(player.ability[1].getHudText() + "\n");
 		str.append("Mana: " + (int)player.mana + "\n");
+		str.append("Health: " + (int)player.getHealth() + "\n");
 		if (player.selectedEntity != null) {
 			str.append(player.selectedEntity.name + " Selected\n");
 		}
-		this.stats.setText(str.toString());
+		this.wizardStats.setText(str.toString());
 		//this.textArea.updateGeometry();
 	}
 

@@ -22,21 +22,23 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 		abilities.add(new SummonGoldenDragonSpell(game, module, p));
 		abilities.add(new SummonGreenDragonSpell(game, module, p));
 		abilities.add(new SummonRedDragonSpell(game, module, p));
-		//abilities.add(new SummonWyvernSpell(game, module, p));
+		abilities.add(new SummonScorpion(game, module, p));
 		abilities.add(new SummonSkeletonSpell(game, module, p));
 		abilities.add(new SummonCerberusSpell(game, module, p));
 		
 		abilities.add(new FireballSpell(game, module, p));
 		abilities.add(new FreezeSpell(game, module, p));
-		abilities.add(new WallSpell(game, module, p));
-		abilities.add(new WindSpell(game, module, p));
-		abilities.add(new TeleportSpell(game, module, p));
-		abilities.add(new SubversionSpell(game, module, p));
-		abilities.add(new TurmoilSpell(game, module, p));
+		abilities.add(new InvisibilitySpell(game, module, p));
+		abilities.add(new HealSpell(game, module, p));
 		abilities.add(new RaiseDeadSpell(game, module, p));
 		abilities.add(new RunFastSpell(game, module, p));
+		abilities.add(new SlowDownSpell(game, module, p));
+		abilities.add(new SubversionSpell(game, module, p));
 		abilities.add(new SwapPositionsSpell(game, module, p));
-		abilities.add(new HealSpell(game, module, p));
+		abilities.add(new TeleportSpell(game, module, p));
+		abilities.add(new TurmoilSpell(game, module, p));
+		abilities.add(new WallSpell(game, module, p));
+		abilities.add(new WindSpell(game, module, p));
 
 		abilities.add(new CommandCreatureSpell(game, module, p));
 	}

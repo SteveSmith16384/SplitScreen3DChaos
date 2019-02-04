@@ -1,5 +1,6 @@
 package com.scs.splitscreenchaos.entities;
 
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial.CullHint;
 import com.scs.splitscreenchaos.abilities.CycleThroughAbilitiesAbility;
@@ -7,6 +8,7 @@ import com.scs.splitscreenchaos.abilities.FireballSpell;
 import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.effects.FloorSelector;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
+import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenchaos.models.WizardModel;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
@@ -89,9 +91,19 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		}
 		super.process(tpfSecs);
 
+		AbstractCreature creature = (AbstractCreature)module.getWithRay(this, AbstractCreature.class, -1);
+		ChaosHUD hud = (ChaosHUD)this.hud;
+		if (creature != null) {
+			hud.creatureStats.setText(creature.getStatsForHud());
+			Vector3f pos = this.cam.getScreenCoordinates(creature.getLocation());
+			hud.creatureStats.setLocalTranslation(pos);
+		} else {
+			hud.creatureStats.setText("");
+		}
+		
 		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -10f) {
-			//killed("Too low");
-			//return;
+			killed("Too low");
+			return;
 		}
 
 	}
@@ -173,5 +185,9 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 	}
 
+	
+	public float getHealth() {
+		return health;
+	}
 
 }

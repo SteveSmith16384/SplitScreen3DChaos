@@ -20,10 +20,11 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Spatial model = assetManager.loadModel("Models/orc/orc.blend");
+		//Spatial model = assetManager.loadModel("Models/orc/orc.blend");
+		Spatial model = assetManager.loadModel("Models/scorpion/scorpion.blend");
 		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus_texture.png");
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
-		JMEAngleFunctions.rotateXAxisBy(model, 90);
+		//JMEAngleFunctions.rotateXAxisBy(model, 90);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
 
 		//JMEModelFunctions.scaleModelToHeight(model, 2f);
@@ -32,7 +33,7 @@ public class ModelViewer_Chaos extends ModelViewer {
 	
 	
 	public String getAnimNode() {
-		return "warhammer (Node)";
+		return "scorpion (Node)";
 	}
 	
 

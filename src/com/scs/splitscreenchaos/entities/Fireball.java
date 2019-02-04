@@ -35,7 +35,6 @@ public class Fireball extends AbstractBullet {
 		} else {*/
 			fire = new ParticleEmitter("Emitter", ParticleMesh.Type.Triangle, 30);
 			Material mat_red = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Particle.j3md");
-			//mat_red.setTexture("Texture", game.getAssetManager().loadTexture("Textures/flame.png"));
 			mat_red.setTexture("Texture", game.getAssetManager().loadTexture("Effects/Explosion/flame.png"));
 			fire.setMaterial(mat_red);
 			fire.setImagesX(2);
@@ -43,14 +42,14 @@ public class Fireball extends AbstractBullet {
 			fire.setEndColor(  new ColorRGBA(1f, 0f, 0f, 1f));   // red
 			fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
 			//fire.getParticleInfluencer().setInitialVelocity(new Vector3f(2, 0, 0));
-			fire.getParticleInfluencer().setInitialVelocity(this.shooter.getShootDir().mult(2));
+			fire.getParticleInfluencer().setInitialVelocity(this.shooter.getShootDir().mult(3));
 			fire.setStartSize(1);//.5f);
 			fire.setEndSize(0.1f);
 			fire.setGravity(0, 0, 0);
 			fire.setLowLife(1f);
 			fire.setHighLife(3f);
 			fire.getParticleInfluencer().setVelocityVariation(0.3f);
-
+			
 			return fire;
 		//}
 	}

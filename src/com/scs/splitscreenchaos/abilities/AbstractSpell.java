@@ -1,12 +1,12 @@
 package com.scs.splitscreenchaos.abilities;
 
 import com.scs.splitscreenchaos.ChaosSettings;
+import com.scs.splitscreenchaos.effects.ParticleCastEffect;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.abilities.AbstractAbility;
 import com.scs.splitscreenfpsengine.abilities.IAbility;
-import com.scs.splitscreenfpsengine.entities.ParticleCastEffect;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public abstract class AbstractSpell extends AbstractAbility implements IAbility {

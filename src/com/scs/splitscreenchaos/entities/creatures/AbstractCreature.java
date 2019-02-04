@@ -2,7 +2,6 @@ package com.scs.splitscreenchaos.entities.creatures;
 
 import com.jme3.asset.TextureKey;
 import com.jme3.bounding.BoundingBox;
-import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -22,6 +21,7 @@ import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
+import com.scs.splitscreenfpsengine.entities.ParticleShockwave;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -41,14 +41,17 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	public boolean undead;
 	private float health, maxHealth;
-	protected float speed, att, def;
+	protected float att, def;
+	public float speed;
 	private boolean dead = false;
 	public boolean frozen = false;
 
 	private long removeAt;
 	public WizardAvatar owner;
 	private Geometry orbGeom;
-
+	private StringBuilder hudStats = new StringBuilder();
+	private boolean shockwaveShown = false;
+	
 	// AI
 	private Vector3f targetPos;
 	private IAttackable physicalTarget;
@@ -56,6 +59,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private float attackDist = -1; // How far away the target currently is when attacking
 	private float avoidUntil = 0;
 	private RealtimeInterval attackInterval = new RealtimeInterval(2000);
+
 
 	public AbstractCreature(SplitScreenFpsEngine _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health, boolean _undead) {
 		super(_game, _module, name);
@@ -99,7 +103,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			this.orbGeom.removeFromParent();
 		}
 		if (this.owner != null) {
-			Sphere sphere = new Sphere(8, 8, .2f, true, false);
+			BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
+			Sphere sphere = new Sphere(8, 8, bv.getYExtent()/5, true, false); // Make orb size relative to creature
 			sphere.setTextureMode(Sphere.TextureMode.Projected);
 			orbGeom = new Geometry("DebuggingSphere", sphere);
 			TextureKey key = new TextureKey(WizardAvatar.getOrbColour(owner.playerID));
@@ -107,7 +112,6 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			Material mat = new Material(game.getAssetManager(),"Common/MatDefs/Light/Lighting.j3md");
 			mat.setTexture("DiffuseMap", tex);
 			orbGeom.setMaterial(mat);
-			BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
 			orbGeom.setLocalTranslation(0, bv.getYExtent()*2 + .2f, 0);
 			this.getMainNode().attachChild(orbGeom);
 		}
@@ -243,6 +247,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	@Override
 	public void notifiedOfCollision(AbstractPhysicalEntity other) {
+		if (shockwaveShown == false) {
+			shockwaveShown = true;
+			new ParticleShockwave(game, module, this.getLocation());
+		}
 		if (other == this.lockedInCombat) {
 			return;
 		}
@@ -282,6 +290,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		if (dead) {
 			return;
 		}
+		Settings.p(this.name + " wounded " + amt + " by " + reason);
 		this.health -= amt;
 		if (this.health <= 0) {
 			killed(reason, false);
@@ -378,7 +387,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private boolean canAttack(IAttackable golem) {
 		if (golem.canBeSeen()) {
 			if (!golem.isUndead() || this.isUndead()) { // Don't attack undead unless we're undead
-				//if (golem.getSide() != this.getSide()) {
+				//if (golem.getSide() != this.getSide()) {  
 				return true;
 				//}
 			}
@@ -410,5 +419,12 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		this.owner = wiz;
 		this.lockedInCombat = null;
 		addOrb();
+	}
+	
+	
+	public String getStatsForHud() {
+		hudStats.setLength(0);		
+		hudStats.append(this.name + "\nHealth: " + (int)this.health);
+		return hudStats.toString();
 	}
 }
