@@ -14,7 +14,7 @@ public class FreezeEffect extends AbstractTimedEffect {
 		
 		creature = _creature;
 		
-		creature.frozen = true;
+		creature.setFrozen(true);
 		
 		Settings.p(creature + " is frozen");
 		
@@ -23,7 +23,7 @@ public class FreezeEffect extends AbstractTimedEffect {
 	
 	@Override
 	protected void effectFinished() {
-		creature.frozen = false;
+		creature.setFrozen(false);
 		Settings.p(creature + " is no longer frozen");
 		
 	}

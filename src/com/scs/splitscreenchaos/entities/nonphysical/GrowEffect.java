@@ -13,14 +13,15 @@ public class GrowEffect extends AbstractTimedEffect {
 		
 		creature = _creature;
 		
-		// todo creature.getMainNode().
-
+		creature.getMainNode().setLocalScale(2);
+		creature.speed = creature.speed * 1.5f;
 	}
 
 	
 	@Override
 	protected void effectFinished() {
-		// todo
+		creature.getMainNode().setLocalScale(1);
+		creature.speed = creature.speed / 1.5f;
 		
 	}
 

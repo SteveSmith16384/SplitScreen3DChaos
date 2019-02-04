@@ -1,8 +1,5 @@
 package com.scs.splitscreenchaos.entities.nonphysical;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
@@ -18,7 +15,7 @@ import ssmith.util.RealtimeInterval;
 
 public class WindEffect extends AbstractEntity implements IProcessable, IExpiringEffect {
 
-	private List<IEntity> entities = new ArrayList<IEntity>();
+	//private List<IEntity> entities = new ArrayList<IEntity>();
 	private RealtimeInterval interval = new RealtimeInterval(2000);
 	private Vector3f dir;
 	private WizardAvatar wiz;
@@ -35,14 +32,14 @@ public class WindEffect extends AbstractEntity implements IProcessable, IExpirin
 
 	@Override
 	public void actuallyAdd() {
-		this.entities.addAll(module.entities);
+		//this.entities.addAll(module.entities);
 
 	}
 
 	@Override
 	public void process(float tpfSecs) {
 		if (interval.hitInterval()) {
-			for (IEntity e : this.entities) {
+			for (IEntity e : module.entities) {
 				if (e instanceof AbstractCreature) {
 					if (e instanceof IAffectedByPhysics) {
 						AbstractCreature cre = (AbstractCreature)e;

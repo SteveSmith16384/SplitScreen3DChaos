@@ -12,8 +12,8 @@ import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
-// Anims on 'scorpion (Node)': [sleep, die, idle, attack, wakeup, idle_02, neutral, attack_position, attack_02, walk, fallasleep]
-public class ScorpionModel implements ICreatureModel {
+// Anims on 'beholder (Node)': [die, wait, attack, neutral, attack_02, walk]
+public class BeholderModel implements ICreatureModel {
 
 	//public static final float MODEL_HEIGHT = 1.7f;
 
@@ -24,10 +24,10 @@ public class ScorpionModel implements ICreatureModel {
 	private AnimChannel channel;
 	private AbstractCreature.Anim currAnimCode = AbstractCreature.Anim.None;
 
-	public ScorpionModel(AssetManager _assetManager) {
+	public BeholderModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/scorpion/scorpion.blend");
+		model = assetManager.loadModel("Models/beholder/beholder.blend");
 		
 		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
@@ -54,7 +54,7 @@ public class ScorpionModel implements ICreatureModel {
 		switch (animCode) {
 		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
-			channel.setAnim("idle");
+			channel.setAnim("wait");
 			break;
 
 		case Walk:
@@ -74,7 +74,7 @@ public class ScorpionModel implements ICreatureModel {
 
 		case Frozen:
 			channel.setLoopMode(LoopMode.DontLoop);
-			channel.setAnim("fallasleep");
+			channel.setAnim("neutral");
 			channel.reset(false);
 			break;
 

@@ -16,6 +16,7 @@ import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.MyBetterCharacterControl;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
+import com.scs.splitscreenfpsengine.components.IAffectedByPhysics;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
@@ -28,8 +29,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 import ssmith.util.RealtimeInterval;
 
-
-public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable {
+public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable, IAffectedByPhysics {
 
 	private static final float TURN_SPEED = 3f;
 	private static final float WEIGHT = 1f;
@@ -38,20 +38,21 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	private ICreatureModel model;
 	private MyBetterCharacterControl playerControl;
+	private Vector3f walkDir = new Vector3f();
 
 	public boolean undead;
 	private float health, maxHealth;
 	protected float att, def;
 	public float speed;
 	private boolean dead = false;
-	public boolean frozen = false;
+	private boolean frozen = false;
 
 	private long removeAt;
 	public WizardAvatar owner;
 	private Geometry orbGeom;
 	private StringBuilder hudStats = new StringBuilder();
 	private boolean shockwaveShown = false;
-	
+
 	// AI
 	private Vector3f targetPos;
 	private IAttackable physicalTarget;
@@ -117,8 +118,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		}
 
 	}
-	
-	
+
+
 	public abstract ICreatureModel getCreatureModel();
 
 
@@ -134,10 +135,11 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			return;
 		}
 
-		playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
+		//playerControl.setWalkDirection(new Vector3f(0, 0, 0));
 
 		if (frozen) {
 			this.model.setCreatureAnim(Anim.Frozen);
+			//playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
 			return;
 		}
 
@@ -165,15 +167,15 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		if (avoidUntil > 0) {
 			avoidUntil -= tpfSecs;
 		}
-		
-		
+
+
 		if (!dead) {
 			if (lockedInCombat != null) {
 				this.model.setCreatureAnim(Anim.Attack);
 				turnTowardsDestination(lockedInCombat.getLocation());
 				if (canAttack(lockedInCombat)) {
 					if (attackInterval.hitInterval()) {
-						Settings.p("Combat between " + this + " and " + lockedInCombat);
+						Settings.p("Combat between " + this.name + " and " + lockedInCombat.getName());
 						float tot = GameMechanics.combat(att, lockedInCombat.getDef());
 						if (tot > 0) {
 							lockedInCombat.damaged(tot, "combat with " + this.name);
@@ -200,6 +202,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				this.markForRemoval();
 			}
 		}
+		playerControl.setWalkDirection(walkDir);
+		walkDir.set(0, 0, 0);
 	}
 
 
@@ -230,18 +234,19 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 
 	private void moveFwds() {
-		Vector3f walkDirection = this.playerControl.getViewDirection();
-		walkDirection.y = 0;
+		walkDir.set(this.playerControl.getViewDirection());
+		walkDir.y = 0;
 		//Settings.p(this + " walking " + walkDirection);
-		playerControl.setWalkDirection(walkDirection.mult(speed));
+		//playerControl.setWalkDirection(walkDir.multLocal(speed));
+		walkDir.multLocal(speed);
 	}
 
 
 	private void moveBwds() {
-		Vector3f walkDirection = this.playerControl.getViewDirection().mult(-1);
-		walkDirection.y = 0;
-		//Settings.p(this + " walking backwards " + walkDirection);
-		playerControl.setWalkDirection(walkDirection.mult(speed));
+		walkDir.set(this.playerControl.getViewDirection());
+		walkDir.y = 0;
+		//playerControl.setWalkDirection(walkDir.multLocal(-speed));
+		walkDir.multLocal(-speed);
 	}
 
 
@@ -414,17 +419,33 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	}
 
-	
+
 	public void subverted(WizardAvatar wiz) {
 		this.owner = wiz;
 		this.lockedInCombat = null;
 		addOrb();
 	}
-	
-	
+
+
 	public String getStatsForHud() {
 		hudStats.setLength(0);		
 		hudStats.append(this.name + "\nHealth: " + (int)this.health);
 		return hudStats.toString();
 	}
+
+
+	@Override
+	public void applyForce(Vector3f dir) {
+		this.walkDir.addLocal(dir);
+	}
+
+
+	public void setFrozen(boolean b) {
+		this.frozen = b;
+		if (b) {
+			walkDir.set(0, 0, 0);
+			playerControl.setWalkDirection(walkDir);
+		}
+	}
+
 }

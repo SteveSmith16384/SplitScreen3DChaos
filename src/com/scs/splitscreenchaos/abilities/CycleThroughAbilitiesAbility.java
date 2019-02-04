@@ -16,15 +16,15 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	public CycleThroughAbilitiesAbility(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "CycleThroughAbilitiesAbility");
 		
-		abilities.add(new SummonGolemSpell(game, module, p));
+		abilities.add(new SummonCerberusSpell(game, module, p));
 		abilities.add(new SummonGiantSpiderSpell(game, module, p));
-		abilities.add(new SummonZombieSpell(game, module, p));
 		abilities.add(new SummonGoldenDragonSpell(game, module, p));
+		abilities.add(new SummonGolemSpell(game, module, p));
 		abilities.add(new SummonGreenDragonSpell(game, module, p));
 		abilities.add(new SummonRedDragonSpell(game, module, p));
 		abilities.add(new SummonScorpion(game, module, p));
 		abilities.add(new SummonSkeletonSpell(game, module, p));
-		abilities.add(new SummonCerberusSpell(game, module, p));
+		abilities.add(new SummonZombieSpell(game, module, p));
 		
 		abilities.add(new FireballSpell(game, module, p));
 		abilities.add(new FreezeSpell(game, module, p));
