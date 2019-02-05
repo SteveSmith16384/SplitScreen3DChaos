@@ -40,6 +40,7 @@ public class AbstractCorpse extends AbstractPhysicalEntity {
 		this.markForRemoval();
 		//creature.setAIToAwaitingCommand();
 		creature.undead = true;
+		creature.owner = wiz;
 		module.addEntity(creature);
 	}
 

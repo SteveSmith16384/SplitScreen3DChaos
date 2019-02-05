@@ -22,6 +22,7 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 		abilities.add(new GrowSpell(game, module, p));
 		abilities.add(new InvisibilitySpell(game, module, p));
 		abilities.add(new HealSpell(game, module, p));
+		abilities.add(new RaiseAllDeadSpell(game, module, p));
 		abilities.add(new RaiseDeadSpell(game, module, p));
 		abilities.add(new RunFastSpell(game, module, p));
 		abilities.add(new ShrinkSpell(game, module, p));
