@@ -19,7 +19,8 @@ public class CommandCreatureSpell extends AbstractAbility {
 
 	@Override
 	public boolean activate(float interpol) {
-		AbstractPhysicalEntity creature = (AbstractCreature)module.getWithRay(this.avatar, AbstractPhysicalEntity.class, -1);
+		// todo - select creature here, then floor below
+		AbstractPhysicalEntity creature = (AbstractPhysicalEntity)module.getWithRay(this.avatar, AbstractPhysicalEntity.class, -1);
 		if (creature != null) {
 			WizardAvatar w = (WizardAvatar)this.avatar;
 			if (creature instanceof AbstractCreature) {
@@ -47,6 +48,8 @@ public class CommandCreatureSpell extends AbstractAbility {
 				}
 				return true;
 			}
+		} else {
+			Settings.p("Nothing found");
 		}
 		return false;
 	}

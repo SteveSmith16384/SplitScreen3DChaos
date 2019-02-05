@@ -15,7 +15,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 // Anims on 'scorpion (Node)': [sleep, die, idle, attack, wakeup, idle_02, neutral, attack_position, attack_02, walk, fallasleep]
 public class ScorpionModel implements ICreatureModel {
 
-	//public static final float MODEL_HEIGHT = 1.7f;
+	public static final float MODEL_HEIGHT = 1.7f;
 
 	private AssetManager assetManager;
 	private Spatial model;
@@ -31,7 +31,7 @@ public class ScorpionModel implements ICreatureModel {
 		
 		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
-		//JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
+		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);
 		JMEModelFunctions.moveYOriginTo(model, 0f);
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);

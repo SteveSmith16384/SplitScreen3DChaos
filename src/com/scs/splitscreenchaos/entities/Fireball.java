@@ -15,7 +15,7 @@ public class Fireball extends AbstractBullet {
 	private ParticleEmitter fire;
 
 	public Fireball(SplitScreenFpsEngine _game, AbstractGameModule _module, ICanShoot _shooter) {
-		super(_game, _module, "Fireball", _shooter, 1);
+		super(_game, _module, "Fireball", _shooter, 10);
 
 	}
 
@@ -43,8 +43,8 @@ public class Fireball extends AbstractBullet {
 			fire.setStartColor(new ColorRGBA(1f, 1f, 0f, 0.5f)); // yellow
 			//fire.getParticleInfluencer().setInitialVelocity(new Vector3f(2, 0, 0));
 			fire.getParticleInfluencer().setInitialVelocity(this.shooter.getShootDir().mult(3));
-			fire.setStartSize(1);//.5f);
-			fire.setEndSize(0.1f);
+			fire.setStartSize(.4f);//.5f);
+			fire.setEndSize(0.2f);
 			fire.setGravity(0, 0, 0);
 			fire.setLowLife(1f);
 			fire.setHighLife(3f);

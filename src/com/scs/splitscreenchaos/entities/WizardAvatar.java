@@ -124,6 +124,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	@Override
 	public void damaged(float amt, String reason) {
 		if (!killed) { // check not already dead
+			Settings.p(this.getName() + " wounded " + (int)amt + " by " + reason);
 			this.health -= amt;
 			this.hud.showDamageBox();
 			this.hud.appendToLog("Wounded " + (int)amt + " by " + reason);

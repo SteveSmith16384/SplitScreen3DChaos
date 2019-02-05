@@ -45,7 +45,7 @@ public class WindEffect extends AbstractEntity implements IProcessable, IExpirin
 						AbstractCreature cre = (AbstractCreature)e;
 						if (cre.getOwner() != this.wiz) {
 							IAffectedByPhysics abp = (IAffectedByPhysics)e;
-							abp.applyForce(dir);
+							abp.applyForce(dir.mult(10));
 						}
 					}
 				}

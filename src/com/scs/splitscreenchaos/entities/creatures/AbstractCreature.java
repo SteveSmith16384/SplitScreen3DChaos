@@ -105,7 +105,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		}
 		if (this.owner != null) {
 			BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
-			Sphere sphere = new Sphere(8, 8, bv.getYExtent()/5, true, false); // Make orb size relative to creature
+			Sphere sphere = new Sphere(16, 16, bv.getYExtent()/5, true, false); // Make orb size relative to creature
 			sphere.setTextureMode(Sphere.TextureMode.Projected);
 			orbGeom = new Geometry("DebuggingSphere", sphere);
 			TextureKey key = new TextureKey(WizardAvatar.getOrbColour(owner.playerID));
@@ -267,7 +267,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				co.setLockedInCombat(this);
 				this.attackDist = this.distance(other) * 1.5f;
 			} else {
-				avoidUntil = 4;
+				avoidUntil = 2;
 			}
 		}
 	}
