@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SummonRedDragonSpell extends AbstractSummonSpell {
 
 	public SummonRedDragonSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Red Dragon", 80);
+		super(_game, module, p, "Summon Red Dragon", 80);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 	public Spatial getModel() {
 		//Spatial model = assetManager.loadModel("Models/orc/orc.blend");
-		Spatial model = assetManager.loadModel("Models/beholder/beholder.blend");
+		Spatial model = assetManager.loadModel("Models/boneman/boneman_running.blend");
 		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus_texture.png");
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds
 		//JMEAngleFunctions.rotateXAxisBy(model, 90);
@@ -33,12 +33,12 @@ public class ModelViewer_Chaos extends ModelViewer {
 	
 	
 	public String getAnimNode() {
-		return "beholder (Node)";
+		return "Skeli (Node)";
 	}
 	
 
 	public String getAnimToShow() {
-		return "wait";
+		return "forward";
 	}
 	
 

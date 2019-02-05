@@ -21,7 +21,7 @@ import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.input.IInputDevice;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAttackable, IDamagable, INotifiedOfCollision {
+public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAttackable, IDamagable {
 
 	//private static final float ATT = 1;
 	private static final float DEF = 1;
@@ -91,6 +91,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		}
 		super.process(tpfSecs);
 
+		//Show stats of creature we're pointing at
 		AbstractCreature creature = (AbstractCreature)module.getWithRay(this, AbstractCreature.class, -1);
 		ChaosHUD hud = (ChaosHUD)this.hud;
 		if (creature != null) {
@@ -101,6 +102,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 			hud.creatureStats.setText("");
 		}
 		
+		// Fallen off edge?
 		if (this.playerControl.getPhysicsRigidBody().getPhysicsLocation().y < -10f) {
 			killed("Too low");
 			return;
@@ -152,18 +154,6 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		}
 		
 		this.markForRemoval();
-
-	}
-
-	@Override
-	public void notifiedOfCollision(AbstractPhysicalEntity other) {
-		/*if (other instanceof IAttackable) {
-			IAttackable co = (IAttackable)other;
-			float tot = GameMechanics.combat(ATT, co.getDef());
-			if (tot > 0) {
-				co.damaged(tot, "combat with " + this.name);
-			}
-		}*/
 
 	}
 

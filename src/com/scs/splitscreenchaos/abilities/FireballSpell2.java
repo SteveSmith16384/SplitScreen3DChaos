@@ -1,15 +1,15 @@
 package com.scs.splitscreenchaos.abilities;
 
+import com.scs.splitscreenchaos.entities.HomingFireball;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
-import com.scs.splitscreenchaos.entities.nonphysical.FreezeEffect;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class FreezeSpell extends AbstractSpell {
+public class FireballSpell2 extends AbstractSpell {
 
-	public FreezeSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Freeze", 5, -1);
+	public FireballSpell2(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
+		super(_game, module, p, "Fireball", 5, -1);
 	}
 
 
@@ -18,7 +18,7 @@ public class FreezeSpell extends AbstractSpell {
 		AbstractCreature creature = (AbstractCreature)module.getWithRay(this.avatar, AbstractCreature.class, -1);
 		if (creature != null) {
 			if (creature.getSide() != this.getWizard().getSide()) {
-				new FreezeEffect(game, module, creature);
+				new HomingFireball(game, module, this.getWizard(), creature);
 				return true;
 			}
 		}
@@ -32,4 +32,11 @@ public class FreezeSpell extends AbstractSpell {
 		return false;
 	}
 
+
+	@Override
+	protected boolean showCastEffect() {
+		return false;
+	}
+	
+	
 }

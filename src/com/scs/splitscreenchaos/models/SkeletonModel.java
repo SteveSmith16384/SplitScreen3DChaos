@@ -10,6 +10,7 @@ import com.jme3.scene.Spatial;
 import com.scs.splitscreenchaos.components.ICreatureModel;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.Settings;
+import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 
 // Anims on 'Skeli (Node)': [idle, forward]
@@ -46,7 +47,7 @@ public class SkeletonModel implements ICreatureModel {
 
 
 	public Spatial getModel() {
-		return model;
+		return model; // model.getWorldBound();
 	}
 
 
@@ -60,11 +61,13 @@ public class SkeletonModel implements ICreatureModel {
 		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("idle");
+			JMEAngleFunctions.rotateYAxisBy2(model, -90);
 			break;
 
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("forward");
+			JMEAngleFunctions.rotateYAxisBy2(model, 90);
 			break;
 
 		case Attack:

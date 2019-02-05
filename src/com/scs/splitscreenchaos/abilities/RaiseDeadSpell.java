@@ -10,7 +10,7 @@ public class RaiseDeadSpell extends AbstractSpell {
 	private static final float RANGE = 8f;
 	
 	public RaiseDeadSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "RaiseDeadSpell", 20, RANGE);
+		super(_game, module, p, "Raise Dead", 20, RANGE);
 	}
 
 

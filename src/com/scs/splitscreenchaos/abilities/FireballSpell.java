@@ -1,6 +1,6 @@
 package com.scs.splitscreenchaos.abilities;
 
-import com.scs.splitscreenchaos.entities.Fireball;
+import com.scs.splitscreenchaos.entities.FireballBullet;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.entities.AbstractBullet;
@@ -14,7 +14,7 @@ public class FireballSpell extends AbstractShootingSpell {
 
 	@Override
 	protected AbstractBullet getBullet() {
-		return new Fireball(game, module, avatar);
+		return new FireballBullet(game, module, avatar);
 	}
 
 }

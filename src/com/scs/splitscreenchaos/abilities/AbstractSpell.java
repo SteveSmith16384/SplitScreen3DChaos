@@ -24,7 +24,7 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 
 	@Override
 	public boolean activate(float interpol) {
-		if (this.getWizard().mana < cost) {
+		if (this.getWizard().mana < cost && Settings.INFINITE_MANA == false) {
 			Settings.p("Not enough mana!");
 			this.avatar.hud.appendToLog("Not enough mana!");
 			return false;
@@ -95,7 +95,5 @@ public abstract class AbstractSpell extends AbstractAbility implements IAbility 
 	public boolean showFloorSelector() {
 		return true;
 	}
-
-	
 
 }

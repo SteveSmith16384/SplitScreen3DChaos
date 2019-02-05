@@ -23,6 +23,7 @@ import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
 import com.scs.splitscreenfpsengine.components.IProcessable;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.ParticleShockwave;
+import com.scs.splitscreenfpsengine.entities.ParticleSpark;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -31,7 +32,7 @@ import ssmith.util.RealtimeInterval;
 
 public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable, IAffectedByPhysics {
 
-	private static final float TURN_SPEED = 3f;
+	private static final float TURN_SPEED = 4f;
 	private static final float WEIGHT = 1f;
 
 	public enum Anim {None, Idle, Walk, Attack, Died, Frozen}; 
@@ -42,8 +43,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 	public boolean undead;
 	private float health, maxHealth;
-	protected float att, def;
-	public float speed;
+	public float att, def, speed;
 	private boolean dead = false;
 	private boolean frozen = false;
 
@@ -139,10 +139,13 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 		if (frozen) {
 			this.model.setCreatureAnim(Anim.Frozen);
-			//playerControl.setWalkDirection(new Vector3f(0, 0, 0)); // todo - dcet
+			//playerControl.setWalkDirection(new Vector3f(0, 0, 0));
 			return;
 		}
 
+		if (orbGeom != null) {
+			JMEAngleFunctions.rotateYAxisBy2(this.orbGeom, tpfSecs*100);
+		}
 
 		// Reset any vars
 		if (physicalTarget != null) {
@@ -176,6 +179,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				if (canAttack(lockedInCombat)) {
 					if (attackInterval.hitInterval()) {
 						Settings.p("Combat between " + this.name + " and " + lockedInCombat.getName());
+						Vector3f sparkPos = this.getCenter().add(this.lockedInCombat.getLocation()).multLocal(.5f);
+						new ParticleSpark(game, module, sparkPos);
 						float tot = GameMechanics.combat(att, lockedInCombat.getDef());
 						if (tot > 0) {
 							lockedInCombat.damaged(tot, "combat with " + this.name);
@@ -183,7 +188,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 					}
 				}
 			} else if (avoidUntil > 0) {
-				this.turnAwayFromDestination(TURN_SPEED/4);
+				this.turnAwayFromDestination(TURN_SPEED/6);
 				this.moveBwds();
 			} else if (this.targetPos != null) {
 				this.model.setCreatureAnim(Anim.Walk);
@@ -234,19 +239,19 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 
 	private void moveFwds() {
-		walkDir.set(this.playerControl.getViewDirection());
+		walkDir.addLocal(this.playerControl.getViewDirection().mult(speed));
 		walkDir.y = 0;
 		//Settings.p(this + " walking " + walkDirection);
 		//playerControl.setWalkDirection(walkDir.multLocal(speed));
-		walkDir.multLocal(speed);
+		//walkDir.multLocal(speed);
 	}
 
 
 	private void moveBwds() {
-		walkDir.set(this.playerControl.getViewDirection());
+		walkDir.addLocal(this.playerControl.getViewDirection().mult(-speed));
 		walkDir.y = 0;
 		//playerControl.setWalkDirection(walkDir.multLocal(-speed));
-		walkDir.multLocal(-speed);
+		//walkDir.multLocal(-speed);
 	}
 
 
@@ -262,12 +267,12 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		if (other instanceof IAttackable) {
 			IAttackable co = (IAttackable)other;
 			if (co.getSide() != this.getSide()) {
-				Settings.p(this + " now locked in combat with " + other);
+				//Settings.p(this + " now locked in combat with " + other);
 				this.lockedInCombat = co;
 				co.setLockedInCombat(this);
 				this.attackDist = this.distance(other) * 1.5f;
 			} else {
-				avoidUntil = 2;
+				//No!  avoidUntil = 4;
 			}
 		}
 	}

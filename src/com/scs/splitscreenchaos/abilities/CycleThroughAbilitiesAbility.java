@@ -11,11 +11,22 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	
 	public ArrayList<IAbility> abilities = new ArrayList<>();
-	private int index;
+	private int index = 0;
 
 	public CycleThroughAbilitiesAbility(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
 		super(_game, module, p, "CycleThroughAbilitiesAbility");
 		
+	
+		abilities.add(new FireballSpell2(game, module, p));
+		abilities.add(new FreezeSpell(game, module, p));
+		abilities.add(new GrowSpell(game, module, p));
+		abilities.add(new InvisibilitySpell(game, module, p));
+		abilities.add(new HealSpell(game, module, p));
+		abilities.add(new RaiseDeadSpell(game, module, p));
+		abilities.add(new RunFastSpell(game, module, p));
+		abilities.add(new ShrinkSpell(game, module, p));
+		abilities.add(new SlowDownSpell(game, module, p));
+		abilities.add(new SubversionSpell(game, module, p));
 		abilities.add(new SummonCerberusSpell(game, module, p));
 		abilities.add(new SummonGiantSpiderSpell(game, module, p));
 		abilities.add(new SummonGoldenDragonSpell(game, module, p));
@@ -25,16 +36,6 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 		abilities.add(new SummonScorpion(game, module, p));
 		abilities.add(new SummonSkeletonSpell(game, module, p));
 		abilities.add(new SummonZombieSpell(game, module, p));
-		
-		abilities.add(new FireballSpell(game, module, p));
-		abilities.add(new FreezeSpell(game, module, p));
-		abilities.add(new GrowSpell(game, module, p));
-		abilities.add(new InvisibilitySpell(game, module, p));
-		abilities.add(new HealSpell(game, module, p));
-		abilities.add(new RaiseDeadSpell(game, module, p));
-		abilities.add(new RunFastSpell(game, module, p));
-		abilities.add(new SlowDownSpell(game, module, p));
-		abilities.add(new SubversionSpell(game, module, p));
 		abilities.add(new SwapPositionsSpell(game, module, p));
 		abilities.add(new TeleportSpell(game, module, p));
 		abilities.add(new TurmoilSpell(game, module, p));
@@ -51,12 +52,12 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	}
 
 
-	public void selectNext() {
+	public void selectPrev() {
 		this.activate(0);
 	}
 	
 	
-	public void selectPrev() {
+	public void selectNext() {
 		index--;
 		if (index < 0) {
 			index = this.abilities.size() - 1;
@@ -84,7 +85,7 @@ public class CycleThroughAbilitiesAbility extends AbstractAbility {
 	
 	@Override
 	public String getHudText() {
-		return "[CycleThru]";
+		return "";//[CycleThru]";
 	}
 
 }

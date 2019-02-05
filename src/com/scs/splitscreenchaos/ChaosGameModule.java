@@ -1,21 +1,14 @@
 package com.scs.splitscreenchaos;
 
-import java.awt.Point;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
-import com.scs.splitscreenchaos.blocks.BrickBlock;
-import com.scs.splitscreenchaos.blocks.ChangingBlock;
-import com.scs.splitscreenchaos.blocks.GrassBlock;
-import com.scs.splitscreenchaos.blocks.WoodBlock;
 import com.scs.splitscreenchaos.entities.AIWizard;
-import com.scs.splitscreenchaos.entities.MageTower;
+import com.scs.splitscreenchaos.entities.BlackHole;
 import com.scs.splitscreenchaos.entities.ChaosTerrainEntity;
+import com.scs.splitscreenchaos.entities.MageTower;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
@@ -25,15 +18,10 @@ import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.entities.AbstractTerrainEntity;
 import com.scs.splitscreenfpsengine.entities.FloorOrCeiling;
-import com.scs.splitscreenfpsengine.entities.VoxelTerrainEntity;
 import com.scs.splitscreenfpsengine.hud.IHud;
 import com.scs.splitscreenfpsengine.input.IInputDevice;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
-
-import mygame.util.Vector3Int;
-import ssmith.lang.NumberFunctions;
-import ssmith.util.RealtimeInterval;
 
 public class ChaosGameModule extends AbstractGameModule {
 
@@ -41,9 +29,9 @@ public class ChaosGameModule extends AbstractGameModule {
 	public static final int MAP_SIZE = 32;
 	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
 
-	private List<ChangingBlock> changingBlocks;
-	public VoxelTerrainEntity vte;
-	private RealtimeInterval addBlockInt = new RealtimeInterval(10);
+	//private List<ChangingBlock> changingBlocks;
+	//public VoxelTerrainEntity vte;
+	//private RealtimeInterval addBlockInt = new RealtimeInterval(10);
 
 	public int totalWizards, totalHumans, totalAI;
 
@@ -54,7 +42,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		totalAI = _numAI;
 		totalWizards = totalHumans + totalAI;
 
-		changingBlocks = new LinkedList<>();
+		//changingBlocks = new LinkedList<>();
 	}
 
 
@@ -99,10 +87,10 @@ public class ChaosGameModule extends AbstractGameModule {
 
 		}
 
-		vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
-		this.addEntity(vte);
+		//vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
+		//this.addEntity(vte);
 
-		if (!Settings.USE_TERRAIN) {
+		/*if (!Settings.USE_TERRAIN) {
 			for (int i=0 ; i<5 ; i++) {
 				Point p = this.getRandomBlockPos(1);
 				this.createTree(vte, new Vector3f(p.x, 1, p.y));
@@ -115,7 +103,7 @@ public class ChaosGameModule extends AbstractGameModule {
 			this.createWall_Vert(vte, new Vector3f(p.x, 1, p.y));
 		}
 			 */
-		}
+		//}
 
 		// Create AI Wiz
 		if (Settings.AI_WIZARDS) {
@@ -128,21 +116,21 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 
 		// Create AI Monsters
-		//GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
-		//this.addEntity(gd);
+		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
+		this.addEntity(gd);
 	}
 
 
 	@Override
 	public void update(float tpfSecs) {
 		super.update(tpfSecs);
-
+/*
 		if (!this.changingBlocks.isEmpty()) {
 			if (addBlockInt.hitInterval()) {
 				ChangingBlock block = this.changingBlocks.remove(0);
 				vte.blocks.setBlock(block.pos, block.newClass);
 			}
-		}
+		}*/
 	}
 
 
@@ -181,7 +169,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 	}
 
-
+/*
 	private Point getRandomBlockPos(int inset) {
 		int x = NumberFunctions.rnd(inset, MAP_SIZE_BLOCKS-inset-1);
 		int z = NumberFunctions.rnd(inset, MAP_SIZE_BLOCKS-inset-1);
@@ -214,7 +202,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 	}
 
-
+/*
 	private void createWall_Horiz(VoxelTerrainEntity vte, Vector3f startPos) {
 		int height = 8;
 		for (int x=0 ; x<20 ; x++) {
@@ -252,7 +240,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		this.changingBlocks.add(block);
 	}
 
-
+*/
 	@Override
 	protected AbstractPlayersAvatar getPlayersAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID,
 			Camera _cam, IInputDevice _input, int _side) {
@@ -282,5 +270,14 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 	}
 
+
+	@Override
+	protected void testPressed() {
+		//new WindEffect(game, this, this.playerDebug, new Vector3f(1, 0, 0));
+		Vector3f pos = playerDebug.getLocation();
+		pos.y += 2f;
+		//new ParticleShockwave(game, this, pos);
+		new BlackHole(game, this, (WizardAvatar)playerDebug, pos);
+	}
 
 }

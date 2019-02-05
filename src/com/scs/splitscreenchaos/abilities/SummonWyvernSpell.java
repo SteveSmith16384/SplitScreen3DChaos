@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SummonWyvernSpell extends AbstractSummonSpell {
 
 	public SummonWyvernSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "Wyvern", 40);
+		super(_game, module, p, "Summon Wyvern", 40);
 	}
 
 	@Override

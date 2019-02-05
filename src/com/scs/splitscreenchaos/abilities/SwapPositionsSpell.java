@@ -8,7 +8,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SwapPositionsSpell extends AbstractSpell {
 
 	public SwapPositionsSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "SwapPositions", 10, -1);
+		super(_game, module, p, "Swap Positions", 10, -1);
 	}
 
 

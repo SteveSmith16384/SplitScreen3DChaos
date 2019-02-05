@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.jme3.math.Vector3f;
 import com.scs.splitscreenchaos.ChaosGameModule;
+import com.scs.splitscreenchaos.ChaosSettings;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IEntity;
@@ -55,7 +56,7 @@ public class TurmoilEffect extends AbstractEntity implements IProcessable {
 				float x = NumberFunctions.rndFloat(0,  ChaosGameModule.MAP_SIZE);
 				float z = NumberFunctions.rndFloat(0,  ChaosGameModule.MAP_SIZE);
 				Vector3f pos = JMEModelFunctions.getHeightAtPoint(x, z, game.getRootNode());
-				//Vector3f pos = new Vector3f(x, 0f, z); // todo - fall from sky, and check heightn errainn
+				//pos.y += ChaosSettings.SUMMON_Y_POS;  No, since they don't fall immed
 				ape.setLocation(pos);
 			}
 		}

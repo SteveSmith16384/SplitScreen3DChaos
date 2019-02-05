@@ -23,8 +23,9 @@ public class SubversionSpell extends AbstractSpell {
 			} else {
 				avatar.hud.appendToLog("You already control " + creature.name);
 			}
+		} else {
+			avatar.hud.appendToLog("No valid target found");
 		}
-		avatar.hud.appendToLog("No valid target found");
 		return false;
 	}
 

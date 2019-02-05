@@ -10,11 +10,11 @@ import com.scs.splitscreenfpsengine.components.ICanShoot;
 import com.scs.splitscreenfpsengine.entities.AbstractBullet;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
-public class Fireball extends AbstractBullet {
+public class FireballBullet extends AbstractBullet {
 
 	private ParticleEmitter fire;
 
-	public Fireball(SplitScreenFpsEngine _game, AbstractGameModule _module, ICanShoot _shooter) {
+	public FireballBullet(SplitScreenFpsEngine _game, AbstractGameModule _module, ICanShoot _shooter) {
 		super(_game, _module, "Fireball", _shooter, 10);
 
 	}

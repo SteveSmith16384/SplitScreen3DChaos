@@ -21,9 +21,9 @@ import ssmith.util.RealtimeInterval;
 
 public class BlackHole extends AbstractPhysicalEntity implements IProcessable, IExpiringEffect {
 
-	private RealtimeInterval interval = new RealtimeInterval(2000);
+	private RealtimeInterval interval = new RealtimeInterval(200);
 	private WizardAvatar wiz;
-	private float timeLeft = 10;
+	private float timeLeft = 30;
 
 	public BlackHole(SplitScreenFpsEngine _game, AbstractGameModule _module, WizardAvatar _wiz, Vector3f pos) {
 		super(_game, _module, "BlackHole");
@@ -59,8 +59,9 @@ public class BlackHole extends AbstractPhysicalEntity implements IProcessable, I
 						AbstractCreature cre = (AbstractCreature)e;
 						if (cre.getOwner() != this.wiz) {
 							IAffectedByPhysics abp = (IAffectedByPhysics)e;
-							Vector3f dir = this.getLocation().subtract(cre.getLocation()).normalizeLocal();
-							abp.applyForce(dir.mult(2));
+							//Vector3f dir = cre.getCenter().subtract(this.getLocation()).normalizeLocal();
+							Vector3f dir = this.getCenter().subtract(cre.getCenter()).normalizeLocal();
+							abp.applyForce(dir.multLocal(15));
 						}
 					}
 				}
@@ -85,7 +86,7 @@ public class BlackHole extends AbstractPhysicalEntity implements IProcessable, I
 
 	@Override
 	public void effectFinished() {
-		module.markEntityForRemoval(this);
+		this.markForRemoval();
 		
 	}
 

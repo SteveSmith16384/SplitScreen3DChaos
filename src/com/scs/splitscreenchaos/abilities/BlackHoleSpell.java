@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class BlackHoleSpell extends AbstractSpell {
 	
 	public BlackHoleSpell(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "BlackHoleSpell", 80, -1);
+		super(_game, module, p, "Black Hole", 80, -1);
 	}
 
 

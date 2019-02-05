@@ -10,7 +10,7 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 public class SummonBeholder extends AbstractSummonSpell {
 
 	public SummonBeholder(SplitScreenFpsEngine _game, AbstractGameModule module, WizardAvatar p) {
-		super(_game, module, p, "SummonBeholder", 40);
+		super(_game, module, p, "Summon Beholder", 40);
 	}
 
 	@Override

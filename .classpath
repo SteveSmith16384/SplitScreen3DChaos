@@ -22,8 +22,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Blocky"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SplitScreenFPSEngine"/>
 	<classpathentry kind="lib" path="/SplitScreenFPSEngine/libs/Jamepad.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Blocky"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

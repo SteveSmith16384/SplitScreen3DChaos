@@ -31,7 +31,7 @@ public class ChaosTerrainEntity extends AbstractTerrainEntity {
 		mat_terrain.setTexture("Alpha", assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
 
 		/** 1.2) Add GRASS texture into the red layer (Tex1). */
-		Texture grass = assetManager.loadTexture("Textures/blocks/moonrock.png");//Terrain/splat/grass.jpg"); // todo - pass the textures as a param 
+		Texture grass = assetManager.loadTexture("Textures/blocks/moonrock.png");//Terrain/splat/grass.jpg"); 
 		grass.setWrap(WrapMode.Repeat);
 		mat_terrain.setTexture("Tex1", grass);
 		mat_terrain.setFloat("Tex1Scale", 64f);
@@ -62,13 +62,14 @@ public class ChaosTerrainEntity extends AbstractTerrainEntity {
 		 * 3.4) As LOD step scale we supply Vector3f(1,1,1).
 		 * 3.5) We supply the prepared heightmap itself.
 		 */
+		int actualMapSize = mapSize * 2; // We scale it by half later
 		int patchSize = (mapSize)/2;//16;
-		mainNode = new TerrainQuad("my terrain", patchSize, mapSize+1, heightmap.getHeightMap());
+		mainNode = new TerrainQuad("my terrain", patchSize, actualMapSize+1, heightmap.getHeightMap());
 		/** 4. We give the terrain its material, position & scale it, and attach it. */
 		mainNode.setMaterial(mat_terrain);
+		mainNode.setLocalScale(.5f, .005f, .5f);
 		mainNode.setLocalTranslation(mapSize/2, 0, mapSize/2);
-		mainNode.setLocalScale(1f, .01f, 1f);
-		mainNode.setShadowMode(ShadowMode.CastAndReceive);
+		mainNode.setShadowMode(ShadowMode.Receive);
 		//mainNode.getWorldBound()
 
 		CollisionShape terrainShape = CollisionShapeFactory.createMeshShape((Node) mainNode);
