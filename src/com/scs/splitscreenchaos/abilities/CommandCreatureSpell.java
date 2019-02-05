@@ -39,13 +39,15 @@ public class CommandCreatureSpell extends AbstractAbility {
 				}
 			} else {
 				Vector3f position = module.getFloorPointWithRay(w, -1);
-				if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
-					AbstractCreature c = (AbstractCreature)w.selectedEntity;
-					c.setTarget(position);
-					Settings.p("Destination " + position + " selected");
-					this.avatar.hud.appendToLog("Destination selected for " + w.selectedEntity.name);
+				if (position != null) {
+					if (w.selectedEntity != null && w.selectedEntity instanceof AbstractCreature) {
+						AbstractCreature c = (AbstractCreature)w.selectedEntity;
+						c.setTarget(position);
+						Settings.p("Destination " + position + " selected");
+						this.avatar.hud.appendToLog("Destination selected for " + w.selectedEntity.name);
+						return true;
+					}
 				}
-				return true;
 			}
 		} else {
 			Settings.p("Nothing found");

@@ -18,6 +18,7 @@ public class TeleportSpell extends AbstractSpell {
 		Vector3f position = module.getFloorPointWithRay(this.getWizard(), -1);
 		if (position != null) {
 			avatar.playerControl.warp(position);
+			game.soundSystem.playSound("Sound/teleport.wav", 1, false);
 			return true;
 		}
 		avatar.hud.appendToLog("No valid target found");

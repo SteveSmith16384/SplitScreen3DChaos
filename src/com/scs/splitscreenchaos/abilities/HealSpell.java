@@ -17,6 +17,7 @@ public class HealSpell extends AbstractSpell {
 		AbstractCreature ape = (AbstractCreature)module.getWithRay(this.avatar, AbstractCreature.class, -1);
 		if (ape != null && ape.getOwner() == this.avatar) {
 			ape.restoreHealth();
+			game.soundSystem.playSound("Sound/Replenish.wav", 1, false);
 			return true;
 		}
 		avatar.hud.appendToLog("No valid target found");

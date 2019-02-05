@@ -60,6 +60,8 @@ public class HomingFireball extends AbstractPhysicalEntity implements IProcessab
 		//super.rigidBodyControl = new RigidBodyControl(0);
 		//mainNode.addControl(rigidBodyControl);
 		//geometry.setUserData(Settings.ENTITY, this);
+		
+		game.soundSystem.playSound("Sound/105016__julien-matthey__jm-fx-fireball-01.wav", 1, false);
 	}
 
 	

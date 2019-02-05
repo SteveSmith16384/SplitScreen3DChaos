@@ -19,6 +19,7 @@ public class FreezeSpell extends AbstractSpell {
 		if (creature != null) {
 			if (creature.getSide() != this.getWizard().getSide()) {
 				new FreezeEffect(game, module, creature);
+				game.soundSystem.playSound("Sound/freeze.wav", 1, false);
 				return true;
 			}
 		}

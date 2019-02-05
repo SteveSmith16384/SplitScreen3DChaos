@@ -19,6 +19,7 @@ public class ShrinkSpell extends AbstractSpell {
 		if (creature != null) {
 			if (creature.getSide() != this.getWizard().getSide()) {
 				new ShrinkEffect(game, module, creature);
+				game.soundSystem.playSound("Sound/qubodup-SlowDown.ogg", 1, false);
 				return true;
 			}
 		}

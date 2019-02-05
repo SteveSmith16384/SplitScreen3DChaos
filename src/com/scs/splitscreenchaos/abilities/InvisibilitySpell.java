@@ -15,6 +15,7 @@ public class InvisibilitySpell extends AbstractSpell {
 	@Override
 	public boolean cast() {
 		new InvisibilityEffect(game, module, avatar);
+		game.soundSystem.playSound("Sound/spell4.wav", 1, false);
 		return  true;
 	}
 

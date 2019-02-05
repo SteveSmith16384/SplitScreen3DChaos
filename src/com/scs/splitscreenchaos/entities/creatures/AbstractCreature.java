@@ -149,7 +149,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 		// Reset any vars
 		if (physicalTarget != null) {
-			if (physicalTarget.isAlive()) {
+			if (physicalTarget.isAlive() && physicalTarget.canBeSeen()) {
 				this.targetPos = this.physicalTarget.getLocation();
 			} else {
 				physicalTarget = null;

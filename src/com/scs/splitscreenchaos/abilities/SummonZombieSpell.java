@@ -16,6 +16,7 @@ public class SummonZombieSpell extends AbstractSummonSpell {
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
 		Zombie golem = new Zombie(game, module, pos, (WizardAvatar)this.avatar);
+		game.soundSystem.playSound("Sound/Zombie Sound.wav", 1, false);
 		return golem;
 	}
 

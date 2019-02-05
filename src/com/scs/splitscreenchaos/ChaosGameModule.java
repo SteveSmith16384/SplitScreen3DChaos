@@ -66,7 +66,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		if (!Settings.USE_TERRAIN) {
 			FloorOrCeiling floor = new FloorOrCeiling(game, this, 0, 0, 0, MAP_SIZE, 1f, MAP_SIZE, "Textures/blocks/lavarock.jpg");
 			this.addEntity(floor);
-			
+
 			new MageTower(game, this, new Vector3f(0.5f, 0, 0.5f));
 			new MageTower(game, this, new Vector3f(MAP_SIZE-1, 0, 0.5f));
 			new MageTower(game, this, new Vector3f(0.5f, 0, MAP_SIZE-1));
@@ -75,7 +75,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		} else {
 			AbstractTerrainEntity t = new ChaosTerrainEntity(game, this, MAP_SIZE);
 			this.addEntity(t);
-			
+
 			Vector3f pos = JMEModelFunctions.getHeightAtPoint(0.5f, 0.5f, t.getMainNode());
 			new MageTower(game, this, pos);
 			pos = JMEModelFunctions.getHeightAtPoint(MAP_SIZE-1, 0.5f, t.getMainNode());
@@ -102,7 +102,7 @@ public class ChaosGameModule extends AbstractGameModule {
 			p = this.getRandomBlockPos(20);
 			this.createWall_Vert(vte, new Vector3f(p.x, 1, p.y));
 		}
-			 */
+		 */
 		//}
 
 		// Create AI Wiz
@@ -116,15 +116,17 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 
 		// Create AI Monsters
-		GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
-		this.addEntity(gd);
+		if (game.getNumPlayers() == 1) {
+			GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
+			this.addEntity(gd);
+		}
 	}
 
 
 	@Override
 	public void update(float tpfSecs) {
 		super.update(tpfSecs);
-/*
+		/*
 		if (!this.changingBlocks.isEmpty()) {
 			if (addBlockInt.hitInterval()) {
 				ChangingBlock block = this.changingBlocks.remove(0);
@@ -169,7 +171,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		}
 	}
 
-/*
+	/*
 	private Point getRandomBlockPos(int inset) {
 		int x = NumberFunctions.rnd(inset, MAP_SIZE_BLOCKS-inset-1);
 		int z = NumberFunctions.rnd(inset, MAP_SIZE_BLOCKS-inset-1);
@@ -240,7 +242,7 @@ public class ChaosGameModule extends AbstractGameModule {
 		this.changingBlocks.add(block);
 	}
 
-*/
+	 */
 	@Override
 	protected AbstractPlayersAvatar getPlayersAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID,
 			Camera _cam, IInputDevice _input, int _side) {

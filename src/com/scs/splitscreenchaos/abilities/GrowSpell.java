@@ -19,6 +19,7 @@ public class GrowSpell extends AbstractSpell {
 		if (creature != null) {
 			if (creature.getSide() == this.getWizard().getSide()) {
 				new GrowEffect(game, module, creature);
+				game.soundSystem.playSound("Sound/qubodup-SpeedUp.ogg", 1, false);
 				return true;
 			}
 		}
