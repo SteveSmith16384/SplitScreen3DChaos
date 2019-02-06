@@ -24,33 +24,37 @@ public class ChaosTerrainEntity extends AbstractTerrainEntity {
 
 		AssetManager assetManager = game.getAssetManager();
 
-		/** 1. Create terrain material and load four textures into it. */
+		// 1. Create terrain material and load four textures into it.
 		Material mat_terrain = new Material(assetManager, "Common/MatDefs/Terrain/Terrain.j3md");
 
-		/** 1.1) Add ALPHA map (for red-blue-green coded splat textures) */
-		mat_terrain.setTexture("Alpha", assetManager.loadTexture("Textures/Terrain/splat/alphamap.png"));
-
-		/** 1.2) Add GRASS texture into the red layer (Tex1). */
+		// 1.1) Add ALPHA map (for red-blue-green coded splat textures)
+		mat_terrain.setTexture("Alpha", assetManager.loadTexture("Textures/blocks/lavarock.jpg"));//"Textures/Terrain/splat/alpha2.png"));//alphamap.png"));
+/*
+		// 1.2) Add GRASS texture into the red layer (Tex1).
 		Texture grass = assetManager.loadTexture("Textures/blocks/moonrock.png");//Terrain/splat/grass.jpg"); 
 		grass.setWrap(WrapMode.Repeat);
 		mat_terrain.setTexture("Tex1", grass);
 		mat_terrain.setFloat("Tex1Scale", 64f);
-
-		/** 1.3) Add DIRT texture into the green layer (Tex2) */
+*/
+		// 1.3) Add DIRT texture into the green layer (Tex2)
 		Texture dirt = assetManager.loadTexture("Textures/blocks/lavarock.jpg");//Terrain/splat/dirt.jpg");
 		dirt.setWrap(WrapMode.Repeat);
+		mat_terrain.setTexture("Tex1", dirt);
 		mat_terrain.setTexture("Tex2", dirt);
+		mat_terrain.setTexture("Tex3", dirt);
+		mat_terrain.setFloat("Tex1Scale", 32f);
 		mat_terrain.setFloat("Tex2Scale", 32f);
+		mat_terrain.setFloat("Tex3Scale", 32f);
 
-		/** 1.4) Add ROAD texture into the blue layer (Tex3) */
+		// 1.4) Add ROAD texture into the blue layer (Tex3)
 		/*Texture rock = assetManager.loadTexture("Textures/blocks/lavarock.jpg");//Terrain/splat/road.jpg");
 		rock.setWrap(WrapMode.Repeat);
 		mat_terrain.setTexture("Tex3", rock);
 		mat_terrain.setFloat("Tex3Scale", 128f);
 */
-		/** 2. Create the height map */
+		// 2. Create the height map
 		AbstractHeightMap heightmap = null;
-		Texture heightMapImage = assetManager.loadTexture("Textures/blocks/lavarock.jpg");//Terrain/splat/mountains512.png");
+		Texture heightMapImage = assetManager.loadTexture("Textures/Terrain/splat/mountains128.png");
 		heightmap = new ImageBasedHeightMap(heightMapImage.getImage());
 		heightmap.load();
 
@@ -63,11 +67,11 @@ public class ChaosTerrainEntity extends AbstractTerrainEntity {
 		 * 3.5) We supply the prepared heightmap itself.
 		 */
 		int actualMapSize = mapSize * 2; // We scale it by half later
-		int patchSize = (mapSize)/2;//16;
+		int patchSize = (mapSize)/4;//16;
 		mainNode = new TerrainQuad("my terrain", patchSize, actualMapSize+1, heightmap.getHeightMap());
 		/** 4. We give the terrain its material, position & scale it, and attach it. */
 		mainNode.setMaterial(mat_terrain);
-		mainNode.setLocalScale(.5f, .005f, .5f);
+		mainNode.setLocalScale(.5f, .01f, .5f);
 		mainNode.setLocalTranslation(mapSize/2, 0, mapSize/2);
 		mainNode.setShadowMode(ShadowMode.Receive);
 		//mainNode.getWorldBound()

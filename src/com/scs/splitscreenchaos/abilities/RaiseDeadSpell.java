@@ -1,6 +1,6 @@
 package com.scs.splitscreenchaos.abilities;
 
-import com.scs.splitscreenchaos.entities.AbstractCorpse;
+import com.scs.splitscreenchaos.entities.CreatureCorpse;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
@@ -16,7 +16,7 @@ public class RaiseDeadSpell extends AbstractSpell {
 
 	@Override
 	public boolean cast() {
-		AbstractCorpse corpse = (AbstractCorpse)module.getWithRay(this.avatar, AbstractCorpse.class, RANGE);
+		CreatureCorpse corpse = (CreatureCorpse)module.getWithRay(this.avatar, CreatureCorpse.class, RANGE);
 		if (corpse != null) {
 			corpse.resurrect((WizardAvatar)avatar);
 			return true;

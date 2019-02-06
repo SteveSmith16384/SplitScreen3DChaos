@@ -60,7 +60,7 @@ public class BlackHole extends AbstractPhysicalEntity implements IProcessable, I
 						if (cre.getOwner() != this.wiz) {
 							IAffectedByPhysics abp = (IAffectedByPhysics)e;
 							//Vector3f dir = cre.getCenter().subtract(this.getLocation()).normalizeLocal();
-							Vector3f dir = this.getCenter().subtract(cre.getCenter()).normalizeLocal();
+							Vector3f dir = this.getCentre().subtract(cre.getCentre()).normalizeLocal();
 							abp.applyForce(dir.multLocal(15));
 						}
 					}

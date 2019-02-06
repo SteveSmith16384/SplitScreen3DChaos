@@ -1,6 +1,7 @@
 package com.scs.splitscreenchaos.abilities;
 
 import com.jme3.math.Vector3f;
+import com.scs.splitscreenchaos.ChaosGameModule;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.entities.creatures.GreenDragon;
@@ -15,7 +16,7 @@ public class SummonGreenDragonSpell extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		GreenDragon golem = new GreenDragon(game, module, pos, (WizardAvatar)this.avatar);
+		GreenDragon golem = new GreenDragon(game, (ChaosGameModule)module, pos, (WizardAvatar)this.avatar);
 		return golem;
 	}
 

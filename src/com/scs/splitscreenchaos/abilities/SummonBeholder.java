@@ -1,6 +1,7 @@
 package com.scs.splitscreenchaos.abilities;
 
 import com.jme3.math.Vector3f;
+import com.scs.splitscreenchaos.ChaosGameModule;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
 import com.scs.splitscreenchaos.entities.creatures.Beholder;
@@ -15,7 +16,7 @@ public class SummonBeholder extends AbstractSummonSpell {
 
 	@Override
 	protected AbstractCreature createCreature(Vector3f pos) {
-		return new Beholder(game, module, pos, (WizardAvatar)this.avatar);
+		return new Beholder(game, (ChaosGameModule)module, pos, (WizardAvatar)this.avatar);
 	}
 
 }

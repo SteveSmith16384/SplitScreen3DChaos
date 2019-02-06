@@ -1,0 +1,14 @@
+#Name,A,D,S,H
+Wizard,1,1,1,1
+Beholder,6,3,3,2
+Giant Spider,3,1,3,2
+Cerberus,3,1,3,3
+Zombie,1,1,1,2
+Skeleton,1,1,1,2
+Golem,1,1,1,8
+Scorpion,5,4,3,3
+Wyvern,1,1,1,3
+Golden Dragon,9,9,3,9
+Red Dragon,7,9,3,8
+Green Dragon,5,8,3,7
+

@@ -1,5 +1,7 @@
 package com.scs.splitscreenchaos;
 
+import java.io.IOException;
+
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
@@ -25,24 +27,20 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class ChaosGameModule extends AbstractGameModule {
 
-	private static final float BLOCK_SIZE = .1f;
+	//private static final float BLOCK_SIZE = .1f;
 	public static final int MAP_SIZE = 32;
-	private static final int MAP_SIZE_BLOCKS = (int)(MAP_SIZE/BLOCK_SIZE);
-
-	//private List<ChangingBlock> changingBlocks;
-	//public VoxelTerrainEntity vte;
-	//private RealtimeInterval addBlockInt = new RealtimeInterval(10);
 
 	public int totalWizards, totalHumans, totalAI;
+	public CreatureStats stats;
 
-	public ChaosGameModule(SplitScreenFpsEngine _game, int _numHumans, int _numAI) {
+	public ChaosGameModule(SplitScreenFpsEngine _game, int _numHumans, int _numAI) throws IOException {
 		super(_game);
 
 		totalHumans = _numHumans;
 		totalAI = _numAI;
 		totalWizards = totalHumans + totalAI;
 
-		//changingBlocks = new LinkedList<>();
+		stats = new CreatureStats();
 	}
 
 

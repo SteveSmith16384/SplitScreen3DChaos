@@ -8,10 +8,12 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
+import com.scs.splitscreenchaos.ChaosGameModule;
 import com.scs.splitscreenchaos.GameMechanics;
+import com.scs.splitscreenchaos.Stats;
 import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.components.ICreatureModel;
-import com.scs.splitscreenchaos.entities.AbstractCorpse;
+import com.scs.splitscreenchaos.entities.CreatureCorpse;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
 import com.scs.splitscreenfpsengine.MyBetterCharacterControl;
 import com.scs.splitscreenfpsengine.Settings;
@@ -21,16 +23,16 @@ import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.components.IEntity;
 import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
 import com.scs.splitscreenfpsengine.components.IProcessable;
+import com.scs.splitscreenfpsengine.components.IShowTextOnHud;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.ParticleShockwave;
 import com.scs.splitscreenfpsengine.entities.ParticleSpark;
 import com.scs.splitscreenfpsengine.jme.JMEAngleFunctions;
 import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
-import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 import ssmith.util.RealtimeInterval;
 
-public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable, IAffectedByPhysics {
+public abstract class AbstractCreature extends AbstractPhysicalEntity implements IProcessable, IDamagable, INotifiedOfCollision, IAttackable, IAffectedByPhysics, IShowTextOnHud {
 
 	private static final float TURN_SPEED = 4f;
 	private static final float WEIGHT = 1f;
@@ -52,7 +54,8 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private Geometry orbGeom;
 	private StringBuilder hudStats = new StringBuilder();
 	private boolean shockwaveShown = false;
-
+	private float rad;
+	
 	// AI
 	private Vector3f targetPos;
 	private IAttackable physicalTarget;
@@ -62,15 +65,17 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	private RealtimeInterval attackInterval = new RealtimeInterval(2000);
 
 
-	public AbstractCreature(SplitScreenFpsEngine _game, AbstractGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, float _speed, float _att, float _def, float _health, boolean _undead) {
+	public AbstractCreature(SplitScreenFpsEngine _game, ChaosGameModule _module, String name, Vector3f startPos, WizardAvatar _owner, boolean _undead) {
 		super(_game, _module, name);
 
 		owner = _owner;
-		speed = _speed/2;
-		att = _att;
-		def = _def;
-		health = _health;
-		maxHealth = _health;
+
+		Stats stats = _module.stats.getStats(name);
+		speed = stats.speed;
+		att = stats.att;
+		def = stats.def;
+		health = stats.health;
+		maxHealth = stats.health;
 		undead = _undead;
 
 		model = getCreatureModel();
@@ -81,7 +86,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 		BoundingBox bv = (BoundingBox)model.getModel().getWorldBound();
 		//playerControl = new BetterCharacterControl(bb.getZExtent()*.9f, bb.getZExtent()*2, 1000f); ASAS
-		float rad = Math.max(bv.getXExtent(), bv.getZExtent());
+		rad = Math.max(bv.getXExtent(), bv.getZExtent());
 		float height = bv.getYExtent()*3;
 		if (rad > height/2) {
 			height = rad*2; // Ensure propertions work for physics
@@ -179,7 +184,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				if (canAttack(lockedInCombat)) {
 					if (attackInterval.hitInterval()) {
 						Settings.p("Combat between " + this.name + " and " + lockedInCombat.getName());
-						Vector3f sparkPos = this.getCenter().add(this.lockedInCombat.getLocation()).multLocal(.5f);
+						Vector3f sparkPos = this.getCentre().add(this.lockedInCombat.getLocation()).multLocal(.5f);
 						new ParticleSpark(game, module, sparkPos);
 						float tot = GameMechanics.combat(att, lockedInCombat.getDef());
 						if (tot > 0) {
@@ -194,7 +199,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 				this.model.setCreatureAnim(Anim.Walk);
 				this.turnTowardsDestination(targetPos);
 				this.moveFwds();
-				if (this.distance(this.targetPos) < 1f) {
+				if (this.distance(this.targetPos) < this.rad*2) {
 					targetPos = null;
 				}
 			} else {
@@ -328,7 +333,7 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 		removeAt = System.currentTimeMillis() + 2000;
 
 		if (!permanent) {
-			AbstractCorpse corpse = new AbstractCorpse(game, module, this);
+			CreatureCorpse corpse = new CreatureCorpse(game, module, this);
 			module.addEntity(corpse);
 		}
 	}
@@ -428,11 +433,14 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 	public void subverted(WizardAvatar wiz) {
 		this.owner = wiz;
 		this.lockedInCombat = null;
+		this.physicalTarget = null; // Otherwise they go for the wizard who cast Subversion
+		this.targetPos = null;
 		addOrb();
 	}
 
 
-	public String getStatsForHud() {
+	@Override
+	public String getHudText() {
 		hudStats.setLength(0);		
 		hudStats.append(this.name + "\nHealth: " + (int)this.health);
 		return hudStats.toString();
@@ -451,6 +459,17 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 			walkDir.set(0, 0, 0);
 			playerControl.setWalkDirection(walkDir);
 		}
+	}
+	
+	
+	public void resurrect(WizardAvatar wiz) {
+		undead = true;
+		dead = false;
+		owner = wiz;
+		this.targetPos = null;
+		this.lockedInCombat = null;
+		physicalTarget = null;
+		this.addOrb();
 	}
 
 }

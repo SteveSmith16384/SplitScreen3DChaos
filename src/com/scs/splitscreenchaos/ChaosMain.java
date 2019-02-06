@@ -1,5 +1,6 @@
 package com.scs.splitscreenchaos;
 
+import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 
 import com.jme3.system.AppSettings;
@@ -57,27 +58,14 @@ public class ChaosMain extends SplitScreenFpsEngine {
 		super();
 	}
 
-/*
-	@Override
-	public void simpleInitApp() {
-		super.simpleInitApp();
-
-		// Bloom
-		BloomFilter bloom = new BloomFilter();
-		bloom.setDownSamplingFactor(2);
-		bloom.setBlurScale(1.37f);
-		bloom.setExposurePower(3.30f);
-		bloom.setExposureCutOff(0.2f);
-		bloom.setBloomIntensity(2.45f);
-		FilterPostProcessor fpp2 = new FilterPostProcessor(game.getAssetManager());
-		fpp2.addFilter(bloom);
-		view2.addProcessor(fpp2);
-	}
-*/
 
 	@Override
 	public AbstractGameModule getGameModule() {
-		return new ChaosGameModule(this, super.getNumPlayers(), NUM_AI);
+		try {
+			return new ChaosGameModule(this, super.getNumPlayers(), NUM_AI);
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to create game", e);
+		}
 	}
 
 

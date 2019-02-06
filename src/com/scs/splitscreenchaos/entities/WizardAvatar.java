@@ -15,7 +15,7 @@ import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
 import com.scs.splitscreenfpsengine.components.IAvatarModel;
 import com.scs.splitscreenfpsengine.components.IDamagable;
 import com.scs.splitscreenfpsengine.components.IEntity;
-import com.scs.splitscreenfpsengine.components.INotifiedOfCollision;
+import com.scs.splitscreenfpsengine.components.IShowTextOnHud;
 import com.scs.splitscreenfpsengine.entities.AbstractPhysicalEntity;
 import com.scs.splitscreenfpsengine.entities.AbstractPlayersAvatar;
 import com.scs.splitscreenfpsengine.input.IInputDevice;
@@ -92,10 +92,10 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		super.process(tpfSecs);
 
 		//Show stats of creature we're pointing at
-		AbstractCreature creature = (AbstractCreature)module.getWithRay(this, AbstractCreature.class, -1);
+		IShowTextOnHud creature = (IShowTextOnHud)module.getWithRay(this, IShowTextOnHud.class, -1);
 		ChaosHUD hud = (ChaosHUD)this.hud;
 		if (creature != null) {
-			hud.creatureStats.setText(creature.getStatsForHud());
+			hud.creatureStats.setText(creature.getHudText());//.getStatsForHud());
 			Vector3f pos = this.cam.getScreenCoordinates(creature.getLocation());
 			hud.creatureStats.setLocalTranslation(pos);
 		} else {

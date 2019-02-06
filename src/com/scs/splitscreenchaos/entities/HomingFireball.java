@@ -67,14 +67,14 @@ public class HomingFireball extends AbstractPhysicalEntity implements IProcessab
 	
 	@Override
 	public void process(float tpfSecs) {
-		Vector3f targetPos = this.target.getCenter();
+		Vector3f targetPos = this.target.getCentre();
 		Vector3f newPos = targetPos.subtract(this.getLocation()).normalizeLocal().multLocal(.1f);
 		this.getMainNode().setLocalTranslation(this.getLocation().add(newPos));
 
 		float dist = this.distance(this.target.getLocation());
 		if (dist < 1) {
 			Settings.p(this.getName() + " has hit " + this.target.getName());
-			new ParticleExplosion(game, module, this.getCenter());
+			new ParticleExplosion(game, module, this.getCentre());
 			this.markForRemoval();
 		}
 	}
