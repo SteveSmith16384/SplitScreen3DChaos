@@ -17,7 +17,7 @@ import com.scs.splitscreenfpsengine.jme.JMEModelFunctions;
 //Anims: SpiderStand, SpiderWalk
 public class SpiderModel implements ICreatureModel {
 
-	public static final float MODEL_WIDTH = 0.9f;
+	public static final float MODEL_WIDTH = 1.3f;
 
 	private AssetManager assetManager;
 	private Spatial model;

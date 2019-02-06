@@ -29,7 +29,7 @@ public class AIWizard extends AbstractCreature implements IWizard, IAttackable, 
 	
 	@Override
 	public void process(float tpfSecs) {
-		this.mana += tpfSecs;
+		this.mana += tpfSecs/2;
 		if (mana > 200) {
 			mana = 200;
 		}

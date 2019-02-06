@@ -10,18 +10,18 @@ public class CreatureStats {
 	private HashMap<String, Stats> data = new HashMap<>();
 
 	public CreatureStats() throws IOException {
-		String[] lines = Functions.readAllTextFileFromJar("data/creaturestats.txt").split("\n");
+		String[] lines = Functions.readAllTextFileFromJar("Data/creaturestats.txt").split("\n");
 
 		for (String s : lines) {
 			if (s.length() > 0 && s.startsWith("#") == false) {
 				String[] tmp = s.split(",");
 				Stats stats = new Stats();
-				stats.att = Integer.parseInt(tmp[1]);
-				stats.def = Integer.parseInt(tmp[2]);
-				stats.speed = Integer.parseInt(tmp[3]);
-				stats.health = Integer.parseInt(tmp[4]);
+				stats.att = Integer.parseInt(tmp[1].trim());
+				stats.def = Integer.parseInt(tmp[2].trim());
+				stats.speed = Float.parseFloat(tmp[3].trim());
+				stats.health = Integer.parseInt(tmp[4].trim());
 
-				data.put(tmp[0], stats);
+				data.put(tmp[0].trim(), stats);
 			}
 		}
 	}

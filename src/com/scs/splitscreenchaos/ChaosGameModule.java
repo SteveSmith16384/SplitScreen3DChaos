@@ -124,13 +124,6 @@ public class ChaosGameModule extends AbstractGameModule {
 	@Override
 	public void update(float tpfSecs) {
 		super.update(tpfSecs);
-		/*
-		if (!this.changingBlocks.isEmpty()) {
-			if (addBlockInt.hitInterval()) {
-				ChangingBlock block = this.changingBlocks.remove(0);
-				vte.blocks.setBlock(block.pos, block.newClass);
-			}
-		}*/
 	}
 
 

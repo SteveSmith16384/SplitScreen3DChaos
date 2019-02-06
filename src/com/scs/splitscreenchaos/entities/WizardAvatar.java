@@ -23,16 +23,13 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAttackable, IDamagable {
 
-	//private static final float ATT = 1;
-	private static final float DEF = 1;
-
 	public AbstractPhysicalEntity selectedEntity; //e.g. selected creature
 	public float mana;
 	protected float health;
 	public boolean killed = false;
 
 	public WizardAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
-		super(_game, _module, _playerID, _cam, _input, _side, 1.6f);
+		super(_game, _module, _playerID, _cam, _input, _side, 1f);
 
 		mana = 100;
 		health = 100;
@@ -74,12 +71,12 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		}
 
 		if (this.input.isCycleAbilityPressed(true)) {
-			Settings.p("Cycling fwd");
+			//Settings.p("Cycling fwd");
 			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
 			c.selectNext();
 			this.hud.refresh();
 		} else if (this.input.isCycleAbilityPressed(false)) {
-			Settings.p("Cycling bwd");
+			//Settings.p("Cycling bwd");
 			CycleThroughAbilitiesAbility c = (CycleThroughAbilitiesAbility)this.ability[1];
 			c.selectPrev();
 			this.hud.refresh();
@@ -119,7 +116,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 
 	@Override
 	public float getDef() {
-		return DEF;
+		return 1;
 	}
 
 
