@@ -4,7 +4,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Spatial.CullHint;
 import com.scs.splitscreenchaos.abilities.CycleThroughAbilitiesAbility;
-import com.scs.splitscreenchaos.abilities.FireballSpell;
+import com.scs.splitscreenchaos.abilities.FireballSpell2;
 import com.scs.splitscreenchaos.components.IAttackable;
 import com.scs.splitscreenchaos.effects.FloorSelector;
 import com.scs.splitscreenchaos.entities.creatures.AbstractCreature;
@@ -35,7 +35,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 		health = 100;
 		
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
-		this.ability[0] = new FireballSpell(game, _module, this); // todo - default to first spell
+		this.ability[0] = new FireballSpell2(game, _module, this); // todo - default to first spell
 
 		new FloorSelector(game, module, this);
 	}

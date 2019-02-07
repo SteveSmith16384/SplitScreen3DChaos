@@ -28,7 +28,7 @@ public class CerberusModel implements ICreatureModel {
 	public CerberusModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = JMEModelFunctions.loadModel(assetManager, "Models/cerberus/cerberus_v002.blend");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/cerberus/cerberus_v002.blend", Settings.LOAD_J3OModels);
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus/cerberus_texture.png");
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);

@@ -30,7 +30,7 @@ public abstract class AbstractDragonModel implements ICreatureModel {
 	public AbstractDragonModel(AssetManager _assetManager, String tex, float height) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/dragon/dragon.blend");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/dragon/dragon.blend", Settings.LOAD_J3OModels);//assetManager.loadModel("Models/dragon/dragon.blend");
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, tex);
 		model.setShadowMode(ShadowMode.Cast);
 		JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(0, 0, 1)); // Point model fwds

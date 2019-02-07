@@ -31,7 +31,7 @@ public class GolemModel implements ICreatureModel {
 	public GolemModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = JMEModelFunctions.loadModel(assetManager, "Models/golem/golem_clean.blend");//assetManager.loadModel("Models/golem/golem_clean.blend");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/golem/golem_clean.blend", Settings.LOAD_J3OModels);//assetManager.loadModel("Models/golem/golem_clean.blend");
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Textures/lavarock.jpg");
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);

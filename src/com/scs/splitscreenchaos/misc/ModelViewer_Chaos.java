@@ -12,6 +12,7 @@ public class ModelViewer_Chaos extends ModelViewer {
 	}
 
 	public static void main(String[] args) {
+		System.out.println(com.jme3.system.JmeVersion.FULL_NAME);
 		ModelViewer_Chaos app = new ModelViewer_Chaos();
 		app.showSettings = false;
 
