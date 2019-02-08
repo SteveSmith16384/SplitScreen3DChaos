@@ -1,0 +1,4 @@
+#Settings file
+#Fri Feb 08 08:54:07 GMT 2019
+InvulnerableTimeSecs=3.0
+MaxTurnSpeed=1.0

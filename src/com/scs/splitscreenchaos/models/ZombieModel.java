@@ -28,7 +28,7 @@ public class ZombieModel implements ICreatureModel {
 	public ZombieModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/new_thin_zombie/new_thin_zombie.blend");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/new_thin_zombie/new_thin_zombie.blend", Settings.LOAD_J3OModels);
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/new_thin_zombie/new_thin_zombie.png");
 		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds

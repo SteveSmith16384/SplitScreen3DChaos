@@ -21,7 +21,7 @@ public class ModelViewer_Chaos extends ModelViewer {
 
 
 	public Spatial getModel() {
-		Spatial model = assetManager.loadModel("Models/skull/skull_monster.obj");
+		Spatial model = assetManager.loadModel("Models/beholder/beholder.blend");
 		//Spatial model = assetManager.loadModel("Models/skull2/skull.obj");
 
 		//JMEModelFunctions.setTextureOnSpatial(assetManager, model, "Models/cerberus_texture.png");

@@ -28,7 +28,7 @@ public class SkeletonModel implements ICreatureModel {
 	public SkeletonModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/boneman/boneman_running.blend");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/boneman/boneman_running.blend", Settings.LOAD_J3OModels);
 		
 		Node n = (Node)model;
 		n.getChild("Wall").removeFromParent();

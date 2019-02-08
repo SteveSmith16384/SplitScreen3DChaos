@@ -39,7 +39,7 @@ public class WizardModel implements IAvatarModel, ICreatureModel { // Used by wi
 	public WizardModel(AssetManager _assetManager, int playerid) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/mage/mage.blend");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/mage/mage.blend", Settings.LOAD_J3OModels);
 		JMEModelFunctions.setTextureOnSpatial(assetManager, model, getTex(playerid));
 		model.setShadowMode(ShadowMode.Cast);
 		JMEModelFunctions.scaleModelToHeight(model, MODEL_HEIGHT);

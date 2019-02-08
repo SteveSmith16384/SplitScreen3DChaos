@@ -12,7 +12,14 @@ import com.scs.splitscreenchaos.entities.BlackHole;
 import com.scs.splitscreenchaos.entities.ChaosTerrainEntity;
 import com.scs.splitscreenchaos.entities.MageTower;
 import com.scs.splitscreenchaos.entities.WizardAvatar;
+import com.scs.splitscreenchaos.entities.creatures.Beholder;
+import com.scs.splitscreenchaos.entities.creatures.Cerberus;
+import com.scs.splitscreenchaos.entities.creatures.GiantSpider;
 import com.scs.splitscreenchaos.entities.creatures.GoldenDragon;
+import com.scs.splitscreenchaos.entities.creatures.Golem;
+import com.scs.splitscreenchaos.entities.creatures.Scorpion;
+import com.scs.splitscreenchaos.entities.creatures.Skeleton;
+import com.scs.splitscreenchaos.entities.creatures.Zombie;
 import com.scs.splitscreenchaos.hud.ChaosHUD;
 import com.scs.splitscreenfpsengine.Settings;
 import com.scs.splitscreenfpsengine.SplitScreenFpsEngine;
@@ -27,7 +34,6 @@ import com.scs.splitscreenfpsengine.modules.AbstractGameModule;
 
 public class ChaosGameModule extends AbstractGameModule {
 
-	//private static final float BLOCK_SIZE = .1f;
 	public static final int MAP_SIZE = 32;
 
 	public int totalWizards, totalHumans, totalAI;
@@ -115,8 +121,38 @@ public class ChaosGameModule extends AbstractGameModule {
 
 		// Create AI Monsters
 		if (game.getNumPlayers() == 1) {
-			GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
-			this.addEntity(gd);
+			{
+				GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				Golem gd = new Golem(game, this, new Vector3f(6, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				Beholder gd = new Beholder(game, this, new Vector3f(9, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				Cerberus gd = new Cerberus(game, this, new Vector3f(12, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				GiantSpider gd = new GiantSpider(game, this, new Vector3f(15, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				Scorpion gd = new Scorpion(game, this, new Vector3f(18, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				Skeleton gd = new Skeleton(game, this, new Vector3f(21, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				Zombie gd = new Zombie(game, this, new Vector3f(24, 2, 3), null);
+				this.addEntity(gd);
+			}
 		}
 	}
 

@@ -27,7 +27,7 @@ public class ScorpionModel implements ICreatureModel {
 	public ScorpionModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = assetManager.loadModel("Models/scorpion/scorpion.blend");
+		model = JMEModelFunctions.loadModel(assetManager, "Models/scorpion/scorpion.blend", Settings.LOAD_J3OModels);
 		
 		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
