@@ -54,7 +54,7 @@ public class ChaosMain extends SplitScreenFpsEngine {
 	}
 
 
-	public ChaosMain() {
+	private ChaosMain() {
 		super();
 	}
 

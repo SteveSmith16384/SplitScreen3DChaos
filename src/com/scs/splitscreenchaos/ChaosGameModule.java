@@ -130,18 +130,6 @@ public class ChaosGameModule extends AbstractGameModule {
 				this.addEntity(gd);
 			}
 			{
-				Beholder gd = new Beholder(game, this, new Vector3f(9, 2, 3), null);
-				this.addEntity(gd);
-			}
-			{
-				Cerberus gd = new Cerberus(game, this, new Vector3f(12, 2, 3), null);
-				this.addEntity(gd);
-			}
-			{
-				GiantSpider gd = new GiantSpider(game, this, new Vector3f(15, 2, 3), null);
-				this.addEntity(gd);
-			}
-			{
 				Scorpion gd = new Scorpion(game, this, new Vector3f(18, 2, 3), null);
 				this.addEntity(gd);
 			}
@@ -151,6 +139,19 @@ public class ChaosGameModule extends AbstractGameModule {
 			}
 			{
 				Zombie gd = new Zombie(game, this, new Vector3f(24, 2, 3), null);
+				this.addEntity(gd);
+			}
+
+			{
+				Beholder gd = new Beholder(game, this, new Vector3f(9, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				GiantSpider gd = new GiantSpider(game, this, new Vector3f(15, 2, 3), null);
+				this.addEntity(gd);
+			}
+			{
+				Cerberus gd = new Cerberus(game, this, new Vector3f(12, 2, 3), null);
 				this.addEntity(gd);
 			}
 		}

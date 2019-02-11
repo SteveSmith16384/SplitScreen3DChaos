@@ -27,7 +27,7 @@ public class BeholderModel implements ICreatureModel {
 	public BeholderModel(AssetManager _assetManager) {
 		assetManager = _assetManager;
 
-		model = JMEModelFunctions.loadModel(assetManager, "Models/beholder/beholder.blend", Settings.LOAD_J3OModels);//
+		model = JMEModelFunctions.loadModel(assetManager, "Models/beholder/beholder.blend", Settings.LOAD_J3OModels);
 		
 		model.setShadowMode(ShadowMode.Cast);
 		//JMEAngleFunctions.rotateToWorldDirection(model, new Vector3f(-1, 0, 0)); // Point model fwds
