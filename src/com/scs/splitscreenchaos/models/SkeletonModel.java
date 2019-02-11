@@ -42,6 +42,9 @@ public class SkeletonModel implements ICreatureModel {
 
 		AnimControl control = JMEModelFunctions.getNodeWithControls(null, (Node)model);
 		channel = control.createChannel();
+		
+		JMEAngleFunctions.rotateYAxisBy2(model, -90);
+
 
 	}
 
@@ -61,13 +64,13 @@ public class SkeletonModel implements ICreatureModel {
 		case Idle:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("idle");
-			JMEAngleFunctions.rotateYAxisBy2(model, -90);
+			JMEAngleFunctions.rotateYAxisBy2(model, 90);
 			break;
 
 		case Walk:
 			channel.setLoopMode(LoopMode.Loop);
 			channel.setAnim("forward");
-			JMEAngleFunctions.rotateYAxisBy2(model, 90);
+			JMEAngleFunctions.rotateYAxisBy2(model, -90);
 			break;
 
 		case Attack:
