@@ -31,7 +31,7 @@ public class WizardAvatar extends AbstractPlayersAvatar implements IWizard, IAtt
 	public WizardAvatar(SplitScreenFpsEngine _game, AbstractGameModule _module, int _playerID, Camera _cam, IInputDevice _input, int _side) {
 		super(_game, _module, _playerID, _cam, _input, _side, 1f);
 
-		mana = 100;
+		mana = 50;
 		health = 100;
 		
 		this.ability[1] = new CycleThroughAbilitiesAbility(game, _module, this);
