@@ -17,6 +17,7 @@ public class CreateJ3OModels extends SimpleApplication {
 	@Override
 	public void simpleInitApp() {
 		try {
+			// todo - apply the tex, set to y=0, and then export
 			JMEModelFunctions.loadModel(assetManager, "Models/beholder/beholder.blend", true);
 			JMEModelFunctions.loadModel(assetManager, "Models/dragon/dragon.blend", true);
 			JMEModelFunctions.loadModel(assetManager, "Models/cerberus/cerberus_v002.blend", true);
