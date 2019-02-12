@@ -91,26 +91,8 @@ public class ChaosGameModule extends AbstractGameModule {
 
 		}
 
-		//vte = new VoxelTerrainEntity(game, this, 0, 0, 0, new Vector3Int(MAP_SIZE_BLOCKS, (int)(20/BLOCK_SIZE), MAP_SIZE_BLOCKS), 50, BLOCK_SIZE, 1);
-		//this.addEntity(vte);
-
-		/*if (!Settings.USE_TERRAIN) {
-			for (int i=0 ; i<5 ; i++) {
-				Point p = this.getRandomBlockPos(1);
-				this.createTree(vte, new Vector3f(p.x, 1, p.y));
-			}
-			/*
-		for (int i=0 ; i<10 ; i++) {
-			Point p = this.getRandomBlockPos(20);
-			this.createWall_Horiz(vte, new Vector3f(p.x, 1, p.y));
-			p = this.getRandomBlockPos(20);
-			this.createWall_Vert(vte, new Vector3f(p.x, 1, p.y));
-		}
-		 */
-		//}
-
 		// Create AI Wiz
-		if (Settings.AI_WIZARDS) {
+		if (ChaosSettings.AI_WIZARDS) {
 			int num = this.totalHumans;
 			for (int i=0 ; i<totalAI ; i++) {
 				AIWizard wiz = new AIWizard(game, this, this.getPlayerStartPos(num), num);
@@ -123,13 +105,13 @@ public class ChaosGameModule extends AbstractGameModule {
 		if (game.getNumPlayers() == 1) {
 			{
 				GoldenDragon gd = new GoldenDragon(game, this, new Vector3f(3, 2, 3), null);
-				this.addEntity(gd);
+				//this.addEntity(gd);
 			}
 			{
 				Golem gd = new Golem(game, this, new Vector3f(6, 2, 3), null);
 				this.addEntity(gd);
 			}
-			{
+			/*{
 				Scorpion gd = new Scorpion(game, this, new Vector3f(18, 2, 3), null);
 				this.addEntity(gd);
 			}
@@ -141,7 +123,6 @@ public class ChaosGameModule extends AbstractGameModule {
 				Zombie gd = new Zombie(game, this, new Vector3f(24, 2, 3), null);
 				this.addEntity(gd);
 			}
-
 			{
 				Beholder gd = new Beholder(game, this, new Vector3f(9, 2, 3), null);
 				this.addEntity(gd);
@@ -153,6 +134,10 @@ public class ChaosGameModule extends AbstractGameModule {
 			{
 				Cerberus gd = new Cerberus(game, this, new Vector3f(12, 2, 3), null);
 				this.addEntity(gd);
+			}*/
+			for (int i=0; i<10 ; i++) {
+				Skeleton gd = new Skeleton(game, this, new Vector3f(5 + (i*2), 2, 3), null);
+				//this.addEntity(gd);
 			}
 		}
 	}

@@ -39,14 +39,14 @@ public class WindEffect extends AbstractEntity implements IProcessable, IExpirin
 	@Override
 	public void process(float tpfSecs) {
 		if (interval.hitInterval()) {
-			Settings.p("Wind blowing");
 			for (IEntity e : module.entities) {
 				if (e instanceof AbstractCreature) {
 					if (e instanceof IAffectedByPhysics) {
 						AbstractCreature cre = (AbstractCreature)e;
 						if (cre.getOwner() != this.wiz) {
 							IAffectedByPhysics abp = (IAffectedByPhysics)e;
-							abp.applyForce(dir.mult(2));
+							Settings.p("Wind blowing " + cre.name);
+							abp.applyForce(dir.mult(10));
 						}
 					}
 				}

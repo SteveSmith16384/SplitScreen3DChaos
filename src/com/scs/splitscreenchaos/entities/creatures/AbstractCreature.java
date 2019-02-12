@@ -9,6 +9,7 @@ import com.jme3.scene.Spatial.CullHint;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.scs.splitscreenchaos.ChaosGameModule;
+import com.scs.splitscreenchaos.ChaosSettings;
 import com.scs.splitscreenchaos.GameMechanics;
 import com.scs.splitscreenchaos.Stats;
 import com.scs.splitscreenchaos.components.IAttackable;
@@ -379,6 +380,10 @@ public abstract class AbstractCreature extends AbstractPhysicalEntity implements
 
 
 	private IAttackable findClosestTarget() {
+		if (ChaosSettings.DISABLE_AI) {
+			return null;
+		}
+		
 		IAttackable closest = null;
 		float closestDist = 9999;
 		for (IEntity e : module.entities) {
