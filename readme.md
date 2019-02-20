@@ -10,13 +10,16 @@ Works, but has not been completely tested
 
 
 ## Gameplay
-Walk around, cast spells.  Try and kill the other wizards by creating creatures which will automatically attack.  Use the mouse/keyboard and joypads.
+Walk around, cast spells.  Try and kill the other wizards by creating creatures which will automatically attack.  
 
 
-## Building
-You will need:-
-* jMonkeyEngine (https://wiki.jmonkeyengine.org/)
-* Split Screen FPS Engine (https://github.com/SteveSmith16384/SplitScreenFPSEngine)
+## Controls
+* Mouse & Keyboard: W, A, S, D, and use the mouse spinner to select spells, and the left mouse button to cast.
+* Joypad (only test with PS4 pads): Use L1 and R1 to cycle through spells, and X to cast.
+
+
+## Building/Compiling
+You will need jMonkeyEngine (https://wiki.jmonkeyengine.org/)
 
 
 ## Credits
